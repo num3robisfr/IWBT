@@ -11,4 +11,6 @@ package Model;
  */
 public class NewClass {
     
+    private String test;
+    
 }
