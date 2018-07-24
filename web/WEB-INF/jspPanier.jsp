@@ -3,13 +3,15 @@
 <p class="panier">Panier vide !</p>
 </c:if>
 <c:if test="${!isempty}">
-<c:forEach var="l" items="${list}">
+    <!--
+<%-- <c:forEach var="l" items="${list}">--%>
 ${l.ref}/${l.qty}
 <a href="Controller?section=panier&add=${l.ref}">+</a>
 <a href="Controller?section=panier&dec=${l.ref}">-</a>
 <a href="Controller?section=panier&del=${l.ref}">X</a>
 <br>
-</c:forEach>
+<%--</c:forEach>--%>
+    -->
 <a href="Controller?section=panier&clean">Vider le panier</a>
 </c:if>
     
