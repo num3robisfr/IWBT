@@ -21,6 +21,10 @@ public class Controller extends HttpServlet {
         
         HttpSession session = request.getSession();
         
+        if ("catalog".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspCatalog.jsp";
+        }
+        
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
 
