@@ -1,13 +1,13 @@
 package Model;
 
-import classe.LigneDeCommande;
+import classe.Item;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
 public class beanPanier implements Serializable {
 
-    private HashMap<String, LigneDeCommande> map = null;
+    private HashMap<String, Item> map = null;
 
     public beanPanier() {
         this.map = new HashMap();
@@ -28,16 +28,16 @@ public class beanPanier implements Serializable {
     }
 
     public void add(String ref, int qty) {
-        LigneDeCommande i = null;
+        Item i = null;
         if (map.containsKey(ref)) {
             i = map.get(ref);
-            i.ajouterQte(qty);
+            i.change(qty);
 //            i.setQty( i.getQty()+ qty);
         } else {
-            i = new LigneDeCommande(ref, qty);
+            i = new Item(ref, qty);
             map.put(ref, i);
         }
-        if( i.getLigQteCommandee()<1) 
+        if( i.getQty()<1) 
             del( ref);
     }
 
@@ -68,7 +68,7 @@ public class beanPanier implements Serializable {
     public void save() {
     }
 
-    public Collection<LigneDeCommande> getList() {
+    public Collection<Item> getList() {
         return map.values();
     }
 }
