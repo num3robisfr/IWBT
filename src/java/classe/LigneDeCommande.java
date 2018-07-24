@@ -10,7 +10,7 @@ public class LigneDeCommande {
     private String ligId;
     private String comId;
     private String oeuIsbn;
-    private String ligQteCommandee;
+    private int ligQteCommandee;
     private Double ligPrix;
     private Double ligTva;
     private Double ligTauxPromo;
@@ -22,15 +22,20 @@ public class LigneDeCommande {
 
     public LigneDeCommande() {
     }
-
-    public LigneDeCommande(String comId, String ligQteCommandee, Double ligPrix, Double ligTva) {
+    
+    public LigneDeCommande(String comId, int ligQteCommandee, Double ligPrix, Double ligTva) {
         this.comId = comId;
         this.ligQteCommandee = ligQteCommandee;
         this.ligPrix = ligPrix;
         this.ligTva = ligTva;
     }
+    
+    public LigneDeCommande(String oeuIsbn, int ligQteCommandee) {
+        this.oeuIsbn = oeuIsbn;
+        this.ligQteCommandee = ligQteCommandee;
+    }
 
-    public LigneDeCommande(String ligId, String comId, String oeuIsbn, String ligQteCommandee, Double ligPrix, Double ligTva) {
+    public LigneDeCommande(String ligId, String comId, String oeuIsbn, int ligQteCommandee, Double ligPrix, Double ligTva) {
         this.ligId = ligId;
         this.comId = comId;
         this.oeuIsbn = oeuIsbn;
@@ -39,7 +44,7 @@ public class LigneDeCommande {
         this.ligTva = ligTva;
     }
     
-    public LigneDeCommande(String ligId, String comId, String oeuIsbn, String ligQteCommandee, Double ligPrix, Double ligTva, Double ligTauxPromo) {
+    public LigneDeCommande(String ligId, String comId, String oeuIsbn, int ligQteCommandee, Double ligPrix, Double ligTva, Double ligTauxPromo) {
         this.ligId = ligId;
         this.comId = comId;
         this.oeuIsbn = oeuIsbn;
@@ -75,11 +80,11 @@ public class LigneDeCommande {
         this.oeuIsbn = oeuIsbn;
     }
 
-    public String getLigQteCommandee() {
+    public int getLigQteCommandee() {
         return ligQteCommandee;
     }
 
-    public void setLigQteCommandee(String ligQteCommandee) {
+    public void setLigQteCommandee(int ligQteCommandee) {
         this.ligQteCommandee = ligQteCommandee;
     }
 
@@ -105,6 +110,16 @@ public class LigneDeCommande {
 
     public void setLigTauxPromo(Double ligTauxPromo) {
         this.ligTauxPromo = ligTauxPromo;
+    }
+    
+    
+    /**************************************************************************/
+                                /* AUTRES METHODES */
+    /**************************************************************************/
+    
+    
+    public void ajouterQte(int qty) {
+        this.ligQteCommandee+= qty;
     }
     
     // toString
