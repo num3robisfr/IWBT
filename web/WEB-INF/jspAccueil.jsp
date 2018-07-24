@@ -7,9 +7,14 @@
     </head>
     <body>
         <h1>Bienvenue sur InBookWeTrust !</h1>
-        <%-- <jsp:include page="/controller?section=catalog" flush="true" />
-        <hr>--%>
-        <jsp:include page="/Controller?section=affichePanier" flush="true" />
+        <br />
+        <jsp:include page="/Controller?section=catalog" flush="true" />
+        <br />
+        <hr />
+        <br />
+        <%--<jsp:include page="/Controller?section=affichePanier" flush="true" />--%>
+        <a href="Controller?section=affichePanier">Voir votre panier</a>
+        <br />
         
     </body>
 </html>
