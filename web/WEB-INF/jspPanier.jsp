@@ -1,6 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:if test="${isempty}">
-Panier vide !
+<p class="panier">Panier vide !</p>
 </c:if>
 <c:if test="${!isempty}">
 <c:forEach var="l" items="${list}">
