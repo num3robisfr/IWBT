@@ -2,3 +2,13 @@ h1{
     color : blue;
     text-align: center;
 }
+
+.panier{
+color: blue;
+
+font-style: italic;
+}
+
+.error{
+color: red;
+}
