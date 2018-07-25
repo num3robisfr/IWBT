@@ -21,7 +21,7 @@
                 <jsp:include page="/Controller?section=affichePanier" flush="true" />--%>
                 <%--<a href="Controller?section=affichePanier">Voir votre panier</a>
                 <br />--%>
-                </div>
+            </div>
             <!-- footer -->
             <%@include file="Footer.jsp" %>
         </div>

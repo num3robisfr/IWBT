@@ -27,7 +27,7 @@ public class Controller extends HttpServlet {
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
             beanConnect beanc = new beanConnect();
-           beanCatalog beanca = new beanCatalog();
+            beanCatalog beanca = new beanCatalog();
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(),"",""));
             for ( beanOeuvre b : beanca.getListeOeuvres()) {
                 System.out.println(b);
