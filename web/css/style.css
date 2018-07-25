@@ -1,14 +1,126 @@
-h1{
-    color : blue;
-    text-align: center;
+@font-face{
+    font-family: 'Badaboum';
+    src: url('../polices/BADABB.TTF')  format('truetype');
+}
+
+@font-face{
+    font-family: 'Brandon_grotesque';
+    src: url('../polices/AronGrotesque-regular.ttf') format('truetype');
+}
+
+#bloc-page{
+    margin: 0 auto;
+    width: 900px;
+}
+
+#header{
+    display: flex;
+    height: 100px;
+    background-color: #02407b;
+}
+
+#logo{
+    
+    font-family: 'Badaboum';
+    font-size: 3em;
+    color: #fff;
+    padding: 25px 0 0 25px; 
+}
+#espace{
+    display: flex;
+    flex: 1;
+}
+
+#ensemble_header{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-right: 40px;
+    
+}
+
+#ensemble_header a{
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1 em;
+}
+
+#ensemble_header a:hover{
+    color: #ff9966;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.login{
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
 }
 
 .panier{
-color: blue;
-
-font-style: italic;
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
 }
 
-.error{
-color: red;
+#section{
+    display: flex;
+    min-height: 500px;
+    flex-direction: row;
+}
+
+#sidebar{
+    display: flex;
+    width: 25%;
+    background-color: #FFF;
+    border-right-style: dotted;
+    border-right-color: #999999;
+    border-width: 2px;
+    flex-direction: column;
+}
+
+#catalogue{
+    width: 75%;
+    background-color: #66ccff;
+
+}
+
+.un{
+    color : #E34714;
+    font-family: 'Brandon_grotesque';
+    font-size: 1em;
+    text-transform: uppercase;
+    list-style-type: none;
+    
+}
+
+.deux{
+    color : #000;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    font-size: 0.9em;
+    margin-left: 10px;
+    list-style-type: none;
+}
+
+#footer{
+    display: flex;
+    height: 100px;
+    background-color: #02407b;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#footer p{
+    
+    
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.6em;
+    font-style: normal;
+
+    
 }
