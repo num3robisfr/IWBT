@@ -7,7 +7,7 @@
                         <a href="#">Identifiez-vous</a>
                     </div>
                     <div class="panier">
-                        <a href="#">panier vide</a>
+                        <a href="Controller?section=affichePanier">Panier</a>
                     </div>
                         
                 </div>
