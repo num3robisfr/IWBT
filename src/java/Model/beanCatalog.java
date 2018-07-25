@@ -27,7 +27,7 @@ public ArrayList<beanOeuvre> remplirListeOeuvres(Connection connexion, String fi
         
         
         try {
-            String query = "SELECT * FROM ListesOeuvres2";
+            String query = "SELECT * FROM ListesOeuvres2 WHERE " + filtre + " Titre like '%" + recherche + "%'";
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
