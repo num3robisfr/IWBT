@@ -1,8 +1,11 @@
 package Controller;
 
-
+import Model.beanCatalog;
+import Model.beanConnect;
+import Model.beanOeuvre;
 import Model.beanPanier;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,15 +19,21 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String url = "/WEB-INF/jspAccueil.jsp";
-        
+
         HttpSession session = request.getSession();
-        
+
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
+            beanConnect beanc = new beanConnect();
+           beanCatalog beanca = new beanCatalog();
+            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(),"",""));
+            for ( beanOeuvre b : beanca.getListeOeuvres()) {
+                System.out.println(b);
+            }
         }
-        
+
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
 
@@ -61,7 +70,7 @@ public class Controller extends HttpServlet {
                 panier.clean();
             }
         }
-        
+
         request.getRequestDispatcher(url).include(request, response);
     }
 
