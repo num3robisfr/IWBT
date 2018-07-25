@@ -21,13 +21,14 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String url = "/WEB-INF/jspAccueil.jsp";
+        beanConnect beanc = new beanConnect();
 
         HttpSession session = request.getSession();
 
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
-            beanConnect beanc = new beanConnect();
-           beanCatalog beanca = new beanCatalog();
+//            beanConnect beanc = new beanConnect();
+            beanCatalog beanca = new beanCatalog();
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(),"",""));
             for ( beanOeuvre b : beanca.getListeOeuvres()) {
                 System.out.println(b);
@@ -36,6 +37,14 @@ public class Controller extends HttpServlet {
 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
+            
+            if (beanc==null) {
+                beanc = new beanConnect();
+                System.out.println("whuuut ?!!!");
+            }
+            else {
+                System.out.println("yeah !");
+            }
 
             beanPanier panier = (beanPanier) session.getAttribute("panier");
             if (panier == null) {

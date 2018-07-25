@@ -3,18 +3,28 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="./css/style.css" />
         <title>IBWT</title>
     </head>
     <body>
-        <h1>Bienvenue sur InBookWeTrust !</h1>
-        <br />
-        <jsp:include page="/Controller?section=catalog" flush="true" />
-        <br />
-        <hr />
-        <br />
-        <%--<jsp:include page="/Controller?section=affichePanier" flush="true" />--%>
-        <a href="Controller?section=affichePanier">Voir votre panier</a>
-        <br />
+        <div id="bloc-page">
+            <!-- header -->
+            <%@include file="Header.jsp" %>
+            <!-- section sidebar et catalogue -->
+            <div id="section">
+                <!-- Sidebar -->     
+                <%@include file="Sidebar.jsp" %>
+                <!-- catalogue -->    
+                <%--<%@include file="Catalogue.jsp" %>--%>
+                <jsp:include page="/Controller?section=catalog" flush="true" />
+                <%--<br />
+                <jsp:include page="/Controller?section=affichePanier" flush="true" />--%>
+                <%--<a href="Controller?section=affichePanier">Voir votre panier</a>
+                <br />--%>
+            </div>
+            <!-- footer -->
+            <%@include file="Footer.jsp" %>
+        </div>
         
     </body>
 </html>
