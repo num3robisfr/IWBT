@@ -4,6 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" href="./css/evecss.css" />
         <title>IBWT</title>
     </head>
     <body>
@@ -17,6 +18,8 @@
                 <!-- catalogue -->    
                 <%--<%@include file="Catalogue.jsp" %>--%>
                 <jsp:include page="/Controller?section=catalog" flush="true" />
+                </div>
+
                 <%--<br />
                 <jsp:include page="/Controller?section=affichePanier" flush="true" />--%>
                 <%--<a href="Controller?section=affichePanier">Voir votre panier</a>
