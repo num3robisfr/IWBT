@@ -56,27 +56,49 @@ public class Controller extends HttpServlet {
         }
 
         if ("panier".equals(request.getParameter("section"))) {
+            
             beanPanier panier = (beanPanier) session.getAttribute("panier");
             if (panier == null) {
                 panier = new beanPanier();
                 session.setAttribute("panier", panier);
             }
-
-            if (request.getParameter("doIt") != null) {
-                panier.add(request.getParameter("ref"),
-                        request.getParameter("qty"));
+            if (url.equalsIgnoreCase("/WEB-INF/jspPanier.jsp")) {
+                url = "/WEB-INF/jspPanier.jsp";
+                            
+                if (request.getParameter("doIt") != null) {
+                    panier.add(request.getParameter("ref"),
+                            request.getParameter("qty"));
+                }
+                if (request.getParameter("add") != null) {
+                    panier.add(request.getParameter("add"));
+                }
+                if (request.getParameter("dec") != null) {
+                    panier.dec(request.getParameter("dec"));
+                }
+                if (request.getParameter("del") != null) {
+                    panier.del(request.getParameter("del"));
+                }
+                if (request.getParameter("clean") != null) {
+                    panier.clean();
+                }
             }
-            if (request.getParameter("add") != null) {
-                panier.add(request.getParameter("add"));
-            }
-            if (request.getParameter("dec") != null) {
-                panier.dec(request.getParameter("dec"));
-            }
-            if (request.getParameter("del") != null) {
-                panier.del(request.getParameter("del"));
-            }
-            if (request.getParameter("clean") != null) {
-                panier.clean();
+            else {
+                if (request.getParameter("doIt") != null) {
+                    panier.add(request.getParameter("ref"),
+                            request.getParameter("qty"));
+                }
+                if (request.getParameter("add") != null) {
+                    panier.add(request.getParameter("add"));
+                }
+                if (request.getParameter("dec") != null) {
+                    panier.dec(request.getParameter("dec"));
+                }
+                if (request.getParameter("del") != null) {
+                    panier.del(request.getParameter("del"));
+                }
+                if (request.getParameter("clean") != null) {
+                    panier.clean();
+                }
             }
         }
 
