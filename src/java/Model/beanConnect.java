@@ -18,26 +18,26 @@ import javax.sql.DataSource;
 
 public class beanConnect implements Serializable {
 
-    DataSource ds;
-    Connection connexion;
+    private static DataSource ds;
 
     public Connection getConnexion() {
+        Connection connexion = null;
+
         if (ds == null) {
             try {
                 InitialContext context = new InitialContext();
                 ds = (DataSource) context.lookup("jdbc/IBWTresource");
-                
+
             } catch (NamingException ex) {
                 System.out.println("Oops:Naming:" + ex.getMessage());
             }
-            try {
-                if (connexion == null) {
-                        connexion = ds.getConnection();
-                }
-            } catch (SQLException ex) {
-                System.out.println("Oops:SQL:" + ex.getMessage());
-            }
         }
+        try {
+            connexion = ds.getConnection();
+        } catch (SQLException ex) {
+            System.out.println("Oops:SQL:" + ex.getMessage());
+        }
+
         return connexion;
     }
 

@@ -21,28 +21,44 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String url = "/WEB-INF/jspAccueil.jsp";
-        beanConnect beanc = new beanConnect();
 
+        if (this.getServletContext().getAttribute("connexion") == null) {
+            beanConnect beanc = new beanConnect();
+            this.getServletContext().setAttribute("connexion", beanc);
+        }
+        beanConnect beanc = (beanConnect) this.getServletContext().getAttribute("connexion");
         HttpSession session = request.getSession();
 
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
 //            beanConnect beanc = new beanConnect();
             beanCatalog beanca = new beanCatalog();
-            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(),"",""));
-            for ( beanOeuvre b : beanca.getListeOeuvres()) {
+            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", ""));
+            session.setAttribute("liste", beanca.getListeOeuvres());
+            for (beanOeuvre b : beanca.getListeOeuvres()) {
                 System.out.println(b);
+            }
+            request.setAttribute("beanca", beanca.getListeOeuvres());
+        }
+        if ("oeuvre".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspOeuvre.jsp";
+            for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste")) {
+                System.out.println("+++++++++" + b.getOeuTitre());
+                if (b.getOeuIsbn().equals(request.getParameter("isbn"))) {
+                    System.out.println(">>>>>>>>>>>>>>>>" + b);
+                    request.setAttribute("oeuvre", b);
+                }
+
             }
         }
 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
-            
-            if (beanc==null) {
+
+            if (beanc == null) {
                 beanc = new beanConnect();
                 System.out.println("whuuut ?!!!");
-            }
-            else {
+            } else {
                 System.out.println("yeah !");
             }
 

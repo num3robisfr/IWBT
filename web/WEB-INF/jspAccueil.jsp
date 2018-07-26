@@ -17,6 +17,7 @@
                 <!-- catalogue -->    
                 <%--<%@include file="Catalogue.jsp" %>--%>
                 <jsp:include page="/Controller?section=catalog" flush="true" />
+
                 <%--<br />
                 <jsp:include page="/Controller?section=affichePanier" flush="true" />--%>
                 <%--<a href="Controller?section=affichePanier">Voir votre panier</a>
