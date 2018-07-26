@@ -40,7 +40,29 @@ public class beanPanier implements Serializable {
         if( i.getQty()<1) 
             del( ref);
     }
+    /***********************************************************************/
+    public void add(String url, String ref, String qty) {
+        try {
+            int q = Integer.parseInt(qty);
+            add(url, ref, qty);
+        } catch (NumberFormatException e) {
+            System.out.println("Oops:"+ e.getMessage());
+        }
+    }
 
+//    public void add(String url, String ref, int qty) {
+//        Item i = null;
+//        if (map.containsKey(ref)) {
+//            i = map.get(ref);
+//            i.change(qty);
+//        } else {
+//            i = new Item(ref, qty);
+//            map.put(ref, i);
+//        }
+//        if( i.getQty()<1) 
+//            del( ref);
+//    }
+    /***********************************************************************/
     public void dec(String ref) {
         add(ref, -1);
     }
