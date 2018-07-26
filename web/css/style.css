@@ -83,7 +83,7 @@
 
 #catalogue{
     width: 75%;
-    background-color: #66ccff;
+    background-color: white;
 
 }
 
@@ -122,5 +122,13 @@
     font-size: 0.6em;
     font-style: normal;
 
+    
+}
+
+h1{
+    color : #E34714;
+    font-family: 'Brandon_grotesque';
+    font-size: 2em;
+    list-style-type: none;
     
 }

@@ -11,7 +11,7 @@
         <div id="bloc-page">
             <!-- header -->
             <%@include file="Header.jsp" %>
-            <h2>Votre panier </h2>
+            <h1>Votre panier </h1>
             <br />
             <c:if test="${isempty}">
             <p class="panier">Panier vide !</p>
@@ -26,6 +26,7 @@
             </c:forEach>
             <a href="Controller?section=panier&clean">Vider le panier</a>
             </c:if>
+            <a href="Controller?section=accueil">Retour à l'accueil</a>
             <!-- footer -->
             <%@include file="Footer.jsp" %>
         </div>

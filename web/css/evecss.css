@@ -1,0 +1,30 @@
+
+.row {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+
+.btn {
+    background-color: #00000;
+}
+
+.button {
+    text-align: center;
+    }
+
+.imagetext {
+    text-align: center;
+    border: 1px solid white;
+
+}
+
+
+
+
+
+
+
