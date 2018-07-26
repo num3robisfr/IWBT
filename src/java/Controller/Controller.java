@@ -21,28 +21,44 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String url = "/WEB-INF/jspAccueil.jsp";
-        beanConnect beanc = new beanConnect();
 
+        if (this.getServletContext().getAttribute("connexion") == null) {
+            beanConnect beanc = new beanConnect();
+            this.getServletContext().setAttribute("connexion", beanc);
+        }
+        beanConnect beanc = (beanConnect) this.getServletContext().getAttribute("connexion");
         HttpSession session = request.getSession();
 
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
 //            beanConnect beanc = new beanConnect();
             beanCatalog beanca = new beanCatalog();
-            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(),"",""));
-            for ( beanOeuvre b : beanca.getListeOeuvres()) {
+            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", ""));
+            session.setAttribute("liste", beanca.getListeOeuvres());
+            for (beanOeuvre b : beanca.getListeOeuvres()) {
                 System.out.println(b);
+            }
+            request.setAttribute("beanca", beanca.getListeOeuvres());
+        }
+        if ("oeuvre".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspOeuvre.jsp";
+            for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste")) {
+                System.out.println("+++++++++" + b.getOeuTitre());
+                if (b.getOeuIsbn().equals(request.getParameter("isbn"))) {
+                    System.out.println(">>>>>>>>>>>>>>>>" + b);
+                    request.setAttribute("oeuvre", b);
+                }
+
             }
         }
 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
-            
-            if (beanc==null) {
+
+            if (beanc == null) {
                 beanc = new beanConnect();
                 System.out.println("whuuut ?!!!");
-            }
-            else {
+            } else {
                 System.out.println("yeah !");
             }
 
@@ -56,28 +72,42 @@ public class Controller extends HttpServlet {
         }
 
         if ("panier".equals(request.getParameter("section"))) {
+            
+            
             beanPanier panier = (beanPanier) session.getAttribute("panier");
             if (panier == null) {
                 panier = new beanPanier();
                 session.setAttribute("panier", panier);
             }
-
+                            
             if (request.getParameter("doIt") != null) {
                 panier.add(request.getParameter("ref"),
                         request.getParameter("qty"));
             }
-            if (request.getParameter("add") != null) {
-                panier.add(request.getParameter("add"));
-            }
-            if (request.getParameter("dec") != null) {
-                panier.dec(request.getParameter("dec"));
-            }
-            if (request.getParameter("del") != null) {
-                panier.del(request.getParameter("del"));
-            }
-            if (request.getParameter("clean") != null) {
-                panier.clean();
-            }
+//            if (request.getParameter("add") != null) {
+//                    panier.add(request.getParameter("add"));
+//            }
+            
+//            if (url.equalsIgnoreCase("/WEB-INF/jspPanier.jsp")) {
+                
+            
+                if (request.getParameter("add") != null) {
+                    panier.add(request.getParameter("add"));
+//                    url = "/WEB-INF/jspPanier.jsp";
+                }
+                if (request.getParameter("dec") != null) {
+                    panier.dec(request.getParameter("dec"));
+//                    url = "/WEB-INF/jspPanier.jsp";
+                }
+                if (request.getParameter("del") != null) {
+                    panier.del(request.getParameter("del"));
+//                    url = "/WEB-INF/jspPanier.jsp";
+                }
+                if (request.getParameter("clean") != null) {
+                    panier.clean();
+//                    url = "/WEB-INF/jspPanier.jsp";
+                }
+//            }
         }
 
         request.getRequestDispatcher(url).include(request, response);

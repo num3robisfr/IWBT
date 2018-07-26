@@ -54,6 +54,7 @@ public ArrayList<beanOeuvre> remplirListeOeuvres(Connection connexion, String fi
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Oops:SQL:" + ex.getMessage());
-        } return listeOeuvres;
+        } 
+        return listeOeuvres;
     }    
 }
