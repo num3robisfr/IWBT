@@ -1,11 +1,13 @@
 package Controller;
 
+import DAO.DataAccessTheme;
 import Model.beanCatalog;
 import Model.beanConnect;
 import Model.beanOeuvre;
 import Model.beanPanier;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +23,7 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String url = "/WEB-INF/jspAccueil.jsp";
+        
 
         if (this.getServletContext().getAttribute("connexion") == null) {
             beanConnect beanc = new beanConnect();
@@ -28,6 +31,12 @@ public class Controller extends HttpServlet {
         }
         beanConnect beanc = (beanConnect) this.getServletContext().getAttribute("connexion");
         HttpSession session = request.getSession();
+        
+        
+        //ca ne passe pas les paramètres :(  nico
+        request.setAttribute("AllTheme", DataAccessTheme.getAllTheme());
+        request.setAttribute("AllSousTheme", DataAccessTheme.getAllSousTheme());
+
 
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
@@ -35,22 +44,22 @@ public class Controller extends HttpServlet {
             beanCatalog beanca = new beanCatalog();
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", ""));
             session.setAttribute("liste", beanca.getListeOeuvres());
-            for (beanOeuvre b : beanca.getListeOeuvres()) {
-                System.out.println(b);
-            }
+            
             request.setAttribute("beanca", beanca.getListeOeuvres());
         }
         if ("oeuvre".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspOeuvre.jsp";
             for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste")) {
-                System.out.println("+++++++++" + b.getOeuTitre());
+
                 if (b.getOeuIsbn().equals(request.getParameter("isbn"))) {
-                    System.out.println(">>>>>>>>>>>>>>>>" + b);
+
                     request.setAttribute("oeuvre", b);
                 }
 
             }
+
         }
+       
 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";

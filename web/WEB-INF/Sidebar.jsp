@@ -1,20 +1,17 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<div id="sidebar">
-    <ul class="un">
-        <li>Evènements</li>
-        <li>Nos coups de coeur</li>
-        <li>Best Sellers</li>
-    </ul>
-
-    <ul class="deux">
-        <li>Littérature & romans</li>
-        <li>BD & Mangas</li>
-    </ul>
-    <ul class="un">
-        <li>Bons plans</li>
-        <li>Les partenariats</li>
-
-    </ul>
-</div>
+        <div id="sidebar">
+            <ul class="un">
+                <c:forEach items="${AllTheme}" var="p">
+                    <li>${p.intitule}</li>
+                    <c:forEach var="s" items="${AllSousTheme}">
+                        <c:if test="${s.id == p.id}">
+                        <ul class="deux">
+                            <li>${s.soustheme}</li>
+                        </ul>
+                        </c:if>
+                    </c:forEach>
+                </c:forEach>
+            </ul> 
+        </div>
