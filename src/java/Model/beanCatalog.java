@@ -48,7 +48,8 @@ public ArrayList<beanOeuvre> remplirListeOeuvres(Connection connexion, String fi
                         rs.getString("Tva"),
                         rs.getString("Nbre de cmt"),
                         rs.getString("Moyenne des notes"),
-                        rs.getString("Statut"));
+                        rs.getString("Statut"),
+                        rs.getString("Nbre de Cdc"));
                 listeOeuvres.add(o);            }
             rs.close();
             stmt.close();

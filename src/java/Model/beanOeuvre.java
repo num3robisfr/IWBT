@@ -26,11 +26,13 @@ public class beanOeuvre implements Serializable {
     private String oeuMoyenneCmt;
     private Integer oeuQte;
     private String oeuStatut;
+    private String oeuNbreCdc;
+
 
     public beanOeuvre() {
     }
 
-    public beanOeuvre(String oeuIsbn, String oeuTitre, String oeuSousTitre, String autNom, String ediNom, String oeuDateParution, String oeuResume, Integer oeuNbrePage, String oeuUrlImage, String theIntitule, String souIntitule, Float oeuPrix, String tvaTaux, String oeuNbreCmt, String oeuMoyenneCmt, String oeuStatut) {
+    public beanOeuvre(String oeuIsbn, String oeuTitre, String oeuSousTitre, String autNom, String ediNom, String oeuDateParution, String oeuResume, Integer oeuNbrePage, String oeuUrlImage, String theIntitule, String souIntitule, Float oeuPrix, String tvaTaux, String oeuNbreCmt, String oeuMoyenneCmt, String oeuStatut, String oeuNbreCdc) {
         this.oeuIsbn = oeuIsbn;
         this.oeuTitre = oeuTitre;
         this.oeuSousTitre = oeuSousTitre;
@@ -47,6 +49,17 @@ public class beanOeuvre implements Serializable {
         this.oeuNbreCmt = oeuNbreCmt;
         this.oeuMoyenneCmt = oeuMoyenneCmt;
         this.oeuStatut = oeuStatut;
+        this.oeuNbreCdc = oeuNbreCdc;
+    }
+
+
+
+    public String getOeuNbreCdc() {
+        return oeuNbreCdc;
+    }
+
+    public void setOeuNbreCdc(String oeuNbreCdc) {
+        this.oeuNbreCdc = oeuNbreCdc;
     }
 
     public String getOeuIsbn() {
