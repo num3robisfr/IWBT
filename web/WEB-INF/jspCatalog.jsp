@@ -6,7 +6,9 @@
 
         <jsp:include page="jspEvenement.jsp" flush="true" />
         <br>
-        <div class="row d-flex wrap">
+        
+        <h1>Nouveauté</h1>
+<div class="row d-flex wrap">
             <c:forEach items="${beanca}" var="p">
 
                 <div class="col-4">
@@ -25,7 +27,5 @@
 
             </c:forEach>
         </div>
-        <h1>Nouveauté</h1>
-
     </div>
 

@@ -21,6 +21,7 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
         String url = "/WEB-INF/jspAccueil.jsp";
         
@@ -42,24 +43,28 @@ public class Controller extends HttpServlet {
             url = "/WEB-INF/jspCatalog.jsp";
 //            beanConnect beanc = new beanConnect();
             beanCatalog beanca = new beanCatalog();
-            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", ""));
-            session.setAttribute("liste", beanca.getListeOeuvres());
-            
-            request.setAttribute("beanca", beanca.getListeOeuvres());
+            beanca.setListeNouveautes(beanca.remplirListeNouveautes(beanc.getConnexion()));
+//            session.setAttribute("liste", beanca.getListeNouveautes());
+            request.setAttribute("beanca", beanca.getListeNouveautes());
         }
+        
+                if ("OK".equals(request.getParameter("doit"))) {
+            url = "/WEB-INF/jspCatalogue.jsp";
+//            beanConnect beanc = new beanConnect();
+            beanCatalog beanca = new beanCatalog();
+            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(),"",request.getParameter("search")));
+//            session.setAttribute("liste2", beanca.getListeOeuvres());
+            request.setAttribute("beanca2", beanca.getListeOeuvres());
+        }
+        
         if ("oeuvre".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspOeuvre.jsp";
             for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste")) {
-
                 if (b.getOeuIsbn().equals(request.getParameter("isbn"))) {
-
                     request.setAttribute("oeuvre", b);
                 }
-
             }
-
         }
-       
 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
