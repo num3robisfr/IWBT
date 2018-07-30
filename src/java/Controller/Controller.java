@@ -5,6 +5,7 @@ import Model.beanCatalog;
 import Model.beanConnect;
 import Model.beanOeuvre;
 import Model.beanPanier;
+import Model.beanPanierV2;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -68,60 +69,67 @@ public class Controller extends HttpServlet {
 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
+            
+//            if (beanc==null) {
+//                beanc = new beanConnect();
+//                System.out.println("whuuut ?!!!");
+//            }
+//            else {
+//                System.out.println("yeah !");
+//            }
 
-            if (beanc == null) {
-                beanc = new beanConnect();
-                System.out.println("whuuut ?!!!");
-            } else {
-                System.out.println("yeah !");
-            }
-
-            beanPanier panier = (beanPanier) session.getAttribute("panier");
+            beanPanierV2 panier = (beanPanierV2) session.getAttribute("panier");
             if (panier == null) {
-                panier = new beanPanier();
+                panier = new beanPanierV2();
                 session.setAttribute("panier", panier);
             }
             request.setAttribute("isempty", panier.isEmpty());
             request.setAttribute("list", panier.getList());
+            
+            
+                        
+            if (request.getParameter("add") != null) {
+                panier.add(request.getParameter("addUrlImage"), request.getParameter("add"));
+            }
+            if (request.getParameter("dec") != null) {
+                panier.dec(request.getParameter("dec"));
+                if (panier.isEmpty()) {
+                    request.setAttribute("isempty", panier.isEmpty());
+                    url = "/WEB-INF/jspPanier.jsp";
+                }
+            }
+            if (request.getParameter("del") != null) {
+                panier.del(request.getParameter("del"));
+                if (panier.isEmpty()) {
+                    request.setAttribute("isempty", panier.isEmpty());
+                    url = "/WEB-INF/jspPanier.jsp";
+                }
+            }
+            if (request.getParameter("clean") != null) {
+                    panier.clean();
+                    request.setAttribute("isempty", panier.isEmpty());
+                    url = "/WEB-INF/jspPanier.jsp";
+                }
         }
-
+        
         if ("panier".equals(request.getParameter("section"))) {
-            
-            
-            beanPanier panier = (beanPanier) session.getAttribute("panier");
+             
+            beanPanierV2 panier = (beanPanierV2) session.getAttribute("panier");
             if (panier == null) {
-                panier = new beanPanier();
+                panier = new beanPanierV2();
                 session.setAttribute("panier", panier);
             }
                             
             if (request.getParameter("doIt") != null) {
-                panier.add(request.getParameter("ref"),
+                panier.add(request.getParameter("urlImage"), 
+                        request.getParameter("ref"),
                         request.getParameter("qty"));
             }
-//            if (request.getParameter("add") != null) {
-//                    panier.add(request.getParameter("add"));
-//            }
+            if (request.getParameter("add") != null) {
+                panier.add(request.getParameter("addUrlImage"), request.getParameter("add"));
+            }
             
-//            if (url.equalsIgnoreCase("/WEB-INF/jspPanier.jsp")) {
                 
-            
-                if (request.getParameter("add") != null) {
-                    panier.add(request.getParameter("add"));
-//                    url = "/WEB-INF/jspPanier.jsp";
-                }
-                if (request.getParameter("dec") != null) {
-                    panier.dec(request.getParameter("dec"));
-//                    url = "/WEB-INF/jspPanier.jsp";
-                }
-                if (request.getParameter("del") != null) {
-                    panier.del(request.getParameter("del"));
-//                    url = "/WEB-INF/jspPanier.jsp";
-                }
-                if (request.getParameter("clean") != null) {
-                    panier.clean();
-//                    url = "/WEB-INF/jspPanier.jsp";
-                }
-//            }
         }
 
         request.getRequestDispatcher(url).include(request, response);
