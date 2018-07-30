@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
             <div id="header">
-                <div id="logo">In Book We Trust</div>
+                <div id="logo"><a href="Controller">In Book We Trust</a></div>
                 <div id="espace"></div>
                 <div id="ensemble_header">
                     <div class="login">
