@@ -1,5 +1,6 @@
 package Model;
 
+import classe.Item;
 import classe.ItemV2;
 import java.io.Serializable;
 import java.util.Collection;
@@ -12,7 +13,10 @@ public class beanPanierV2 implements Serializable {
     public beanPanierV2() {
         this.map = new HashMap();
     }
-
+    public void add(String ref) {
+        add(null, ref, 1);    
+    }
+    
     public void add(String urlImage, String ref) {
         add(urlImage, ref, 1);
     }
@@ -23,7 +27,6 @@ public class beanPanierV2 implements Serializable {
             add(urlImage, ref, q);
         } catch (NumberFormatException e) {
             System.out.println("Oops:"+ e.getMessage());
-//            add(ref, 0);
         }
     }
 
@@ -33,21 +36,21 @@ public class beanPanierV2 implements Serializable {
             i = map.get(urlImage);
             i = map.get(ref);
             i.change(qty);
-//            i.setQty( i.getQty()+ qty);
         } else {
             i = new ItemV2(urlImage, ref, qty);
             map.put(ref, i);
         }
         if( i.getQty()<1) 
             del( ref);
+        System.out.println(i);
     }
 
-    public void dec(String urlImage, String ref) {
-        add(urlImage, ref, -1);
+    public void dec(String ref) {
+        add("",ref, -1);
     }
 
-    public void dec(String urlImage, String ref, int qty) {
-        add(urlImage, ref, -qty);
+    public void dec(String ref, int qty) {
+        add("",ref, -qty);
     }
 
     public void del(String ref) {

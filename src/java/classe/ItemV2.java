@@ -39,5 +39,12 @@ public class ItemV2 {
     public void change( int qty) {
         this.qty+= qty;
     }
+
+    @Override
+    public String toString() {
+        return "ItemV2{" + "urlImage=" + urlImage + ", ref=" + ref + ", qty=" + qty + '}';
+    }
+    
+    
     
 }
