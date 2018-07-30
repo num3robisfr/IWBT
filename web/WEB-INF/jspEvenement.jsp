@@ -26,7 +26,7 @@
        
     </div>
     <div class="col-4">
-       <br> <img src="./Images/salonnrentrée1.jpg" alt="salon rentrée" width="100%"><br><button class="btn">Consulter</button>
+       <br> <img src="./Images/salonrentrée2.jpg" alt="salon rentrée" width="100%"><br><button class="btn">Consulter</button>
         <p> Salon de la rentrée</p>
         <p style="color: green;">du 01 Septembre au 06 Septembre</p>
  
