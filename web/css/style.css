@@ -23,8 +23,18 @@
     font-family: 'Badaboum';
     font-size: 3em;
     color: #fff;
-    padding: 25px 0 0 25px; 
+    padding: 20px 0 0 25px; 
 }
+
+#logo a{
+    text-decoration: none;
+    color: white;
+}
+
+#logo a:hover{
+    color: #ff9966;
+}
+
 #espace{
     display: flex;
     flex: 1;
