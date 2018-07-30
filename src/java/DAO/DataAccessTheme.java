@@ -32,10 +32,9 @@ public class DataAccessTheme {
                 Theme o = new Theme(rs.getInt("theId"), rs.getString("theIntitule"));
                 ls.add(o);
             }
-                    System.out.println(ls);
+            rs.close();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DataAccessTheme.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.println("Oops pb Theme");
         }
     return ls;
 }
@@ -49,10 +48,9 @@ public class DataAccessTheme {
                 SousTheme o = new SousTheme(rs.getInt("theId"), rs.getString("souIntitule"));
                 ls.add(o);
             }
-            System.out.println(ls);
+            rs.close();
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DataAccessTheme.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Oops pb Sous Theme");
         }
         return ls;
     }
