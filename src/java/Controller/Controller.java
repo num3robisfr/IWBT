@@ -66,6 +66,10 @@ public class Controller extends HttpServlet {
                 }
             }
         }
+        
+        if("newClient".equals(request.getParameter("section"))){
+            url = "/WEB-INF/newCompteClient.jsp";
+        }
 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";

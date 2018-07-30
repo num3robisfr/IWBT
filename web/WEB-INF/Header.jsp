@@ -4,7 +4,7 @@
                 <div id="espace"></div>
                 <div id="ensemble_header">
                     <div class="login">
-                        <a href="#">Identifiez-vous</a>
+                        <a href="Controller?section=newClient">Identifiez-vous</a>
                     </div>
                     <div class="panier">
                         <a href="Controller?section=affichePanier">Panier</a>
