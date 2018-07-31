@@ -39,7 +39,8 @@ public class Controller extends HttpServlet {
         beanCatalog beanca = new beanCatalog();
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", ""));
             session.setAttribute("liste2", beanca.getListeOeuvres());
-        //ca ne passe pas les paramètres :(  nico
+            
+        //recupère les themes et les sous themes
         request.setAttribute("AllTheme", DataAccessTheme.getAllTheme());
         request.setAttribute("AllSousTheme", DataAccessTheme.getAllSousTheme());
 

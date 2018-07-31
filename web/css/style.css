@@ -97,6 +97,15 @@
     padding-right: 10px;
 }
 
+.un{
+    color : #E34714;
+    font-family: 'Brandon_grotesque';
+    font-size: 1em;
+    text-transform: uppercase;
+    list-style-type: none;
+    text-decoration: none;
+}
+
 .un a:hover{
     color : #E34714;
     font-family: 'Brandon_grotesque';
@@ -114,6 +123,17 @@
     text-decoration: none;
 }
 
+.deux{
+    color : #000;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    font-size: 0.9em;
+    margin-left: 10px;
+    list-style-type: none;
+    text-decoration: none;
+    padding-left: -10px;
+}
+
 .deux a{
     color : #000;
     font-family: 'Arial', sans-serif;
@@ -122,6 +142,7 @@
     margin-left: 10px;
     list-style-type: none;
     text-decoration: none;
+    padding-left: -10px;
 }
 
 .deux a:hover{
@@ -132,6 +153,7 @@
     margin-left: 10px;
     list-style-type: none;
     text-decoration: none;
+    padding-left: -10px;
 }
 
 #footer{
