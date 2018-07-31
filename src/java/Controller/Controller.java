@@ -6,6 +6,8 @@ import Model.beanConnect;
 import Model.beanOeuvre;
 import Model.beanPanier;
 import Model.beanPanierV2;
+import classe.AgendaEvenement;
+import classe.Evenement;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -25,7 +27,6 @@ public class Controller extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         String url = "/WEB-INF/jspAccueil.jsp";
-        
 
         if (this.getServletContext().getAttribute("connexion") == null) {
             beanConnect beanc = new beanConnect();
@@ -33,31 +34,34 @@ public class Controller extends HttpServlet {
         }
         beanConnect beanc = (beanConnect) this.getServletContext().getAttribute("connexion");
         HttpSession session = request.getSession();
-        
-        
+
         //ca ne passe pas les paramètres :(  nico
         request.setAttribute("AllTheme", DataAccessTheme.getAllTheme());
         request.setAttribute("AllSousTheme", DataAccessTheme.getAllSousTheme());
 
-
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
-//            beanConnect beanc = new beanConnect();
+
             beanCatalog beanca = new beanCatalog();
             beanca.setListeNouveautes(beanca.remplirListeNouveautes(beanc.getConnexion()));
             session.setAttribute("liste", beanca.getListeNouveautes());
             request.setAttribute("beanca", beanca.getListeNouveautes());
+            
+            AgendaEvenement listeEvenement = new AgendaEvenement();
+            listeEvenement.setListeEvenement(listeEvenement.ChargerListeEvenement());
+            request.setAttribute("listeevenement", listeEvenement.getListeEvenement());
+            session.setAttribute("listeEvenement", listeEvenement.getListeEvenement());
         }
-        
-                if ("OK".equals(request.getParameter("doit"))) {
+
+        if ("OK".equals(request.getParameter("doit"))) {
             url = "/WEB-INF/jspCatalogue.jsp";
 //            beanConnect beanc = new beanConnect();
             beanCatalog beanca = new beanCatalog();
-            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(),"",request.getParameter("search")));
+            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", request.getParameter("search")));
 //            session.setAttribute("liste2", beanca.getListeOeuvres());
             request.setAttribute("beanca2", beanca.getListeOeuvres());
         }
-        
+
         if ("oeuvre".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspOeuvre.jsp";
             for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste")) {
@@ -67,17 +71,30 @@ public class Controller extends HttpServlet {
             }
         }
         
-        if("login".equals(request.getParameter("section"))){
+                if ("evenement".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspEvent.jsp";
+            beanCatalog boe = new beanCatalog();
+            boe.setListeOeuvresEvenement(boe.remplirListeOeuvresEvenement(beanc.getConnexion(), request.getParameter("intitule")));
+            request.setAttribute("listeevenementoeuvre", boe.getListeOeuvresEvenement());
+            session.setAttribute("listeevenementoeuvre",  boe.getListeOeuvresEvenement());
+            for (Evenement e: (ArrayList<Evenement>) session.getAttribute("listeEvenement")) {
+                if (e.getEveId().equals(request.getParameter("intitule"))) {
+                    request.setAttribute("evenement", e);
+                }
+            }
+        }
+
+        if ("login".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
         }
-        
-        if("newCompteClient".equals(request.getParameter("section"))){
+
+        if ("newCompteClient".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newCompteClient.jsp";
         }
 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
-            
+
 //            if (beanc==null) {
 //                beanc = new beanConnect();
 //                System.out.println("whuuut ?!!!");
@@ -85,7 +102,6 @@ public class Controller extends HttpServlet {
 //            else {
 //                System.out.println("yeah !");
 //            }
-
             beanPanierV2 panier = (beanPanierV2) session.getAttribute("panier");
             if (panier == null) {
                 panier = new beanPanierV2();
@@ -93,9 +109,7 @@ public class Controller extends HttpServlet {
             }
             request.setAttribute("isempty", panier.isEmpty());
             request.setAttribute("list", panier.getList());
-            
-            
-                        
+
             if (request.getParameter("add") != null) {
                 panier.add(request.getParameter("addUrlImage"), request.getParameter("add"));
             }
@@ -114,30 +128,29 @@ public class Controller extends HttpServlet {
                 }
             }
             if (request.getParameter("clean") != null) {
-                    panier.clean();
-                    request.setAttribute("isempty", panier.isEmpty());
-                    url = "/WEB-INF/jspPanier.jsp";
-                }
+                panier.clean();
+                request.setAttribute("isempty", panier.isEmpty());
+                url = "/WEB-INF/jspPanier.jsp";
+            }
         }
-        
+
         if ("panier".equals(request.getParameter("section"))) {
-             
+
             beanPanierV2 panier = (beanPanierV2) session.getAttribute("panier");
             if (panier == null) {
                 panier = new beanPanierV2();
                 session.setAttribute("panier", panier);
             }
-                            
+
             if (request.getParameter("doIt") != null) {
-                panier.add(request.getParameter("urlImage"), 
+                panier.add(request.getParameter("urlImage"),
                         request.getParameter("ref"),
                         request.getParameter("qty"));
             }
             if (request.getParameter("add") != null) {
                 panier.add(request.getParameter("addUrlImage"), request.getParameter("add"));
             }
-            
-                
+
         }
 
         request.getRequestDispatcher(url).include(request, response);
