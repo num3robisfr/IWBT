@@ -45,7 +45,7 @@ public class Controller extends HttpServlet {
 //            beanConnect beanc = new beanConnect();
             beanCatalog beanca = new beanCatalog();
             beanca.setListeNouveautes(beanca.remplirListeNouveautes(beanc.getConnexion()));
-//            session.setAttribute("liste", beanca.getListeNouveautes());
+            session.setAttribute("liste", beanca.getListeNouveautes());
             request.setAttribute("beanca", beanca.getListeNouveautes());
         }
         
