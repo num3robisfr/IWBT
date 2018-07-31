@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class AgendaEvenement {
 
-    private ArrayList<Evenement> listeEvenement;
+    private ArrayList<Evenement> listeEvenement = new ArrayList<Evenement>();
 
     /* *************************************************************************************************** */
     public AgendaEvenement() {
@@ -40,8 +40,9 @@ public class AgendaEvenement {
     /* *************************************************************************************************** */
     public ArrayList<Evenement> ChargerListeEvenement() {
 
+  
         Connection con = outil.ConnexionDB.GetConnection();
-        String query = "SELECT * FROM Evenement"
+        String query = "SELECT * FROM Evenement "
                 + " WHERE eveDateDebut != '2000-01-01 00:00:00.000' ";
 
         try {
@@ -50,12 +51,13 @@ public class AgendaEvenement {
             while (rs.next()) {
                 Evenement e = new Evenement(rs.getString("eveId"),
                         rs.getString("eveIntitule"),
-                        rs.getDate("eveDateDebut"),
-                        rs.getDate("eveDateFin"),
+                        outil.OutilsFormatage.formaterDate(rs.getDate("eveDateDebut")),
+                        outil.OutilsFormatage.formaterDate(rs.getDate("eveDateFin")),
                         rs.getString("eveTauxPromo"),
-                        rs.getString("eveObservation"),
-                        rs.getString("eveUrl"));
+                        rs.getString("eveUrl"),
+                        rs.getString("eveObservation"));
                 listeEvenement.add(e);
+      
             }
             rs.close();
             stmt.close();

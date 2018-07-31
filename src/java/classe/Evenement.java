@@ -7,8 +7,8 @@ public class Evenement {
     private String eveId;
     private String utiId;
     private String eveIntitule;
-    private Date eveDateDebut;
-    private Date eveDateFin;
+    private String eveDateDebut;
+    private String eveDateFin;
     private String eveTauxPromo;
     private String eveUrl;
     private String eveDescription;
@@ -19,33 +19,17 @@ public class Evenement {
     public Evenement() {
     }
 
-    public Evenement(String eveId, String eveIntitule, Date eveDateDebut, Date eveDateFin, String eveTauxPromo, String eveDescription, String eveUrl) {
+    public Evenement(String eveId, String eveIntitule, String eveDateDebut, String eveDateFin, String eveTauxPromo, String eveUrl, String eveDescription) {
         this.eveId = eveId;
         this.eveIntitule = eveIntitule;
         this.eveDateDebut = eveDateDebut;
         this.eveDateFin = eveDateFin;
         this.eveTauxPromo = eveTauxPromo;
-        this.eveDescription = eveDescription;
         this.eveUrl = eveUrl;
+        this.eveDescription = eveDescription;
+        
     }
 
-    public Evenement(String eveId, String utiId, String eveIntitule, Date eveDateDebut, Date eveDateFin, String eveTauxPromo, String eveDescription) {
-        this.eveId = eveId;
-        this.utiId = utiId;
-        this.eveIntitule = eveIntitule;
-        this.eveDateDebut = eveDateDebut;
-        this.eveDateFin = eveDateFin;
-        this.eveTauxPromo = eveTauxPromo;
-        this.eveDescription = eveDescription;
-    }
-
-    public Evenement(String eveIntitule, Date eveDateDebut, Date eveDateFin, String eveTauxPromo, String eveDescription) {
-        this.eveIntitule = eveIntitule;
-        this.eveDateDebut = eveDateDebut;
-        this.eveDateFin = eveDateFin;
-        this.eveTauxPromo = eveTauxPromo;
-        this.eveDescription = eveDescription;
-    }
 
     /**
      * ******************************************getters
@@ -83,19 +67,19 @@ public class Evenement {
         this.eveIntitule = eveIntitule;
     }
 
-    public Date getEveDateDebut() {
+    public String getEveDateDebut() {
         return eveDateDebut;
     }
 
-    public void setEveDateDebut(Date eveDateDebut) {
+    public void setEveDateDebut(String eveDateDebut) {
         this.eveDateDebut = eveDateDebut;
     }
 
-    public Date getEveDateFin() {
+    public String getEveDateFin() {
         return eveDateFin;
     }
 
-    public void setEveDateFin(Date eveDateFin) {
+    public void setEveDateFin(String eveDateFin) {
         this.eveDateFin = eveDateFin;
     }
 
