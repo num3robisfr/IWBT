@@ -3,7 +3,6 @@ package Controller;
 import Model.*;
 import classe.AgendaEvenement;
 import classe.Evenement;
-import classe.Theme;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
