@@ -36,6 +36,9 @@ public class Controller extends HttpServlet {
         beanConnect beanc = (beanConnect) this.getServletContext().getAttribute("connexion");
         HttpSession session = request.getSession();
 
+        beanCatalog beanca = new beanCatalog();
+            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", ""));
+            session.setAttribute("liste2", beanca.getListeOeuvres());
         //ca ne passe pas les paramètres :(  nico
         request.setAttribute("AllTheme", DataAccessTheme.getAllTheme());
         request.setAttribute("AllSousTheme", DataAccessTheme.getAllSousTheme());
@@ -43,7 +46,6 @@ public class Controller extends HttpServlet {
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
 
-            beanCatalog beanca = new beanCatalog();
             beanca.setListeNouveautes(beanca.remplirListeNouveautes(beanc.getConnexion()));
             session.setAttribute("liste", beanca.getListeNouveautes());
             request.setAttribute("beanca", beanca.getListeNouveautes());
@@ -57,9 +59,7 @@ public class Controller extends HttpServlet {
         if ("OK".equals(request.getParameter("doit"))) {
             url = "/WEB-INF/jspCatalogue.jsp";
 //            beanConnect beanc = new beanConnect();
-            beanCatalog beanca = new beanCatalog();
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", request.getParameter("search")));
-            session.setAttribute("liste2", beanca.getListeOeuvres());
             request.setAttribute("beanca2", beanca.getListeOeuvres());
         }
 
@@ -73,7 +73,6 @@ public class Controller extends HttpServlet {
         }
         if ("theme".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspTheme.jsp";
-            beanCatalog beanca = new beanCatalog();
             String theme=null;
             for (Theme t : DataAccessTheme.getAllTheme()) {
                 if (Integer.valueOf(request.getParameter("theId"))==(t.getId())) {
