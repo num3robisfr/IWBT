@@ -32,7 +32,7 @@
                             <div class="card bg-light mb-3 border-primary" style="max-width: 18rem;">
                                 <div class="card-body">
                                     <h1 class="card-title text-danger text-center"><strong>${oeuvre.oeuPrix}€</strong></h1>
-                                    
+
                                 </div>
                                 <div class="card-footer">
                                     <form action="Controller" method="get">
@@ -73,7 +73,8 @@
                                 </c:if>
                                 <c:if test="${oeuvre.oeuMoyenneCmt != null}">
                                     ${oeuvre.oeuMoyenneCmt} (${oeuvre.oeuNbreCmt} commentaire(s) )
-                                </c:if><br>    
+                                </c:if><br><br>
+                                ${oeuvre.oeuNbreCdc}  <img src='./Images/pouce.jpg' width='3%'>  de la part de la rédaction
                             </p>
                         </div>
                         <div class="col-1"></div>
