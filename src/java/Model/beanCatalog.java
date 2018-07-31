@@ -1,12 +1,13 @@
 package Model;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class beanCatalog {
+public class beanCatalog implements Serializable {
     
     ArrayList<beanOeuvre> listeOeuvres=new ArrayList();
     ArrayList<beanOeuvre> listeNouveautes=new ArrayList();
