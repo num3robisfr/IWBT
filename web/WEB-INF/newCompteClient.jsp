@@ -21,7 +21,7 @@
                 <div id="catalogue">
                     <div class="container">
                         <div class="row">
-                            <h1>Je crée mon compte personnel</h1>
+                            <h1>Je crée mon compte personnel (étape 1/2)</h1>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="telephone">Numéro de téléphone</label>
-                                        <input type="text" class="form-control" name="telephone" placeholder="0102030405">
+                                        <input type="text" class="form-control" name="telephone" placeholder="">
                                     </div>
                                     <div class="form-group">
                                         <label for="dateNaissance">Date de naissance</label>
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col">
-                                            <button type="submit" class="btn btn-primary d-block" value="addClient" name="client">créer</button>
+                                            <button type="submit" class="btn btn-primary mx-auto d-block" value="addClient" name="client">étape suivante</button>
                                             <br>
                                         </div>
                                         

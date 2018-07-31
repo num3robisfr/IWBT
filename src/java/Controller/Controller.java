@@ -105,6 +105,10 @@ public class Controller extends HttpServlet {
             url = "/WEB-INF/newCompteClient.jsp";
         }
 
+        if ("newAdresse".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/newAdresse.jsp";
+        }
+
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
 
