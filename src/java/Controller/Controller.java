@@ -59,13 +59,13 @@ public class Controller extends HttpServlet {
 //            beanConnect beanc = new beanConnect();
             beanCatalog beanca = new beanCatalog();
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", request.getParameter("search")));
-//            session.setAttribute("liste2", beanca.getListeOeuvres());
+            session.setAttribute("liste2", beanca.getListeOeuvres());
             request.setAttribute("beanca2", beanca.getListeOeuvres());
         }
 
         if ("oeuvre".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspOeuvre.jsp";
-            for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste")) {
+            for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste2")) {
                 if (b.getOeuIsbn().equals(request.getParameter("isbn"))) {
                     request.setAttribute("oeuvre", b);
                 }
