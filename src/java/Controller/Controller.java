@@ -1,11 +1,6 @@
 package Controller;
 
-import DAO.DataAccessTheme;
-import Model.beanCatalog;
-import Model.beanConnect;
-import Model.beanOeuvre;
-import Model.beanPanier;
-import Model.beanPanierV2;
+import Model.*;
 import classe.AgendaEvenement;
 import classe.Evenement;
 import classe.Theme;
@@ -41,8 +36,13 @@ public class Controller extends HttpServlet {
             session.setAttribute("liste2", beanca.getListeOeuvres());
             
         //recupère les themes et les sous themes
-        request.setAttribute("AllTheme", DataAccessTheme.getAllTheme());
-        request.setAttribute("AllSousTheme", DataAccessTheme.getAllSousTheme());
+        beanTheme bT = new beanTheme();
+        beanSousTheme bST = new beanSousTheme();
+        request.setAttribute("AllTheme", bT.getAllTheme(beanc.getConnexion()));
+        request.setAttribute("AllSousTheme",bST.GetSousTheme(beanc.getConnexion()) );
+            
+//        request.setAttribute("AllTheme", DataAccessTheme.getAllTheme());
+//        request.setAttribute("AllSousTheme", DataAccessTheme.getAllSousTheme());
 
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
@@ -75,7 +75,7 @@ public class Controller extends HttpServlet {
         if ("theme".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspTheme.jsp";
             String theme=null;
-            for (Theme t : DataAccessTheme.getAllTheme()) {
+            for (beanTheme t : bT.getAllTheme(beanc.getConnexion())) {
                 if (Integer.valueOf(request.getParameter("theId"))==(t.getId())) {
                    theme=t.getIntitule();
                 }
