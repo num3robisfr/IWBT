@@ -8,6 +8,7 @@ import Model.beanPanier;
 import Model.beanPanierV2;
 import classe.AgendaEvenement;
 import classe.Evenement;
+import classe.Theme;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -69,6 +70,19 @@ public class Controller extends HttpServlet {
                     request.setAttribute("oeuvre", b);
                 }
             }
+        }
+        if ("theme".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspTheme.jsp";
+            beanCatalog beanca = new beanCatalog();
+            String theme=null;
+            for (Theme t : DataAccessTheme.getAllTheme()) {
+                if (Integer.valueOf(request.getParameter("theId"))==(t.getId())) {
+                   theme=t.getIntitule();
+                }
+            }
+            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "Theme= '" + theme +"' AND ", ""));
+            request.setAttribute("beanca3", beanca.getListeOeuvres());
+            request.setAttribute("theme", theme);
         }
         
                 if ("evenement".equals(request.getParameter("section"))) {
