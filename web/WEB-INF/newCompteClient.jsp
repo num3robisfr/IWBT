@@ -20,7 +20,7 @@
 
                 <div id="catalogue">
 
-                </div>
+                </div></div>
                 <!-- footer -->
                 <%@include file="Footer.jsp" %>
             </div>
