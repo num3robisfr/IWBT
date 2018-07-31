@@ -67,7 +67,11 @@ public class Controller extends HttpServlet {
             }
         }
         
-        if("newClient".equals(request.getParameter("section"))){
+        if("login".equals(request.getParameter("section"))){
+            url = "/WEB-INF/jspLogin.jsp";
+        }
+        
+        if("newCompteClient".equals(request.getParameter("section"))){
             url = "/WEB-INF/newCompteClient.jsp";
         }
 
