@@ -97,22 +97,41 @@
     padding-right: 10px;
 }
 
-.un{
+.un a:hover{
     color : #E34714;
     font-family: 'Brandon_grotesque';
     font-size: 1em;
     text-transform: uppercase;
     list-style-type: none;
-    
+    text-decoration: none;
+}
+.un a{
+    color : #E34714;
+    font-family: 'Brandon_grotesque';
+    font-size: 1em;
+    text-transform: uppercase;
+    list-style-type: none;
+    text-decoration: none;
 }
 
-.deux{
+.deux a{
     color : #000;
     font-family: 'Arial', sans-serif;
     font-weight: normal;
     font-size: 0.9em;
     margin-left: 10px;
     list-style-type: none;
+    text-decoration: none;
+}
+
+.deux a:hover{
+    color : #000;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    font-size: 0.9em;
+    margin-left: 10px;
+    list-style-type: none;
+    text-decoration: none;
 }
 
 #footer{
