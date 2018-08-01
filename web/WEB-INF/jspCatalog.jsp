@@ -6,13 +6,13 @@
 
         <jsp:include page="jspEvenement.jsp" flush="true" />
         <br>
-        
+
         <h1>Nouveauté</h1>
         <br>
-<div class="row d-flex wrap">
+        <div class="row d-flex wrap">
             <c:forEach items="${beanca}" var="p">
 
-                <div class="col-4">
+                <div class="col-4 mb-3">
                     <div class="card" style="width: 18rem; height: 400px;">
                         <a href="Controller?section=oeuvre&isbn=${p.oeuIsbn}"><img class="card-img-top mx-auto d-block" style="height: 50%; width: 50%;" src="${p.oeuUrlImage}" alt="${p.oeuTitre}"></a>
                         <div class="card-body">
@@ -20,7 +20,6 @@
                             <p>${p.autNom}</p>
                             <p>${p.oeuPrix}€</p>
                             <a class="btn btn-primary mx-auto d-block" href="Controller?section=oeuvre&isbn=${p.oeuIsbn}">Sélectionner</a>
-                            <%--<a class="btn btn-primary mx-auto d-block" href="Controller?section=panier&ajoutV2=&urlImage=${p.oeuUrlImage}&ref=${p.oeuIsbn}&titre=${p.oeuTitre}"> + </a>--%>
                         </div>
                     </div>
                 </div>
@@ -29,5 +28,9 @@
 
             </c:forEach>
         </div>
+        <div class="row">
+            <br>
+        </div>    
     </div>
+</div>
 

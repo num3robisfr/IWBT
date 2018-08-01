@@ -61,8 +61,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="email">Adresse mail</label>
+                                        <input type="text" class="form-control" name="email" placeholder="nom.prenom@exemple.fr">
+                                        <span class="text-danger">${erreurs['email']}</span>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="password">Mot de passe</label>
                                         <input type="password" class="form-control" name="password" placeholder="">
+                                        <span class="text-danger">${erreurs['password']}</span>
                                     </div>
                                     <div class="row">
                                         <div class="col">

@@ -130,6 +130,9 @@ public class Controller extends HttpServlet {
             String prenom = request.getParameter("prenom");
             String numTel = request.getParameter("telephone");
             String dateNaissance = request.getParameter("dateNaissance");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            
             try {
                 checkNom(nom);
             } catch (Exceptions e) {
@@ -147,11 +150,25 @@ public class Controller extends HttpServlet {
                 erreurs.put("numTel", e.getMessage());
             }
             try {
-                checkDate(dateNaissance);
+            checkDate(dateNaissance);
             } catch (Exceptions e) {
-                erreurs.put("dateNaissance", e.getMessage());
+            erreurs.put("dateNaissance", e.getMessage());
             }
-
+            try {
+                checkEmail(email);
+            } catch (Exceptions e) {
+                erreurs.put("email", e.getMessage());
+            }
+            try {
+                checkMdp(password);
+            } catch (Exceptions e) {
+                erreurs.put("password", e.getMessage());
+            }
+            
+            if(erreurs.isEmpty()){
+                System.out.println("addClient : pas d'erreur");
+                url = "/WEB-INF/newAdresse.jsp";               
+            }
 
             request.setAttribute("erreurs", erreurs);
         }
