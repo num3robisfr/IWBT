@@ -13,31 +13,37 @@
         <div id="bloc-page">
             <!-- header -->
             <%@include file="Header.jsp" %>
+            <div id="panier">
             <h1>Votre panier </h1>
             <br />
+            </div>
+            <div id="panier-container">
             <c:if test="${isempty}">
             <p class="panier">Panier vide !</p>
+            <p class="panier"><a href="Controller?section=accueil">Retour à l'accueil</a></p>
             </c:if>
             <c:if test="${!isempty}">
                 <Table>
+            
             <c:forEach var="l" items="${list}">
                 <tr>
                     <td><a class="" href="Controller?section=oeuvre&isbn=${l.ref}"><img src='${l.urlImage}' title='${l.ref}'/></a></td>
-                    <td>${l.titre} / ${l.qty}</td>
-                    <td>
+                    <td><p>${l.titre}</p></td>
+                    <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
+                    <td><p>${l.qty}</p></td>
+                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                    
                         <form action="Controller" method="get">
                             <input type='hidden' name='section' value='affichePanier' />
                             <input type='hidden' name='urlImage' value='${l.urlImage}' />
                             <input type='hidden' name='ref' value='${l.ref}' />
                             <input type='hidden' name='titre' value='${l.titre}' />
                             <input type='hidden' name='qty' value='${l.qty}' />
-                            <INPUT TYPE='SUBMIT' class="" NAME='add' VALUE='+' />
-                            <INPUT TYPE='SUBMIT' class="" NAME='dec' VALUE='-' />   
-                            <INPUT TYPE='SUBMIT' class="" NAME='del' VALUE='Supprimer' />
+                            <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='add' VALUE='+' /></td>
+                            <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='dec' VALUE='-' /></td>   
+                            <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='del' VALUE='Supprimer' /></td>
                         </form>
-                            <%--<a href="Controller?section=affichePanier&add=(urlImage=${l.urlImage}&ref=${l.ref}&titre=${l.titre}&qty=${l.qty}')"><INPUT TYPE='SUBMIT' NAME='add' VALUE='+' /></a>
-                            <a href="Controller?section=affichePanier&dec=(urlImage=${l.urlImage}&ref=${l.ref}&titre=${l.titre}')"><INPUT TYPE='SUBMIT' NAME='dec' VALUE='-' /></a>
-                            <a href="Controller?section=affichePanier&del=${l.ref}"><INPUT TYPE='SUBMIT' NAME='del' VALUE='Supprimer' /></a>--%> 
+                            
                     </td>
             <br>
                 </tr>
@@ -54,11 +60,18 @@
                 </tr>
             </c:forEach>
                 </Table>
-            <a href="Controller?section=affichePanier&clean">Vider le panier</a>
+                
+                <br />
+                <br />
+                <p class="panier"><a href="Controller?section=affichePanier&clean">Vider le panier</a>
+                &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp
+                <a href="Controller?section=accueil">Retour à l'accueil</a></p>
             </c:if>
-            <a href="Controller?section=accueil">Retour à l'accueil</a>
+            
+                
+            </div>
             <!-- footer -->
-            <%@include file="Footer.jsp" %>
+            <%@include file="Footer.jsp" %> 
         </div>
     </body>
 </html>
