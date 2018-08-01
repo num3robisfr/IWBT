@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,18 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/Controller"})
 public class Controller extends HttpServlet {
 
+        private Cookie getCookie(Cookie[] cookies, String name) {
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals(name)) {
+                    return c;
+                }
+            }
+        }
+        return null;
+    }
+        
+        
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
