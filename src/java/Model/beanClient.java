@@ -28,14 +28,13 @@ public class beanClient implements Serializable{
     public beanClient() {
     }
 
-    public beanClient(String nom, String prenom, String genre, String email, String password, String telephone, Date dateEntree) {
+    public beanClient(String nom, String prenom, String genre, String email, String password, String telephone) {
         this.nom = nom;
         this.prenom = prenom;
         this.genre = genre;
         this.email = email;
         this.password = password;
         this.telephone = telephone;
-        this.dateEntree = dateEntree;
     }
 
     public int getId() {

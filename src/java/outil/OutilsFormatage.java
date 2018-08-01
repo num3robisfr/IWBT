@@ -22,4 +22,16 @@ public class OutilsFormatage {
         return Date;
     }
     
+    public static String retournerType(String genre){
+       String s = ""; 
+       
+       if(genre.equals("M")){
+           s = "H";
+       }else{
+           s= "F";
+       }
+       
+       return s;
+    }
+    
 }

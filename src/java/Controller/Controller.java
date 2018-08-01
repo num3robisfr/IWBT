@@ -5,6 +5,7 @@ import Model.beanAgendaEvenement;
 import classe.Evenement;
 import exception.Exceptions;
 import static outil.VerifSaisie.*;
+import static outil.OutilsFormatage.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -134,6 +135,13 @@ public class Controller extends HttpServlet {
             String dateNaissance = request.getParameter("dateNaissance");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            String genre = request.getParameter("civilite");
+            
+            try {
+                client.put("genre", retournerType(genre));
+            } catch (Exception e) {
+                System.out.println("Oops pb avce la methode retournerType");
+            }
             
             try {
                 checkNom(nom);
@@ -190,6 +198,11 @@ public class Controller extends HttpServlet {
         
         if ("addAdresse".equals(request.getParameter("adresse"))){
             url = "/WEB-INF/newAdresse.jsp";
+            
+            Map<String, String> hM  = (HashMap<String, String>) session.getAttribute("client");
+            
+            beanClient bC = new beanClient(hM.get("nom"),hM.get("prenom"),hM.get("genre"),hM.get("email"),hM.get("password"),hM.get("numTel"));
+            
             
             
         }
