@@ -20,7 +20,7 @@ public class Controller extends HttpServlet {
         private Cookie getCookie(Cookie[] cookies, String name) {
         if (cookies != null) {
             for (Cookie c : cookies) {
-                if (c.getName().equals(name)) {
+                if (c.getName().equals(name)) { 
                     return c;
                 }
             }
