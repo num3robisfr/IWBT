@@ -180,6 +180,7 @@ public class Controller extends HttpServlet {
 
             request.setAttribute("erreurs", erreurs);
             request.setAttribute("client", client);
+            session.setAttribute("client", client);
         }
         
 
