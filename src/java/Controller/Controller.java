@@ -45,7 +45,7 @@ public class Controller extends HttpServlet {
 
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
-
+            beanca = new beanCatalog();
             beanca.setListeNouveautes(beanca.remplirListeNouveautes(beanc.getConnexion()));
             session.setAttribute("liste", beanca.getListeNouveautes());
             request.setAttribute("beanca", beanca.getListeNouveautes());
@@ -59,6 +59,7 @@ public class Controller extends HttpServlet {
         if ("OK".equals(request.getParameter("doit"))) {
             url = "/WEB-INF/jspCatalogue.jsp";
 //            beanConnect beanc = new beanConnect();
+            beanca = new beanCatalog();
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", request.getParameter("search")));
             request.setAttribute("beanca2", beanca.getListeOeuvres());
         }
@@ -79,6 +80,7 @@ public class Controller extends HttpServlet {
                    theme=t.getIntitule();
                 }
             }
+            beanca = new beanCatalog();
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "Theme= '" + theme +"' AND ", ""));
             request.setAttribute("beanca3", beanca.getListeOeuvres());
             request.setAttribute("theme", theme);
