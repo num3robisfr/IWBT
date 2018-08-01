@@ -5,6 +5,7 @@ import Model.beanAgendaEvenement;
 import classe.Evenement;
 import exception.Exceptions;
 import static outil.VerifSaisie.*;
+import static outil.OutilsFormatage.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -141,7 +142,7 @@ public class Controller extends HttpServlet {
         if ("newCompteClient".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newCompteClient.jsp";
         }
-
+        
         if ("addClient".equals(request.getParameter("client"))) {
             url = "/WEB-INF/newCompteClient.jsp";
             String nom = request.getParameter("nom");
@@ -150,7 +151,14 @@ public class Controller extends HttpServlet {
             String dateNaissance = request.getParameter("dateNaissance");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-
+            String genre = request.getParameter("civilite");
+            
+            try {
+                client.put("genre", retournerType(genre));
+            } catch (Exception e) {
+                System.out.println("Oops pb avce la methode retournerType");
+            }
+            
             try {
                 checkNom(nom);
                 client.put("nom", nom);
@@ -196,10 +204,22 @@ public class Controller extends HttpServlet {
 
             request.setAttribute("erreurs", erreurs);
             request.setAttribute("client", client);
+            session.setAttribute("client", client);
         }
 
         if ("newAdresse".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newAdresse.jsp";
+        }
+        
+        if ("addAdresse".equals(request.getParameter("adresse"))){
+            url = "/WEB-INF/newAdresse.jsp";
+            
+            Map<String, String> hM  = (HashMap<String, String>) session.getAttribute("client");
+            
+            beanClient bC = new beanClient(hM.get("nom"),hM.get("prenom"),hM.get("genre"),hM.get("email"),hM.get("password"),hM.get("numTel"));
+            
+            
+            
         }
 
         if ("affichePanier".equals(request.getParameter("section"))) {
@@ -278,6 +298,11 @@ public class Controller extends HttpServlet {
 
         request.getRequestDispatcher(url).include(request, response);
     }
+    
+//------------------------------------------------------------------------------
+//                                 AUTRES
+//------------------------------------------------------------------------------ 
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -319,5 +344,3 @@ public class Controller extends HttpServlet {
     }// </editor-fold>
 
 }
-
-/* CL - cdi1804 - 18.07.23 */

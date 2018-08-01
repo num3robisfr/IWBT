@@ -27,16 +27,6 @@
                             <div class="col-md-6">
                                 <p>Adresse de livraison</p>
                                 <form action="Controller" method="get">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="nom">Nom</label>
-                                            <input type="text" class="form-control" id="nom" placeholder="">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="prenom">Prénom</label>
-                                            <input type="text" class="form-control" id="prenom" placeholder="">
-                                        </div>  
-                                    </div>
                                     <div class="form-group">
                                         <label for="adresse">Adresse</label>
                                         <input type="text" class="form-control" id="adresse" placeholder="">
@@ -56,14 +46,17 @@
                                         </div>
                                     </div>
                                     <div class="form-group form-check">
-                                        <input type="checkbox" class="form-check-input" name="CheckAdresse">
+                                        <input type="checkbox" class="form-check-input" name="CheckAdresse" checked>
                                         <label class="form-check-label" for="exampleCheck1">Utiliser la même adresse pour la facturation</label>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary mx-auto d-block" value="addAdresse" name="adresse">Créer le compte</button>
                                         </div>
-                                    </div>    
+                                    </div>
+                                    <div class="row">
+                                        <br>
+                                    </div>     
                                 </form>
                             </div>
                         </div>
