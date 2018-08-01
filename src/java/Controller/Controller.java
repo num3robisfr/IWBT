@@ -165,7 +165,12 @@ public class Controller extends HttpServlet {
                         request.getParameter("ref"),
                         request.getParameter("titre"),
                         request.getParameter("qty"));
-                //url = "Controller?section=oeuvre&isbn=request.getParameter(\"ref\")";
+                url = "Controller?section=oeuvre&isbn=request.getParameter(\"ref\")";
+                for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste2")) {
+                    if (b.getOeuIsbn().equals(request.getParameter("ref"))) {
+                        request.setAttribute("oeuvre", b);
+                    }
+                }  
             }
             
             if (request.getParameter("ajoutV2") != null) {
