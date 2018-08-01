@@ -112,62 +112,73 @@ public class Controller extends HttpServlet {
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
 
-//            if (beanc==null) {
-//                beanc = new beanConnect();
-//                System.out.println("whuuut ?!!!");
-//            }
-//            else {
-//                System.out.println("yeah !");
-//            }
-            beanPanierV2 panier = (beanPanierV2) session.getAttribute("panier");
+            beanPanier panier = (beanPanier) session.getAttribute("panier");
             if (panier == null) {
-                panier = new beanPanierV2();
+                panier = new beanPanier();
                 session.setAttribute("panier", panier);
+                
             }
             request.setAttribute("isempty", panier.isEmpty());
             request.setAttribute("list", panier.getList());
-
+            
+            
+                        
             if (request.getParameter("add") != null) {
-                panier.add(request.getParameter("addUrlImage"), request.getParameter("add"));
+                panier.add(request.getParameter("urlImage"), request.getParameter("ref"), request.getParameter("titre"));
+                url = "/WEB-INF/jspPanier.jsp";
+                
             }
             if (request.getParameter("dec") != null) {
-                panier.dec(request.getParameter("dec"));
+                panier.dec(request.getParameter("urlImage"), request.getParameter("ref"), request.getParameter("titre"));
                 if (panier.isEmpty()) {
                     request.setAttribute("isempty", panier.isEmpty());
                     url = "/WEB-INF/jspPanier.jsp";
                 }
             }
             if (request.getParameter("del") != null) {
-                panier.del(request.getParameter("del"));
+                panier.del(request.getParameter("ref"));
                 if (panier.isEmpty()) {
                     request.setAttribute("isempty", panier.isEmpty());
                     url = "/WEB-INF/jspPanier.jsp";
                 }
             }
             if (request.getParameter("clean") != null) {
-                panier.clean();
-                request.setAttribute("isempty", panier.isEmpty());
-                url = "/WEB-INF/jspPanier.jsp";
-            }
+                    panier.clean();
+                    request.setAttribute("isempty", panier.isEmpty());
+                    url = "/WEB-INF/jspPanier.jsp";
+                }
         }
-
+        
         if ("panier".equals(request.getParameter("section"))) {
-
-            beanPanierV2 panier = (beanPanierV2) session.getAttribute("panier");
+            
+            beanPanier panier = (beanPanier) session.getAttribute("panier");
             if (panier == null) {
-                panier = new beanPanierV2();
+                panier = new beanPanier();
                 session.setAttribute("panier", panier);
+                
             }
-
-            if (request.getParameter("doIt") != null) {
-                panier.add(request.getParameter("urlImage"),
+                            
+            if (request.getParameter("ajout") != null) {
+                panier.add(request.getParameter("urlImage"), 
                         request.getParameter("ref"),
+                        request.getParameter("titre"),
+                        request.getParameter("qty"));
+                //url = "Controller?section=oeuvre&isbn=request.getParameter(\"ref\")";
+            }
+            
+            if (request.getParameter("ajoutV2") != null) {
+                panier.add(request.getParameter("urlImage"), 
+                        request.getParameter("ref"),
+                        request.getParameter("titre"),
                         request.getParameter("qty"));
             }
-            if (request.getParameter("add") != null) {
-                panier.add(request.getParameter("addUrlImage"), request.getParameter("add"));
+            
+            if (request.getParameter("ref") != null) {
+                panier.add(request.getParameter("urlImage"), request.getParameter("ref"), request.getParameter("titre"));
+                
             }
-
+            
+            
         }
 
         request.getRequestDispatcher(url).include(request, response);

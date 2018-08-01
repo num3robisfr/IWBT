@@ -35,8 +35,14 @@
 
                                 </div>
                                 <div class="card-footer">
+                                    <%--<a href="Controller?section=panier&ajout=&urlImage=${oeuvre.oeuUrlImage}&ref=${oeuvre.oeuIsbn}&titre=${oeuvre.oeuTitre}">>>>>>Ajouter<<<<<</a>--%> 
                                     <form action="Controller" method="get">
-                                        <button type="submit" class="btn btn-primary mx-auto d-block" value="add" name="panier">Ajouter</button>
+                                        <input type='hidden' name='section' value='panier' />
+                                        <input type='hidden' name='urlImage' value='${oeuvre.oeuUrlImage}' />
+                                        <input type='hidden' name='ref' value='${oeuvre.oeuIsbn}' />
+                                        <input type='hidden' name='titre' value='${oeuvre.oeuTitre}' />
+                                        <INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='ajout' VALUE='Ajouter' />
+                                        
                                     </form>
                                 </div>
                             </div>   
