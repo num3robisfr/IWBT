@@ -40,19 +40,25 @@
                                         <div class="form-group col-md-6">
                                             <label for="nom">Nom</label>
                                             <input type="text" class="form-control" name="nom" placeholder="">
+                                            <span class="text-danger">${erreurs['nom']}</span>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="prenom">Prénom</label>
                                             <input type="text" class="form-control" name="prenom" placeholder="">
+                                            <span class="text-danger">${erreurs['prenom']}</span>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="telephone">Numéro de téléphone</label>
-                                        <input type="text" class="form-control" name="telephone" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="dateNaissance">Date de naissance</label>
-                                        <input type="date" class="form-control" name="dateNaissance" placeholder="30/07/2018">
+                                    <div class="form-row">    
+                                        <div class="form-group col-md-6">
+                                            <label for="telephone">Numéro de téléphone</label>
+                                            <input type="text" class="form-control" name="telephone" placeholder="">
+                                            <span class="text-danger">${erreurs['numTel']}</span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="dateNaissance">Date de naissance</label>
+                                            <input type="date" class="form-control" name="dateNaissance" placeholder="30/07/2018">
+                                            <span class="text-danger">${erreurs['dateNaissance']}</span>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Mot de passe</label>

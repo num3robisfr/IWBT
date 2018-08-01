@@ -3,8 +3,12 @@ package Controller;
 import Model.*;
 import Model.beanAgendaEvenement;
 import classe.Evenement;
+import exception.Exceptions;
+import static outil.VerifSaisie.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +37,7 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-
+        Map<String, String> erreurs = new HashMap<String, String>();
         String url = "/WEB-INF/jspAccueil.jsp";
 
         if (this.getServletContext().getAttribute("connexion") == null) {
@@ -119,6 +123,39 @@ public class Controller extends HttpServlet {
         if ("newCompteClient".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newCompteClient.jsp";
         }
+        
+                if ("addClient".equals(request.getParameter("client"))) {
+            url = "/WEB-INF/newCompteClient.jsp";
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+            String numTel = request.getParameter("telephone");
+            String dateNaissance = request.getParameter("dateNaissance");
+            try {
+                checkNom(nom);
+            } catch (Exceptions e) {
+                erreurs.put("nom", e.getMessage());
+            }
+            try {
+                checkPrenom(prenom);
+            } catch (Exceptions e) {
+                erreurs.put("prenom", e.getMessage());
+            }
+            
+            try {
+                checkNumTel(numTel);
+            } catch (Exceptions e) {
+                erreurs.put("numTel", e.getMessage());
+            }
+            try {
+                checkDate(dateNaissance);
+            } catch (Exceptions e) {
+                erreurs.put("dateNaissance", e.getMessage());
+            }
+
+
+            request.setAttribute("erreurs", erreurs);
+        }
+        
 
         if ("newAdresse".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newAdresse.jsp";
