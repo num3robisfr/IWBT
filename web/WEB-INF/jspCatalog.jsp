@@ -14,7 +14,7 @@
 
                 <div class="col-4">
                     <div class="card" style="width: 18rem; height: 400px;">
-                        <img class="card-img-top mx-auto d-block" style="height: 50%; width: 50%;" src="${p.oeuUrlImage}" alt="${p.oeuTitre}">
+                        <a href="Controller?section=oeuvre&isbn=${p.oeuIsbn}"><img class="card-img-top mx-auto d-block" style="height: 50%; width: 50%;" src="${p.oeuUrlImage}" alt="${p.oeuTitre}"></a>
                         <div class="card-body">
                             <h6 class="card-title">${p.oeuTitre}</h6>
                             <p>${p.autNom}</p>
