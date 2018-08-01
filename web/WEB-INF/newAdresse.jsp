@@ -30,30 +30,34 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="nom">Nom</label>
-                                            <input type="text" class="form-control" name="nom" placeholder="">
+                                            <input type="text" class="form-control" id="nom" placeholder="">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="prenom">Prénom</label>
-                                            <input type="text" class="form-control" name="prenom" placeholder="">
+                                            <input type="text" class="form-control" id="prenom" placeholder="">
                                         </div>  
                                     </div>
                                     <div class="form-group">
                                         <label for="adresse">Adresse</label>
-                                        <input type="text" class="form-control" name="adresse" placeholder="">
+                                        <input type="text" class="form-control" id="adresse" placeholder="">
                                     </div>
                                     <div class="form-group">
                                         <label for="complement">Complement d'adresse</label>
-                                        <input type="text" class="form-control" name="complement" placeholder="Appartement, étage, etc ...">
+                                        <input type="text" class="form-control" id="complement" placeholder="Appartement, étage, etc ...">
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="codePostal">Code postal</label>
-                                            <input type="text" class="form-control" name="codePostal" placeholder="75000">
+                                            <input type="text" class="form-control" id="codePostal" placeholder="75000">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="ville">Ville</label>
-                                            <input type="text" class="form-control" name="ville" placeholder="Paris">
+                                            <input type="text" class="form-control" id="ville" placeholder="Paris">
                                         </div>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" name="CheckAdresse">
+                                        <label class="form-check-label" for="exampleCheck1">Utiliser la même adresse pour la facturation</label>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">

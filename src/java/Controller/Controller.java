@@ -38,6 +38,8 @@ public class Controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         Map<String, String> erreurs = new HashMap<String, String>();
+        Map<String, String> client = new HashMap<String, String>();
+        
         String url = "/WEB-INF/jspAccueil.jsp";
 
         if (this.getServletContext().getAttribute("connexion") == null) {
@@ -135,32 +137,38 @@ public class Controller extends HttpServlet {
             
             try {
                 checkNom(nom);
+                client.put("nom", nom);
             } catch (Exceptions e) {
                 erreurs.put("nom", e.getMessage());
             }
             try {
                 checkPrenom(prenom);
+                client.put("prenom", prenom);
             } catch (Exceptions e) {
                 erreurs.put("prenom", e.getMessage());
             }
             
             try {
                 checkNumTel(numTel);
+                client.put("numTel", numTel);
             } catch (Exceptions e) {
                 erreurs.put("numTel", e.getMessage());
             }
             try {
-            checkDate(dateNaissance);
+                checkDate(dateNaissance);
+                client.put("dateNaissance", dateNaissance);
             } catch (Exceptions e) {
             erreurs.put("dateNaissance", e.getMessage());
             }
             try {
                 checkEmail(email);
+                client.put("email", email);
             } catch (Exceptions e) {
                 erreurs.put("email", e.getMessage());
             }
             try {
                 checkMdp(password);
+                client.put("password", password);
             } catch (Exceptions e) {
                 erreurs.put("password", e.getMessage());
             }
@@ -171,6 +179,7 @@ public class Controller extends HttpServlet {
             }
 
             request.setAttribute("erreurs", erreurs);
+            request.setAttribute("client", client);
         }
         
 
