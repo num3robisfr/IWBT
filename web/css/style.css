@@ -73,7 +73,19 @@
     justify-content: center;
     align-items: center;
 }
-
+#panier{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+#panier-container{
+    display: flex;
+    min-height: 500px;
+    flex-direction: column;
+    padding-left: 20%;
+    padding-right: 20%;
+}
 #section{
     display: flex;
     min-height: 500px;

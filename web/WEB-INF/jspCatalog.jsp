@@ -20,7 +20,7 @@
                             <p>${p.autNom}</p>
                             <p>${p.oeuPrix}€</p>
                             <a class="btn btn-primary mx-auto d-block" href="Controller?section=oeuvre&isbn=${p.oeuIsbn}">Sélectionner</a>
-                            <a class="btn btn-primary mx-auto d-block" href="Controller?section=panier&ajoutV2=&urlImage=${p.oeuUrlImage}&ref=${p.oeuIsbn}&titre=${p.oeuTitre}"> + </a>
+                            <%--<a class="btn btn-primary mx-auto d-block" href="Controller?section=panier&ajoutV2=&urlImage=${p.oeuUrlImage}&ref=${p.oeuIsbn}&titre=${p.oeuTitre}"> + </a>--%>
                         </div>
                     </div>
                 </div>
