@@ -55,39 +55,11 @@
                                             <input type="text" class="form-control" name="ville" placeholder="Paris">
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Adresse de Facturation</p>
-                                <form action="Controller" method="get">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="nom">Nom</label>
-                                            <input type="text" class="form-control" name="nom" placeholder="">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary mx-auto d-block" value="addAdresse" name="adresse">Créer le compte</button>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="prenom">Prénom</label>
-                                            <input type="text" class="form-control" name="prenom" placeholder="">
-                                        </div>  
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="adresse">Adresse</label>
-                                        <input type="text" class="form-control" name="adresse" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="complement">Complement d'adresse</label>
-                                        <input type="text" class="form-control" name="complement" placeholder="Appartement, étage, etc ...">
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="codePostal">Code postal</label>
-                                            <input type="text" class="form-control" name="codePostal" placeholder="75000">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="ville">Ville</label>
-                                            <input type="text" class="form-control" name="ville" placeholder="Paris">
-                                        </div>
-                                    </div> 
+                                    </div>    
                                 </form>
                             </div>
                         </div>
