@@ -126,7 +126,7 @@ public class Controller extends HttpServlet {
             url = "/WEB-INF/newCompteClient.jsp";
         }
         
-                if ("addClient".equals(request.getParameter("client"))) {
+        if ("addClient".equals(request.getParameter("client"))) {
             url = "/WEB-INF/newCompteClient.jsp";
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
@@ -185,6 +185,12 @@ public class Controller extends HttpServlet {
 
         if ("newAdresse".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newAdresse.jsp";
+        }
+        
+        if ("addAdresse".equals(request.getParameter("adresse"))){
+            url = "/WEB-INF/newAdresse.jsp";
+            
+            
         }
 
         if ("affichePanier".equals(request.getParameter("section"))) {
