@@ -10,7 +10,7 @@
         <h1>Nouveauté</h1>
         <br>
         <div class="row d-flex wrap">
-            <c:forEach items="${beanca}" var="p">
+            <c:forEach items="${listeNouv}" var="p">
 
                 <div class="col-4 mb-3">
                     <div class="card" style="width: 18rem; height: 400px;">

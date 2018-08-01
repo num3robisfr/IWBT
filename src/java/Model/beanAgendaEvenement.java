@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class beanAgendaEvenement implements Serializable {
 
-    private ArrayList<Evenement> listeEvenement = new ArrayList<Evenement>();
+    private ArrayList<Evenement> listeEvenement;
 
     /* *************************************************************************************************** */
     public beanAgendaEvenement() {
@@ -40,15 +40,14 @@ public class beanAgendaEvenement implements Serializable {
     }
 
     /* *************************************************************************************************** */
-    public ArrayList<Evenement> ChargerListeEvenement() {
+    public ArrayList<Evenement> ChargerListeEvenement(Connection connexion) {
 
-  
-        Connection con = outil.ConnexionDB.GetConnection();
-        String query = "SELECT * FROM Evenement "
-                + " WHERE eveDateDebut != '2000-01-01 00:00:00.000' ";
+        listeEvenement = new ArrayList<Evenement>();
+
+        String query = "SELECT * FROM Evenement WHERE eveDateDebut != '2000-01-01 00:00:00.000' ";
 
         try {
-            Statement stmt = con.createStatement();
+            Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 Evenement e = new Evenement(rs.getString("eveId"),
@@ -59,15 +58,11 @@ public class beanAgendaEvenement implements Serializable {
                         rs.getString("eveUrl"),
                         rs.getString("eveObservation"));
                 listeEvenement.add(e);
-      
+
             }
             rs.close();
             stmt.close();
-            try {
-                con.close();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "PB de fermeture du flux");
-            }
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "ERREUR SQL " + e.getMessage());
         }

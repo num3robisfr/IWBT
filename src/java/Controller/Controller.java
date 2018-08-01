@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -21,71 +21,89 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/Controller"})
 public class Controller extends HttpServlet {
 
-        private Cookie getCookie(Cookie[] cookies, String name) {
+    private Cookie getCookie(Cookie[] cookies, String name) {
         if (cookies != null) {
             for (Cookie c : cookies) {
-                if (c.getName().equals(name)) { 
+                if (c.getName().equals(name)) {
                     return c;
                 }
             }
         }
         return null;
     }
-        
-        
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+
+//------------------------------------------------------------------------------
+//                         LES VARIABLES GLOBALES
+//------------------------------------------------------------------------------ 
+        HttpSession session = request.getSession();
+        ServletContext application = this.getServletContext();
+
+        beanConnect beanc = (beanConnect) this.getServletContext().getAttribute("beanc");
+        beanCatalog beanca = (beanCatalog) session.getAttribute("beanca");
+        beanAgendaEvenement beanae = (beanAgendaEvenement) session.getAttribute("beanae");
+        beanTheme beant = (beanTheme) session.getAttribute("beant");
+        beanSousTheme beanst = (beanSousTheme) session.getAttribute("beanst");
+
         Map<String, String> erreurs = new HashMap<String, String>();
         Map<String, String> client = new HashMap<String, String>();
-        
         String url = "/WEB-INF/jspAccueil.jsp";
 
-        if (this.getServletContext().getAttribute("connexion") == null) {
-            beanConnect beanc = new beanConnect();
-            this.getServletContext().setAttribute("connexion", beanc);
+//------------------------------------------------------------------------------
+//                             SERIALIZATION
+//------------------------------------------------------------------------------ 
+        if (beanc == null) {
+            beanc = new beanConnect();
+            application.setAttribute("beanc", beanc);
         }
-        beanConnect beanc = (beanConnect) this.getServletContext().getAttribute("connexion");
-        HttpSession session = request.getSession();
 
-        beanCatalog beanca = new beanCatalog();
+        if (beanca == null) {
+            beanca = new beanCatalog();
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", ""));
-            session.setAttribute("liste2", beanca.getListeOeuvres());
-            
-        //recupère les themes et les sous themes
-        beanTheme bT = new beanTheme();
-        beanSousTheme bST = new beanSousTheme();
-        request.setAttribute("AllTheme", bT.getAllTheme(beanc.getConnexion()));
-        request.setAttribute("AllSousTheme",bST.GetSousTheme(beanc.getConnexion()) );
-            
-//        request.setAttribute("AllTheme", DataAccessTheme.getAllTheme());
-//        request.setAttribute("AllSousTheme", DataAccessTheme.getAllSousTheme());
+            beanca.setListeNouveautes(beanca.remplirListeNouveautes(beanc.getConnexion()));
+            session.setAttribute("beanca", beanca);
+        }
 
+        if (beanae == null) {
+            beanae = new beanAgendaEvenement();
+            beanae.setListeEvenement(beanae.ChargerListeEvenement(beanc.getConnexion()));
+            session.setAttribute("beanae", beanae);
+        }
+
+        if (beant == null) {
+            beant = new beanTheme();
+            session.setAttribute("beant", beant);
+        }
+        request.setAttribute("AllTheme", beant.getAllTheme(beanc.getConnexion()));
+
+        if (beanst == null) {
+            beanst = new beanSousTheme();
+            session.setAttribute("beanst", beanst);
+        }
+        request.setAttribute("AllSousTheme", beanst.GetSousTheme(beanc.getConnexion()));
+
+//------------------------------------------------------------------------------
+//                              LES SECTIONS
+//------------------------------------------------------------------------------ 
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
-            beanca = new beanCatalog();
-            beanca.setListeNouveautes(beanca.remplirListeNouveautes(beanc.getConnexion()));
-            session.setAttribute("liste", beanca.getListeNouveautes());
-            request.setAttribute("beanca", beanca.getListeNouveautes());
-            
-            beanAgendaEvenement listeEvenement = new beanAgendaEvenement();
-            listeEvenement.setListeEvenement(listeEvenement.ChargerListeEvenement());
-            request.setAttribute("listeevenement", listeEvenement.getListeEvenement());
-            session.setAttribute("listeEvenement", listeEvenement.getListeEvenement());
+            request.setAttribute("listeNouv", beanca.getListeNouveautes());
+            request.setAttribute("listeEvenement", beanae.getListeEvenement());
         }
 
         if ("OK".equals(request.getParameter("doit"))) {
             url = "/WEB-INF/jspCatalogue.jsp";
-//            beanConnect beanc = new beanConnect();
-            beanca = new beanCatalog();
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", request.getParameter("search")));
-            request.setAttribute("beanca2", beanca.getListeOeuvres());
+            request.setAttribute("listeSearch", beanca.getListeOeuvres());
         }
 
         if ("oeuvre".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspOeuvre.jsp";
-            for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste2")) {
+            for (beanOeuvre b : (ArrayList<beanOeuvre>) beanca.getListeOeuvres()) {
                 if (b.getOeuIsbn().equals(request.getParameter("isbn"))) {
                     request.setAttribute("oeuvre", b);
                 }
@@ -93,25 +111,23 @@ public class Controller extends HttpServlet {
         }
         if ("theme".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspTheme.jsp";
-            String theme=null;
-            for (beanTheme t : bT.getAllTheme(beanc.getConnexion())) {
-                if (Integer.valueOf(request.getParameter("theId"))==(t.getId())) {
-                   theme=t.getIntitule();
+            String theme = null;
+            for (beanTheme t : beant.getAllTheme(beanc.getConnexion())) {
+                if (Integer.valueOf(request.getParameter("theId")) == (t.getId())) {
+                    theme = t.getIntitule();
                 }
             }
-            beanca = new beanCatalog();
-            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "Theme= '" + theme +"' AND ", ""));
-            request.setAttribute("beanca3", beanca.getListeOeuvres());
+            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "Theme= '" + theme + "' AND ", ""));
+            request.setAttribute("listeOeuvTheme", beanca.getListeOeuvres());
             request.setAttribute("theme", theme);
         }
-        
-                if ("evenement".equals(request.getParameter("section"))) {
+
+        if ("evenement".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspEvent.jsp";
-            beanCatalog boe = new beanCatalog();
-            boe.setListeOeuvresEvenement(boe.remplirListeOeuvresEvenement(beanc.getConnexion(), request.getParameter("intitule")));
-            request.setAttribute("listeevenementoeuvre", boe.getListeOeuvresEvenement());
-            session.setAttribute("listeevenementoeuvre",  boe.getListeOeuvresEvenement());
-            for (Evenement e: (ArrayList<Evenement>) session.getAttribute("listeEvenement")) {
+            beanca.setListeOeuvresEvenement(beanca.remplirListeOeuvresEvenement(beanc.getConnexion(), request.getParameter("intitule")));
+            request.setAttribute("listeevenementoeuvre", beanca.getListeOeuvresEvenement());
+
+            for (Evenement e : (ArrayList<Evenement>) beanae.getListeEvenement()) {
                 if (e.getEveId().equals(request.getParameter("intitule"))) {
                     request.setAttribute("evenement", e);
                 }
@@ -125,8 +141,8 @@ public class Controller extends HttpServlet {
         if ("newCompteClient".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newCompteClient.jsp";
         }
-        
-                if ("addClient".equals(request.getParameter("client"))) {
+
+        if ("addClient".equals(request.getParameter("client"))) {
             url = "/WEB-INF/newCompteClient.jsp";
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
@@ -134,7 +150,7 @@ public class Controller extends HttpServlet {
             String dateNaissance = request.getParameter("dateNaissance");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            
+
             try {
                 checkNom(nom);
                 client.put("nom", nom);
@@ -147,7 +163,7 @@ public class Controller extends HttpServlet {
             } catch (Exceptions e) {
                 erreurs.put("prenom", e.getMessage());
             }
-            
+
             try {
                 checkNumTel(numTel);
                 client.put("numTel", numTel);
@@ -158,7 +174,7 @@ public class Controller extends HttpServlet {
                 checkDate(dateNaissance);
                 client.put("dateNaissance", dateNaissance);
             } catch (Exceptions e) {
-            erreurs.put("dateNaissance", e.getMessage());
+                erreurs.put("dateNaissance", e.getMessage());
             }
             try {
                 checkEmail(email);
@@ -172,16 +188,15 @@ public class Controller extends HttpServlet {
             } catch (Exceptions e) {
                 erreurs.put("password", e.getMessage());
             }
-            
-            if(erreurs.isEmpty()){
+
+            if (erreurs.isEmpty()) {
                 System.out.println("addClient : pas d'erreur");
-                url = "/WEB-INF/newAdresse.jsp";               
+                url = "/WEB-INF/newAdresse.jsp";
             }
 
             request.setAttribute("erreurs", erreurs);
             request.setAttribute("client", client);
         }
-        
 
         if ("newAdresse".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newAdresse.jsp";
@@ -194,17 +209,15 @@ public class Controller extends HttpServlet {
             if (panier == null) {
                 panier = new beanPanier();
                 session.setAttribute("panier", panier);
-                
+
             }
             request.setAttribute("isempty", panier.isEmpty());
             request.setAttribute("list", panier.getList());
-            
-            
-                        
+
             if (request.getParameter("add") != null) {
                 panier.add(request.getParameter("urlImage"), request.getParameter("ref"), request.getParameter("titre"));
                 url = "/WEB-INF/jspPanier.jsp";
-                
+
             }
             if (request.getParameter("dec") != null) {
                 panier.dec(request.getParameter("urlImage"), request.getParameter("ref"), request.getParameter("titre"));
@@ -221,47 +234,46 @@ public class Controller extends HttpServlet {
                 }
             }
             if (request.getParameter("clean") != null) {
-                    panier.clean();
-                    request.setAttribute("isempty", panier.isEmpty());
-                    url = "/WEB-INF/jspPanier.jsp";
-                }
+                panier.clean();
+                request.setAttribute("isempty", panier.isEmpty());
+                url = "/WEB-INF/jspPanier.jsp";
+            }
         }
-        
+
         if ("panier".equals(request.getParameter("section"))) {
-            
+
             beanPanier panier = (beanPanier) session.getAttribute("panier");
             if (panier == null) {
                 panier = new beanPanier();
                 session.setAttribute("panier", panier);
-                
+
             }
-                            
+
             if (request.getParameter("ajout") != null) {
-                panier.add(request.getParameter("urlImage"), 
+                panier.add(request.getParameter("urlImage"),
                         request.getParameter("ref"),
                         request.getParameter("titre"),
                         request.getParameter("qty"));
                 url = "Controller?section=oeuvre&isbn=request.getParameter(\"ref\")";
-                for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste2")) {
+                for (beanOeuvre b : (ArrayList<beanOeuvre>) beanca.getListeOeuvres()) {
                     if (b.getOeuIsbn().equals(request.getParameter("ref"))) {
                         request.setAttribute("oeuvre", b);
                     }
-                }  
+                }
             }
-            
+
             if (request.getParameter("ajoutV2") != null) {
-                panier.add(request.getParameter("urlImage"), 
+                panier.add(request.getParameter("urlImage"),
                         request.getParameter("ref"),
                         request.getParameter("titre"),
                         request.getParameter("qty"));
             }
-            
+
             if (request.getParameter("ref") != null) {
                 panier.add(request.getParameter("urlImage"), request.getParameter("ref"), request.getParameter("titre"));
-                
+
             }
-            
-            
+
         }
 
         request.getRequestDispatcher(url).include(request, response);

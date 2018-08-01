@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public class beanCatalog implements Serializable {
     
-    ArrayList<beanOeuvre> listeOeuvres=new ArrayList();
-    ArrayList<beanOeuvre> listeNouveautes=new ArrayList();
-    ArrayList<beanOeuvre> listeOeuvresEvenement = new ArrayList();
+    ArrayList<beanOeuvre> listeOeuvres;
+    ArrayList<beanOeuvre> listeNouveautes;
+    ArrayList<beanOeuvre> listeOeuvresEvenement;
 
     public beanCatalog() {
     }
@@ -45,7 +45,7 @@ public class beanCatalog implements Serializable {
 
 public ArrayList<beanOeuvre> remplirListeOeuvres(Connection connexion, String filtre, String recherche) {
         
-        
+        listeOeuvres=new ArrayList();
         try {
             String query = "SELECT * FROM ListesOeuvres2 WHERE " + filtre + " Titre like '%" + recherche + "%'";
             Statement stmt = connexion.createStatement();
@@ -81,7 +81,7 @@ public ArrayList<beanOeuvre> remplirListeOeuvres(Connection connexion, String fi
 
 public ArrayList<beanOeuvre> remplirListeNouveautes(Connection connexion) {
         
-        
+        listeNouveautes=new ArrayList();
         try {
             String query = "SELECT * FROM ListeNouveautes";
             Statement stmt = connexion.createStatement();
@@ -116,7 +116,7 @@ public ArrayList<beanOeuvre> remplirListeNouveautes(Connection connexion) {
     }    
 public ArrayList<beanOeuvre> remplirListeOeuvresEvenement (Connection connexion, String filtre) {
         
-        
+        listeOeuvresEvenement=new ArrayList();
         try {
             String query = "SELECT * FROM ListesOeuvresEvenement WHERE EvenementId = " + filtre ;
             Statement stmt = connexion.createStatement();
@@ -141,13 +141,13 @@ public ArrayList<beanOeuvre> remplirListeOeuvresEvenement (Connection connexion,
                         rs.getString("Moyenne des notes"),
                         rs.getString("Statut"),
                         rs.getString("Nbre de Cdc"));
-                listeOeuvres.add(o);            }
+                listeOeuvresEvenement.add(o);            }
             rs.close();
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Oops:SQL:" + ex.getMessage());
         } 
-        return listeOeuvres;
+        return listeOeuvresEvenement;
     }    
 
 }

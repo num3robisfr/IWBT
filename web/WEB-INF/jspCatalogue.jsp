@@ -24,7 +24,7 @@
 
         <br><h1>Résultats de la recherche</h1><br>
 <div class="row d-flex wrap">
-            <c:forEach items="${beanca2}" var="p">
+            <c:forEach items="${listeSearch}" var="p">
 
                 <div class="col-4">
                     <div class="card" style="width: 18rem; height: 400px;">

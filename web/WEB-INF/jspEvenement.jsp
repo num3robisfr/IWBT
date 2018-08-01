@@ -12,7 +12,7 @@
     <!-- bienvenue -->
     <br><h1> Evènement</h1>
     <div class="row"> 
-        <c:forEach items="${listeevenement}" var="l">
+        <c:forEach items="${listeEvenement}" var="l">
             <div class="col-4"> 
                 <br><a class="card-img-top mx-auto d-block" href="Controller?section=evenement&intitule=${l.eveId}">${l.eveIntitule}<img src="${l.eveUrl}" alt=${l.eveIntitule} width="100%"></a><br>
                 <p></p>
