@@ -44,7 +44,8 @@ public class beanAgendaEvenement implements Serializable {
 
         listeEvenement = new ArrayList<Evenement>();
 
-        String query = "SELECT * FROM Evenement WHERE eveDateDebut != '2000-01-01 00:00:00.000' ";
+        String query = "SELECT * FROM Evenement WHERE eveDateDebut >= getdate() and eveDateDebut < (getdate()+240)"
+                + " ORDER BY  eveDateDebut ASC ";
 
         try {
             Statement stmt = connexion.createStatement();

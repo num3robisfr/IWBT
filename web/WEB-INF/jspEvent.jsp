@@ -27,7 +27,7 @@
 
                 <div id="catalogue">
                     <center> <br><h1>${evenement.eveIntitule}</h1><br><img src="${evenement.eveUrl}" alt=${evenement.eveIntitule} width="40%"><br></center>
-                    <p style="color: green;"><h2><center>du ${evenement.eveDateDebut} au ${evenement.eveDateFin}</center></h2></p>
+                    <p style="color: green;"><h2 class="date"><center><blink> du ${evenement.eveDateDebut} au ${evenement.eveDateFin}</blink></center></h2></p>
       
                     <h1>   <center>Livres concernés</center></h1><br>
                     <div class="row">
