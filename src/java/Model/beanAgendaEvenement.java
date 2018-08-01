@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package classe;
+package Model;
 
+import classe.Evenement;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,15 +18,15 @@ import javax.swing.JOptionPane;
  *
  * @author thierry
  */
-public class AgendaEvenement {
+public class beanAgendaEvenement implements Serializable {
 
     private ArrayList<Evenement> listeEvenement = new ArrayList<Evenement>();
 
     /* *************************************************************************************************** */
-    public AgendaEvenement() {
+    public beanAgendaEvenement() {
     }
 
-    public AgendaEvenement(ArrayList<Evenement> listeEvenement) {
+    public beanAgendaEvenement(ArrayList<Evenement> listeEvenement) {
         this.listeEvenement = listeEvenement;
     }
 

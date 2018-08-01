@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.*;
-import classe.AgendaEvenement;
+import Model.beanAgendaEvenement;
 import classe.Evenement;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class Controller extends HttpServlet {
             session.setAttribute("liste", beanca.getListeNouveautes());
             request.setAttribute("beanca", beanca.getListeNouveautes());
             
-            AgendaEvenement listeEvenement = new AgendaEvenement();
+            beanAgendaEvenement listeEvenement = new beanAgendaEvenement();
             listeEvenement.setListeEvenement(listeEvenement.ChargerListeEvenement());
             request.setAttribute("listeevenement", listeEvenement.getListeEvenement());
             session.setAttribute("listeEvenement", listeEvenement.getListeEvenement());
