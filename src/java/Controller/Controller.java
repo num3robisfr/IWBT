@@ -367,7 +367,7 @@ public class Controller extends HttpServlet {
                         request.getParameter("prix"));
                 session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
                 url = "Controller?section=oeuvre&isbn=request.getParameter(\"ref\")";
-                for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste2")) {
+                for (beanOeuvre b : (ArrayList<beanOeuvre>) beanca.getListeOeuvres()) {
                     if (b.getOeuIsbn().equals(request.getParameter("ref"))) {
                         request.setAttribute("oeuvre", b);
                     }
