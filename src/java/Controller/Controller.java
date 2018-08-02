@@ -231,25 +231,30 @@ public class Controller extends HttpServlet {
             url = "/WEB-INF/newAdresse.jsp";
         }
         
-        if ("addAdresse".equals(request.getParameter("adr"))){
+                if ("addAdresse".equals(request.getParameter("adr"))){
             url = "/WEB-INF/newAdresse.jsp";
             erreurs.clear();
             Map<String, String> hMClient  = (HashMap) session.getAttribute("client");
             Map<String, String> hMAdresse = new HashMap<>();
+            Map<String, String> resultat = new HashMap<>();
             
-            beanClient bC = new beanClient(hMClient.get("nom"),hMClient.get("prenom"),hMClient.get("genre"),hMClient.get("email"),hMClient.get("password"),hMClient.get("numTel"));
+            beanClient bC = new beanClient(hMClient.get("nom"),hMClient.get("prenom"),
+                    hMClient.get("genre"),hMClient.get("email"),hMClient.get("password"),
+                    hMClient.get("numTel"));
             
             String adresse = request.getParameter("adresse");
             String complement = request.getParameter("complement");
             String codePostal = request.getParameter("codePostal");
             String ville = request.getParameter("ville");
-
+            
+            
             try {
                 checkAdresse(adresse);
                 hMAdresse.put("adresse", adresse);
             } catch (Exceptions e) {
                 erreurs.put("adresse", e.getMessage());
             }
+            hMAdresse.put("complement", complement);
             try {
                 checkCodePostal(codePostal);
                 hMAdresse.put("codePostal", codePostal);
@@ -262,9 +267,36 @@ public class Controller extends HttpServlet {
             } catch (Exceptions e) {
                 erreurs.put("ville", e.getMessage());
             }
+            
+            if(erreurs.isEmpty()){
+                int cliId = bC.AddClient(beanc.getConnexion());
+                if (cliId == 0){
+                    resultat.put("erreur", "erreur d'enregistrement");
+                    System.out.println("pb d'enregistrement");
+                }
+                if (cliId > 0) {
+                    
+                    beanAdresse bA = new beanAdresse(adresse, complement, codePostal, ville, 1);
+                    int adrId = bA.AddAdresse(beanc.getConnexion());
+                    
+                    if(adrId == 0){
+                        resultat.put("erreur", "erreur d'enregistrement");
+                        System.out.println("pb d'enregistrement");
+                    }
+                    if (adrId > 0) {
+                        int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, cliId, bC);
+                        System.out.println("resultat AddrAdrFacturation :" + res);
+
+                        resultat.put("message", "enregistrement effectué avec succés");
+                        System.out.println("enregistrement ok");
+                    }
+
+                }
+            }
+            
             request.setAttribute("erreurs", erreurs);
             request.setAttribute("adresse", hMAdresse);
-
+            request.setAttribute("resultat", resultat);
         }
 
         if ("affichePanier".equals(request.getParameter("section"))) {
@@ -280,30 +312,44 @@ public class Controller extends HttpServlet {
             request.setAttribute("list", panier.getList());
 
             if (request.getParameter("add") != null) {
-                panier.add(request.getParameter("urlImage"), request.getParameter("ref"), request.getParameter("titre"));
+                panier.add(request.getParameter("urlImage"),
+                        request.getParameter("ref"),
+                        request.getParameter("titre"),
+                        request.getParameter("prix"));
                 url = "/WEB-INF/jspPanier.jsp";
 
             }
             if (request.getParameter("dec") != null) {
-                panier.dec(request.getParameter("urlImage"), request.getParameter("ref"), request.getParameter("titre"));
+                panier.dec(request.getParameter("urlImage"),
+                        request.getParameter("ref"),
+                        request.getParameter("titre"),
+                        request.getParameter("prix"));
+                session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
                 if (panier.isEmpty()) {
                     request.setAttribute("isempty", panier.isEmpty());
+                    session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
                     url = "/WEB-INF/jspPanier.jsp";
                 }
             }
             if (request.getParameter("del") != null) {
                 panier.del(request.getParameter("ref"));
+                session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
                 if (panier.isEmpty()) {
                     request.setAttribute("isempty", panier.isEmpty());
+                    session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
                     url = "/WEB-INF/jspPanier.jsp";
                 }
             }
 
             if (request.getParameter("clean") != null) {
                 panier.clean();
+                session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
                 request.setAttribute("isempty", panier.isEmpty());
                 url = "/WEB-INF/jspPanier.jsp";
             }
+
+            session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
+            System.out.println("panier.getTotal() = " + panier.getTotal(request.getParameter("ref")));
         }
 
         if ("panier".equals(request.getParameter("section"))) {
@@ -318,9 +364,10 @@ public class Controller extends HttpServlet {
                 panier.add(request.getParameter("urlImage"),
                         request.getParameter("ref"),
                         request.getParameter("titre"),
-                        request.getParameter("qty"));
+                        request.getParameter("prix"));
+                session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
                 url = "Controller?section=oeuvre&isbn=request.getParameter(\"ref\")";
-                for (beanOeuvre b : (ArrayList<beanOeuvre>) beanca.getListeOeuvres()) {
+                for (beanOeuvre b : (ArrayList<beanOeuvre>) session.getAttribute("liste2")) {
                     if (b.getOeuIsbn().equals(request.getParameter("ref"))) {
                         request.setAttribute("oeuvre", b);
                     }
@@ -331,15 +378,21 @@ public class Controller extends HttpServlet {
                 panier.add(request.getParameter("urlImage"),
                         request.getParameter("ref"),
                         request.getParameter("titre"),
-                        request.getParameter("qty"));
+                        request.getParameter("prix"));
+                session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
             }
 
-            if (request.getParameter("ref") != null) {
-                panier.add(request.getParameter("urlImage"), request.getParameter("ref"), request.getParameter("titre"));
-
-            }
+//            if (request.getParameter("ref") != null) {
+//                panier.add(request.getParameter("urlImage"), 
+//                        request.getParameter("ref"), 
+//                        request.getParameter("titre"), 
+//                        request.getParameter("prix"));
+//                
+//            }
+            System.out.println("panier.getTotal() = " + panier.getTotal(request.getParameter("ref")));
 
         }
+        
 
         request.getRequestDispatcher(url).include(request, response);
     }
