@@ -26,7 +26,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <p>Adresse de facturation</p>
-                                <form action="Controller" method="get">
+                                <form action="Controller" method="post">
                                     <div class="form-group">
                                         <label for="adresse">Adresse</label>
                                         <input type="text" class="form-control" name="adresse" placeholder="" value="${adresse['adresse']}">

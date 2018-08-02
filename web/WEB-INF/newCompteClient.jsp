@@ -26,7 +26,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <p>Informations personnelles</p>
-                                <form action="Controller" method="get">
+                                <form action="Controller" method="post">
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
                                             <label for="civilite">Civilité</label>
