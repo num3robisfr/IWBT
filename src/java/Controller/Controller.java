@@ -231,25 +231,30 @@ public class Controller extends HttpServlet {
             url = "/WEB-INF/newAdresse.jsp";
         }
         
-        if ("addAdresse".equals(request.getParameter("adr"))){
+                if ("addAdresse".equals(request.getParameter("adr"))){
             url = "/WEB-INF/newAdresse.jsp";
             erreurs.clear();
             Map<String, String> hMClient  = (HashMap) session.getAttribute("client");
             Map<String, String> hMAdresse = new HashMap<>();
+            Map<String, String> resultat = new HashMap<>();
             
-            beanClient bC = new beanClient(hMClient.get("nom"),hMClient.get("prenom"),hMClient.get("genre"),hMClient.get("email"),hMClient.get("password"),hMClient.get("numTel"));
+            beanClient bC = new beanClient(hMClient.get("nom"),hMClient.get("prenom"),
+                    hMClient.get("genre"),hMClient.get("email"),hMClient.get("password"),
+                    hMClient.get("numTel"));
             
             String adresse = request.getParameter("adresse");
             String complement = request.getParameter("complement");
             String codePostal = request.getParameter("codePostal");
             String ville = request.getParameter("ville");
-
+            
+            
             try {
                 checkAdresse(adresse);
                 hMAdresse.put("adresse", adresse);
             } catch (Exceptions e) {
                 erreurs.put("adresse", e.getMessage());
             }
+            hMAdresse.put("complement", complement);
             try {
                 checkCodePostal(codePostal);
                 hMAdresse.put("codePostal", codePostal);
@@ -262,9 +267,36 @@ public class Controller extends HttpServlet {
             } catch (Exceptions e) {
                 erreurs.put("ville", e.getMessage());
             }
+            
+            if(erreurs.isEmpty()){
+                int cliId = bC.AddClient(beanc.getConnexion());
+                if (cliId == 0){
+                    resultat.put("erreur", "erreur d'enregistrement");
+                    System.out.println("pb d'enregistrement");
+                }
+                if (cliId > 0) {
+                    
+                    beanAdresse bA = new beanAdresse(adresse, complement, codePostal, ville, 1);
+                    int adrId = bA.AddAdresse(beanc.getConnexion());
+                    
+                    if(adrId == 0){
+                        resultat.put("erreur", "erreur d'enregistrement");
+                        System.out.println("pb d'enregistrement");
+                    }
+                    if (adrId > 0) {
+                        int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, cliId, bC);
+                        System.out.println("resultat AddrAdrFacturation :" + res);
+
+                        resultat.put("message", "enregistrement effectué avec succés");
+                        System.out.println("enregistrement ok");
+                    }
+
+                }
+            }
+            
             request.setAttribute("erreurs", erreurs);
             request.setAttribute("adresse", hMAdresse);
-
+            request.setAttribute("resultat", resultat);
         }
 
         if ("affichePanier".equals(request.getParameter("section"))) {

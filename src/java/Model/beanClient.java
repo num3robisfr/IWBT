@@ -3,6 +3,7 @@ package Model;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -133,4 +134,36 @@ public class beanClient implements Serializable {
         return nomClient;
     }
 
+    public int AddClient(Connection connexion) {
+        int cliId = 0;
+
+        try {
+
+            String query = "INSERT INTO Client "
+                    + "(cliNom, cliPrenom, cliGenre, cliEmail, cliMotDePasse, cliTelephone) "
+                    + "VALUES "
+                    + "(?,?,?,?,?,?)";
+            PreparedStatement pstmt = connexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, this.nom);
+            pstmt.setString(2, this.prenom);
+            pstmt.setString(3, this.genre);
+            pstmt.setString(4, this.email);
+            pstmt.setString(5, this.password);
+            pstmt.setString(6, this.telephone);
+
+            pstmt.executeUpdate();
+
+            ResultSet clefs = pstmt.getGeneratedKeys();
+
+            if (clefs.next()) {
+                cliId = clefs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            cliId = 0;
+            System.out.println("erreur requete AddClient : " + ex);
+        }
+
+        return cliId;
+    }
+    
 }
