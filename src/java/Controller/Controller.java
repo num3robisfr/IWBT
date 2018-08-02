@@ -50,8 +50,10 @@ public class Controller extends HttpServlet {
         beanTheme beant = (beanTheme) session.getAttribute("beant");
         beanSousTheme beanst = (beanSousTheme) session.getAttribute("beanst");
 
-        Map<String, String> erreurs = new HashMap<String, String>();
-        Map<String, String> client = new HashMap<String, String>();
+        Map<String, String> erreurs = new HashMap<>();
+        Map<String, String> client = new HashMap();
+        
+        
         String url = "/WEB-INF/jspAccueil.jsp";
 
 //------------------------------------------------------------------------------
@@ -145,6 +147,7 @@ public class Controller extends HttpServlet {
         
         if ("addClient".equals(request.getParameter("client"))) {
             url = "/WEB-INF/newCompteClient.jsp";
+            erreurs.clear();
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
             String numTel = request.getParameter("telephone");
@@ -156,7 +159,7 @@ public class Controller extends HttpServlet {
             try {
                 client.put("genre", retournerType(genre));
             } catch (Exception e) {
-                System.out.println("Oops pb avce la methode retournerType");
+                System.out.println("Oops pb avec la methode retournerType");
             }
             
             try {
@@ -211,15 +214,40 @@ public class Controller extends HttpServlet {
             url = "/WEB-INF/newAdresse.jsp";
         }
         
-        if ("addAdresse".equals(request.getParameter("adresse"))){
+        if ("addAdresse".equals(request.getParameter("adr"))){
             url = "/WEB-INF/newAdresse.jsp";
+            erreurs.clear();
+            Map<String, String> hMClient  = (HashMap) session.getAttribute("client");
+            Map<String, String> hMAdresse = new HashMap<>();
             
-            Map<String, String> hM  = (HashMap<String, String>) session.getAttribute("client");
+            beanClient bC = new beanClient(hMClient.get("nom"),hMClient.get("prenom"),hMClient.get("genre"),hMClient.get("email"),hMClient.get("password"),hMClient.get("numTel"));
             
-            beanClient bC = new beanClient(hM.get("nom"),hM.get("prenom"),hM.get("genre"),hM.get("email"),hM.get("password"),hM.get("numTel"));
-            
-            
-            
+            String adresse = request.getParameter("adresse");
+            String complement = request.getParameter("complement");
+            String codePostal = request.getParameter("codePostal");
+            String ville = request.getParameter("ville");
+
+            try {
+                checkAdresse(adresse);
+                hMAdresse.put("adresse", adresse);
+            } catch (Exceptions e) {
+                erreurs.put("adresse", e.getMessage());
+            }
+            try {
+                checkCodePostal(codePostal);
+                hMAdresse.put("codePostal", codePostal);
+            } catch (Exceptions e) {
+                erreurs.put("codePostal", e.getMessage());
+            }
+            try {
+                checkVille(ville);
+                hMAdresse.put("ville", ville);
+            } catch (Exceptions e) {
+                erreurs.put("ville", e.getMessage());
+            }
+            request.setAttribute("erreurs", erreurs);
+            request.setAttribute("adresse", hMAdresse);
+
         }
 
         if ("affichePanier".equals(request.getParameter("section"))) {
