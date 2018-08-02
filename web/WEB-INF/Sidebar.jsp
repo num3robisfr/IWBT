@@ -27,7 +27,7 @@
                 <c:forEach var="s" items="${AllSousTheme}">
                     <c:if test="${s.id == p.id}">
                     <ul class="deux">
-                        <li><a href="Controller?section=theme&souId=1">${s.soustheme}</a></li>
+                        <li><a href="Controller?section=sousTheme&souId=${s.soustheme}">${s.soustheme}</a></li>
                     </ul>
                 </c:if>
             </c:forEach>

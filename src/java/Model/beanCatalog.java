@@ -75,6 +75,7 @@ public class beanCatalog implements Serializable {
         } catch (SQLException ex) {
             System.out.println("Oops:SQL:" + ex.getMessage());
         }
+        System.out.println(query);
         return listeOeuvres;
     }
 

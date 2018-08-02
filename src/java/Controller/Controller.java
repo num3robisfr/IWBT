@@ -53,8 +53,7 @@ public class Controller extends HttpServlet {
 
         Map<String, String> erreurs = new HashMap<>();
         Map<String, String> client = new HashMap();
-        
-        
+
         String url = "/WEB-INF/jspAccueil.jsp";
 
 //------------------------------------------------------------------------------
@@ -111,6 +110,7 @@ public class Controller extends HttpServlet {
 
         if ("oeuvre".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspOeuvre.jsp";
+            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "", ""));
             for (beanOeuvre b : (ArrayList<beanOeuvre>) beanca.getListeOeuvres()) {
                 if (b.getOeuIsbn().equals(request.getParameter("isbn"))) {
                     request.setAttribute("oeuvre", b);
@@ -120,14 +120,22 @@ public class Controller extends HttpServlet {
         if ("theme".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspTheme.jsp";
             String theme = null;
-            for (beanTheme t : beant.getAllTheme(beanc.getConnexion())) {
-                if (Integer.valueOf(request.getParameter("theId")) == (t.getId())) {
-                    theme = t.getIntitule();
+            for (beanTheme bt : beant.getAllTheme(beanc.getConnexion())) {
+                if (Integer.valueOf(request.getParameter("theId")) == (bt.getId())) {
+                    theme = bt.getIntitule();
                 }
             }
             beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "Theme= '" + theme + "' AND ", ""));
             request.setAttribute("listeOeuvTheme", beanca.getListeOeuvres());
-            request.setAttribute("theme", theme);
+            request.setAttribute("theme", theme.toUpperCase());
+        }
+
+        if ("sousTheme".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspSousTheme.jsp";
+            String sousTheme = request.getParameter("souId");
+            beanca.setListeOeuvres(beanca.remplirListeOeuvres(beanc.getConnexion(), "\"Sous Theme\"= '" + sousTheme + "' AND ", ""));
+            request.setAttribute("listeOeuvSousTheme", beanca.getListeOeuvres());
+            request.setAttribute("soustheme", sousTheme.toUpperCase());
         }
 
         if ("evenement".equals(request.getParameter("section"))) {
@@ -146,7 +154,7 @@ public class Controller extends HttpServlet {
             url = "/WEB-INF/jspLogin.jsp";
             String checkLogin = "0";
             if (request.getParameter("oklogin") != null) {
-                System.out.println(request.getParameter("login")+" "+request.getParameter("password"));
+                System.out.println(request.getParameter("login") + " " + request.getParameter("password"));
                 checkLogin = beancl.checkLogin(beanc.getConnexion(), request.getParameter("login"), request.getParameter("password"));
             }
             if (checkLogin != null) {
@@ -154,14 +162,13 @@ public class Controller extends HttpServlet {
             } else {
                 request.setAttribute("okay", "1");
             }
-            
-            
+
         }
 
         if ("newCompteClient".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newCompteClient.jsp";
         }
-        
+
         if ("addClient".equals(request.getParameter("client"))) {
             url = "/WEB-INF/newCompteClient.jsp";
             erreurs.clear();
@@ -172,13 +179,13 @@ public class Controller extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String genre = request.getParameter("civilite");
-            
+
             try {
                 client.put("genre", retournerType(genre));
             } catch (Exception e) {
                 System.out.println("Oops pb avec la methode retournerType");
             }
-            
+
             try {
                 checkNom(nom);
                 client.put("nom", nom);
@@ -230,15 +237,15 @@ public class Controller extends HttpServlet {
         if ("newAdresse".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newAdresse.jsp";
         }
-        
-        if ("addAdresse".equals(request.getParameter("adr"))){
+
+        if ("addAdresse".equals(request.getParameter("adr"))) {
             url = "/WEB-INF/newAdresse.jsp";
             erreurs.clear();
-            Map<String, String> hMClient  = (HashMap) session.getAttribute("client");
+            Map<String, String> hMClient = (HashMap) session.getAttribute("client");
             Map<String, String> hMAdresse = new HashMap<>();
-            
-            beanClient bC = new beanClient(hMClient.get("nom"),hMClient.get("prenom"),hMClient.get("genre"),hMClient.get("email"),hMClient.get("password"),hMClient.get("numTel"));
-            
+
+            beanClient bC = new beanClient(hMClient.get("nom"), hMClient.get("prenom"), hMClient.get("genre"), hMClient.get("email"), hMClient.get("password"), hMClient.get("numTel"));
+
             String adresse = request.getParameter("adresse");
             String complement = request.getParameter("complement");
             String codePostal = request.getParameter("codePostal");
@@ -343,12 +350,10 @@ public class Controller extends HttpServlet {
 
         request.getRequestDispatcher(url).include(request, response);
     }
-    
+
 //------------------------------------------------------------------------------
 //                                 AUTRES
 //------------------------------------------------------------------------------ 
-
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
