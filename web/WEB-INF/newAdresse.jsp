@@ -51,28 +51,46 @@
                                     </div>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <button type="submit" class="btn btn-primary mx-auto d-block" value="addAdresse" name="adr">Créer le compte</button>
+                                                    <c:if test="${resultat['message'] == null }">
+                                                        <button type="submit" class="btn btn-primary mx-auto d-block" value="addAdresse" name="adr">Créer le compte</button>
+                                                    </c:if>
                                                 </div>
-                                                <c:if test="${resultat['message'] != null }">
-                                                    <div class="col-md-6">
-                                                        <div class="alert alert-success" role="alert">
-                                                            ${resultat['message']}
-                                                        </div>
-                                                    </div>
-                                                </c:if>
-                                                <c:if test="${resultat['erreur'] != null}">
-                                                    <div class="col-md-6">
-                                                        <div class="alert alert-danger" role="alert">
-                                                            ${resultat['erreur']}
-                                                        </div>
-                                                    </div>
-                                                </c:if>
+
                                             </div>
                                             <div class="row">
                                                 <br>
                                             </div>     
                                 </form>
                             </div>
+                                        <div class="col-md-6">
+                                            <c:if test="${resultat['message'] != null }">
+                                                    <div class="col-md-12">
+                                                        <div class="alert alert-success" role="alert">
+                                                            ${resultat['message']}
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${resultat['erreur'] != null}">
+                                                    <div class="col-md-12">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            ${resultat['erreur']}
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${resultat['message'] != null }">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        
+                                                            <a class="btn btn-primary mx-auto d-block" href="Controller?section=accueil">retourner à l'accueil</a>
+                                                        
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <a class="btn btn-primary mx-auto d-block" href="Controller?section=affichePanier">valider votre panier</a>
+                                                    </div>
+                                                        
+                                                </div>
+                                                 </c:if>               
+                                        </div>            
                         </div>
                     </div>
                 </div>
