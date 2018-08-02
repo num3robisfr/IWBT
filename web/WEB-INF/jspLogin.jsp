@@ -19,15 +19,30 @@
                 <%@include file="Sidebar.jsp" %>
 
                 <div id="catalogue">
-                    <center><form name="loginform" action="Controller">
-                            <br>Identifiant<br><input type="text" name="login" value="" /><br><br>
-                            Mot de passe<br><input type="text" name="password" value="" /><br><br>
-                            <input type="submit" value="Se connecter" name="oklogin" /><br><br>
-                            <a href="Controller?section=newCompteClient">Vous n'avez pas encore de compte IBWT ? Inscrivez vous</a>
-                        </form></center>
-                </div></div>
+                    <c:if test="${okay == '0'}">
+                        <center><form name="loginform" action="Controller?section=login" method="POST">
+                                <br>Identifiant<br><input type="text" name="login" /><br><br>
+                                Mot de passe<br><input type="password" name="password" /><br><br>
+                                <input type="submit" value="Se connecter" name="oklogin" /><br><br>
+                                <br>
+                                <a href="Controller?section=newCompteClient">Vous n'avez pas encore de compte IBWT ? Inscrivez vous</a>
+                            </form></center>                                </c:if>
+
+                    <c:if test="${okay == '1'}">
+                        <center><form name="loginform" action="Controller?section=login" method="POST">
+                                <br>Identifiant<br><input type="text" name="login" /><br><br>
+                                Mot de passe<br><input type="password" name="password" /><br><br>
+                                <input type="submit" value="Se connecter" name="oklogin" /><br><br>
+                                Votre identifiant et/ou mot de passe sont incorrects<br>
+                                <a href="Controller?section=newCompteClient">Vous n'avez pas encore de compte IBWT ? Inscrivez vous</a>
+                            </form></center>                                </c:if>
+
+                    <c:if test="${okay != '1' && okay != '0'}">
+                        <center>Bienvenue ${okay}</center>                                </c:if>
+                    
+                    </div></div>
                 <!-- footer -->
-                <%@include file="Footer.jsp" %>
-            </div>
+            <%@include file="Footer.jsp" %>
+        </div>
     </body>
 </html>

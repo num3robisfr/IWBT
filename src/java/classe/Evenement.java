@@ -1,8 +1,8 @@
 package classe;
 
-import java.sql.Date;
+import java.io.Serializable;
 
-public class Evenement {
+public class Evenement implements Serializable {
 
     private String eveId;
     private String utiId;
