@@ -24,13 +24,29 @@
             </c:if>
             <c:if test="${!isempty}">
                 <Table>
-            
+                <%--<tr>
+                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                    <td><p>Qantité</p></td>
+                    <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
+                    <td><p>Oeuvre</p></td>
+                    <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
+                    <td><p>Prix unitaire</p></td>
+                    <td>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</td>
+                    <td><p>Prix total</p></td>
+                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                </tr>--%>
             <c:forEach var="l" items="${list}">
                 <tr>
-                    <td><a class="" href="Controller?section=oeuvre&isbn=${l.ref}"><img src='${l.urlImage}' title='${l.ref}'/></a></td>
+                    <td><a class="" href="Controller?section=oeuvre&isbn=${l.ref}"><img src='${l.urlImage}' title='${l.titre}'/></a></td>
+                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                    <td><p>${l.qty}</p></td>
+                    <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
                     <td><p>${l.titre}</p></td>
                     <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
-                    <td><p>${l.qty}</p></td>
+                    <td><p>${l.prix} €</p></td>
+                    <td>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</td>
+                    <td><p> ${l.somme} €TTC</p></td>
                     <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
                     
                         <form action="Controller" method="get">
@@ -38,13 +54,18 @@
                             <input type='hidden' name='urlImage' value='${l.urlImage}' />
                             <input type='hidden' name='ref' value='${l.ref}' />
                             <input type='hidden' name='titre' value='${l.titre}' />
-                            <input type='hidden' name='qty' value='${l.qty}' />
+                            <input type='hidden' name='prix' value='${l.prix}' />
+                            
                             <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='add' VALUE='+' /></td>
                             <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='dec' VALUE='-' /></td>   
                             <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='del' VALUE='Supprimer' /></td>
-                        </form>
                             
-                    </td>
+                            
+                        </form>
+                    
+                    
+                    
+                     
             <br>
                 </tr>
                 
@@ -60,6 +81,13 @@
                 </tr>
             </c:forEach>
                 </Table>
+                
+                <br />
+                <br />
+                <p class="panier">Total du panier : ${total} €TTC
+                &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp
+                <a class="btn btn-primary mx-auto d-block" href="Controller?section=accueil">Valider la commande </a></p>
+                
                 
                 <br />
                 <br />

@@ -26,7 +26,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <p>Adresse de facturation</p>
-                                <form action="Controller" method="get">
+                                <form action="Controller" method="post">
                                     <div class="form-group">
                                         <label for="adresse">Adresse</label>
                                         <input type="text" class="form-control" name="adresse" placeholder="" value="${adresse['adresse']}">
@@ -49,14 +49,28 @@
                                             <span class="text-danger">${erreurs['ville']}</span>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <button type="submit" class="btn btn-primary mx-auto d-block" value="addAdresse" name="adr">Créer le compte</button>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <br>
-                                    </div>     
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <button type="submit" class="btn btn-primary mx-auto d-block" value="addAdresse" name="adr">Créer le compte</button>
+                                                </div>
+                                                <c:if test="${resultat['message'] != null }">
+                                                    <div class="col-md-6">
+                                                        <div class="alert alert-success" role="alert">
+                                                            ${resultat['message']}
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${resultat['erreur'] != null}">
+                                                    <div class="col-md-6">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            ${resultat['erreur']}
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                            </div>
+                                            <div class="row">
+                                                <br>
+                                            </div>     
                                 </form>
                             </div>
                         </div>
