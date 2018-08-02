@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class beanCatalog implements Serializable {
-    
+
     ArrayList<beanOeuvre> listeOeuvres;
     ArrayList<beanOeuvre> listeNouveautes;
     ArrayList<beanOeuvre> listeOeuvresEvenement;
@@ -39,15 +39,13 @@ public class beanCatalog implements Serializable {
     public void setListeOeuvresEvenement(ArrayList<beanOeuvre> listeOeuvresEvenement) {
         this.listeOeuvresEvenement = listeOeuvresEvenement;
     }
-    
-    
-    
 
-public ArrayList<beanOeuvre> remplirListeOeuvres(Connection connexion, String filtre, String recherche) {
-        
-        listeOeuvres=new ArrayList();
+    public ArrayList<beanOeuvre> remplirListeOeuvres(Connection connexion, String filtre, String recherche) {
+
+        listeOeuvres = new ArrayList();
+        String query = "SELECT * FROM ListesOeuvres2 WHERE " + filtre + " Titre like '%" + recherche + "%'";
+
         try {
-            String query = "SELECT * FROM ListesOeuvres2 WHERE " + filtre + " Titre like '%" + recherche + "%'";
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
@@ -70,20 +68,22 @@ public ArrayList<beanOeuvre> remplirListeOeuvres(Connection connexion, String fi
                         rs.getString("Moyenne des notes"),
                         rs.getString("Statut"),
                         rs.getString("Nbre de Cdc"));
-                listeOeuvres.add(o);            }
+                listeOeuvres.add(o);
+            }
             rs.close();
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Oops:SQL:" + ex.getMessage());
-        } 
+        }
         return listeOeuvres;
-    }    
+    }
 
-public ArrayList<beanOeuvre> remplirListeNouveautes(Connection connexion) {
-        
-        listeNouveautes=new ArrayList();
+    public ArrayList<beanOeuvre> remplirListeNouveautes(Connection connexion) {
+
+        listeNouveautes = new ArrayList();
+        String query = "SELECT * FROM ListeNouveautes";
+
         try {
-            String query = "SELECT * FROM ListeNouveautes";
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
@@ -106,19 +106,22 @@ public ArrayList<beanOeuvre> remplirListeNouveautes(Connection connexion) {
                         rs.getString("Moyenne des notes"),
                         rs.getString("Statut"),
                         rs.getString("Nbre de Cdc"));
-                listeNouveautes.add(o);            }
+                listeNouveautes.add(o);
+            }
             rs.close();
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Oops:SQL:" + ex.getMessage());
-        } 
+        }
         return listeNouveautes;
-    }    
-public ArrayList<beanOeuvre> remplirListeOeuvresEvenement (Connection connexion, String filtre) {
+    }
+
+    public ArrayList<beanOeuvre> remplirListeOeuvresEvenement(Connection connexion, String filtre) {
+
+        listeOeuvresEvenement = new ArrayList();
+        String query = "SELECT * FROM ListesOeuvresEvenement WHERE EvenementId = " + filtre;
         
-        listeOeuvresEvenement=new ArrayList();
         try {
-            String query = "SELECT * FROM ListesOeuvresEvenement WHERE EvenementId = " + filtre ;
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 
@@ -141,13 +144,14 @@ public ArrayList<beanOeuvre> remplirListeOeuvresEvenement (Connection connexion,
                         rs.getString("Moyenne des notes"),
                         rs.getString("Statut"),
                         rs.getString("Nbre de Cdc"));
-                listeOeuvresEvenement.add(o);            }
+                listeOeuvresEvenement.add(o);
+            }
             rs.close();
             stmt.close();
         } catch (SQLException ex) {
             System.out.println("Oops:SQL:" + ex.getMessage());
-        } 
+        }
         return listeOeuvresEvenement;
-    }    
+    }
 
 }

@@ -1,19 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-/**
- *
- * @author cdi311
- */
-public class beanClient implements Serializable{
-    
+public class beanClient implements Serializable {
+
     private int Id;
     private String nom;
     private String prenom;
@@ -116,7 +111,26 @@ public class beanClient implements Serializable{
     public void setDateSortie(Date dateSortie) {
         this.dateSortie = dateSortie;
     }
-    
-    
-    
+
+    public String checkLogin(Connection connexion, String email, String motdepasse) {
+
+        String nomClient = null;
+        String query = "SELECT * FROM Client WHERE cliEmail = '" + email + "' AND cliMotDePasse = '" + motdepasse + "'";
+
+        try {
+            Statement stmt = connexion.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()!=false) {
+                nomClient = rs.getString("cliPrenom") +" "+ rs.getString("cliNom");
+            }
+            rs.close();
+            stmt.close();
+        } catch (SQLException ex) {
+            System.out.println("Oops:SQL:" + ex.getMessage());
+        }
+        System.out.println(query);
+        System.out.println(nomClient);
+        return nomClient;
+    }
+
 }

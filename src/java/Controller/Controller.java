@@ -49,6 +49,7 @@ public class Controller extends HttpServlet {
         beanAgendaEvenement beanae = (beanAgendaEvenement) session.getAttribute("beanae");
         beanTheme beant = (beanTheme) session.getAttribute("beant");
         beanSousTheme beanst = (beanSousTheme) session.getAttribute("beanst");
+        beanClient beancl = (beanClient) session.getAttribute("beancl");
 
         Map<String, String> erreurs = new HashMap<String, String>();
         Map<String, String> client = new HashMap<String, String>();
@@ -87,6 +88,10 @@ public class Controller extends HttpServlet {
         }
         request.setAttribute("AllSousTheme", beanst.GetSousTheme(beanc.getConnexion()));
 
+        if (beancl == null) {
+            beancl = new beanClient();
+            session.setAttribute("beancl", beancl);
+        }
 //------------------------------------------------------------------------------
 //                              LES SECTIONS
 //------------------------------------------------------------------------------ 
@@ -137,6 +142,18 @@ public class Controller extends HttpServlet {
 
         if ("login".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
+            String checkLogin = "0";
+            if (request.getParameter("oklogin") != null) {
+                System.out.println(request.getParameter("login")+" "+request.getParameter("password"));
+                checkLogin = beancl.checkLogin(beanc.getConnexion(), request.getParameter("login"), request.getParameter("password"));
+            }
+            if (checkLogin != null) {
+                request.setAttribute("okay", checkLogin);
+            } else {
+                request.setAttribute("okay", "1");
+            }
+            
+            
         }
 
         if ("newCompteClient".equals(request.getParameter("section"))) {
@@ -217,8 +234,6 @@ public class Controller extends HttpServlet {
             Map<String, String> hM  = (HashMap<String, String>) session.getAttribute("client");
             
             beanClient bC = new beanClient(hM.get("nom"),hM.get("prenom"),hM.get("genre"),hM.get("email"),hM.get("password"),hM.get("numTel"));
-            
-            
             
         }
 
