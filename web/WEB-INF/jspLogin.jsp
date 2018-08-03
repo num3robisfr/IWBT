@@ -26,7 +26,8 @@
                                 <input type="submit" value="Se connecter" name="oklogin" /><br><br>
                                 <br>
                                 <a href="Controller?section=newCompteClient">Vous n'avez pas encore de compte IBWT ? Inscrivez vous</a>
-                            </form></center>                                </c:if>
+                            </form></center>                           
+                        </c:if>
 
                     <c:if test="${okay == '1'}">
                         <center><form name="loginform" action="Controller?section=login" method="POST">
@@ -35,13 +36,16 @@
                                 <input type="submit" value="Se connecter" name="oklogin" /><br><br>
                                 Votre identifiant et/ou mot de passe sont incorrects<br>
                                 <a href="Controller?section=newCompteClient">Vous n'avez pas encore de compte IBWT ? Inscrivez vous</a>
-                            </form></center>                                </c:if>
+                            </form></center>                             
+                        </c:if>
 
-                    <c:if test="${okay != '1' && okay != '0'}">
-                        <center>Bienvenue ${okay}</center>                                </c:if>
-                    
-                    </div></div>
-                <!-- footer -->
+                    <c:if test="${okay == '2' }">
+                        <center>Bienvenue ${nom}</center>          
+                        
+                        </c:if>
+
+                </div></div>
+            <!-- footer -->
             <%@include file="Footer.jsp" %>
         </div>
     </body>

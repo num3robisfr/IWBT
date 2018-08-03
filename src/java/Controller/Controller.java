@@ -51,10 +51,14 @@ public class Controller extends HttpServlet {
         beanSousTheme beanst = (beanSousTheme) session.getAttribute("beanst");
         beanClient beancl = (beanClient) session.getAttribute("beancl");
 
+        String checkLogin;
+
         Map<String, String> erreurs = new HashMap<>();
         Map<String, String> client = new HashMap();
 
         String url = "/WEB-INF/jspAccueil.jsp";
+
+        Cookie c = getCookie(request.getCookies(), "username");
 
 //------------------------------------------------------------------------------
 //                             SERIALIZATION
@@ -92,6 +96,14 @@ public class Controller extends HttpServlet {
         if (beancl == null) {
             beancl = new beanClient();
             session.setAttribute("beancl", beancl);
+        }
+        if (c == null) {
+            request.setAttribute("okay", "0");
+
+        } else {
+            checkLogin = c.getValue();
+            request.setAttribute("nom", checkLogin);
+            request.setAttribute("okay", "2");
         }
 //------------------------------------------------------------------------------
 //                              LES SECTIONS
@@ -152,17 +164,42 @@ public class Controller extends HttpServlet {
 
         if ("login".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
-            String checkLogin = "0";
-            if (request.getParameter("oklogin") != null) {
-                System.out.println(request.getParameter("login") + " " + request.getParameter("password"));
-                checkLogin = beancl.checkLogin(beanc.getConnexion(), request.getParameter("login"), request.getParameter("password"));
-            }
-            if (checkLogin != null) {
-                request.setAttribute("okay", checkLogin);
-            } else {
-                request.setAttribute("okay", "1");
-            }
+            checkLogin = "0";
 
+            if (c != null) {
+                checkLogin = c.getValue();
+                request.setAttribute("okay", "2");
+            } else {
+                request.setAttribute("okay", "0");
+            }
+            if (request.getParameter("oklogin") != null) {
+                checkLogin = beancl.checkLogin(beanc.getConnexion(), request.getParameter("login"), request.getParameter("password"));
+
+                if (checkLogin != null) {
+                    request.setAttribute("okay", "2");
+
+                    request.setAttribute("nom", checkLogin);
+
+                    c = new Cookie("username", checkLogin);
+                    c.setMaxAge(3600 * 24 * 7);
+                    response.addCookie(c);
+                } else {
+                    request.setAttribute("okay", "1");
+                }
+            }
+            if (checkLogin == null) {
+                request.setAttribute("okay", "1");
+            } else
+            if (checkLogin.equals("0")) {
+                request.setAttribute("okay", "0");
+            }
+        }
+        if ("logout".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspLogin.jsp";
+
+                c.setMaxAge(0);
+                response.addCookie(c);
+                request.setAttribute("okay", "0");
         }
 
         if ("newCompteClient".equals(request.getParameter("section"))) {
@@ -237,24 +274,23 @@ public class Controller extends HttpServlet {
         if ("newAdresse".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newAdresse.jsp";
         }
-        
-                if ("addAdresse".equals(request.getParameter("adr"))){
+
+        if ("addAdresse".equals(request.getParameter("adr"))) {
             url = "/WEB-INF/newAdresse.jsp";
             erreurs.clear();
             Map<String, String> hMClient = (HashMap) session.getAttribute("client");
             Map<String, String> hMAdresse = new HashMap<>();
             Map<String, String> resultat = new HashMap<>();
-            
-            beanClient bC = new beanClient(hMClient.get("nom"),hMClient.get("prenom"),
-                    hMClient.get("genre"),hMClient.get("email"),hMClient.get("password"),
+
+            beanClient bC = new beanClient(hMClient.get("nom"), hMClient.get("prenom"),
+                    hMClient.get("genre"), hMClient.get("email"), hMClient.get("password"),
                     hMClient.get("numTel"));
-            
+
             String adresse = request.getParameter("adresse");
             String complement = request.getParameter("complement");
             String codePostal = request.getParameter("codePostal");
             String ville = request.getParameter("ville");
-            
-            
+
             try {
                 checkAdresse(adresse);
                 hMAdresse.put("adresse", adresse);
@@ -274,19 +310,19 @@ public class Controller extends HttpServlet {
             } catch (Exceptions e) {
                 erreurs.put("ville", e.getMessage());
             }
-            
-            if(erreurs.isEmpty()){
+
+            if (erreurs.isEmpty()) {
                 int cliId = bC.AddClient(beanc.getConnexion());
-                if (cliId == 0){
+                if (cliId == 0) {
                     resultat.put("erreur", "erreur d'enregistrement");
                     System.out.println("pb d'enregistrement");
                 }
                 if (cliId > 0) {
-                    
+
                     beanAdresse bA = new beanAdresse(adresse, complement, codePostal, ville, 1);
                     int adrId = bA.AddAdresse(beanc.getConnexion());
-                    
-                    if(adrId == 0){
+
+                    if (adrId == 0) {
                         resultat.put("erreur", "erreur d'enregistrement");
                         System.out.println("pb d'enregistrement");
                     }
@@ -300,7 +336,7 @@ public class Controller extends HttpServlet {
 
                 }
             }
-            
+
             request.setAttribute("erreurs", erreurs);
             request.setAttribute("adresse", hMAdresse);
             request.setAttribute("resultat", resultat);
@@ -396,13 +432,11 @@ public class Controller extends HttpServlet {
 //                        request.getParameter("prix"));
 //                
 //            }
-            System.out.println("panier.getTotal() = " + panier.getTotal(request.getParameter("ref")));
-
         }
-        
 
         request.getRequestDispatcher(url).include(request, response);
     }
+//    }
 
 //------------------------------------------------------------------------------
 //                                 AUTRES

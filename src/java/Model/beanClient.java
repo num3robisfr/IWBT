@@ -122,7 +122,7 @@ public class beanClient implements Serializable {
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             if (rs.next()!=false) {
-                nomClient = rs.getString("cliPrenom") +" "+ rs.getString("cliNom");
+                nomClient = rs.getString("cliPrenom") +" "+ rs.getString("cliNom").toUpperCase();
             }
             rs.close();
             stmt.close();
