@@ -38,7 +38,7 @@
                 </tr>--%>
             <c:forEach var="l" items="${list}">
                 <tr>
-                    <td><a class="" href="Controller?section=oeuvre&isbn=${l.ref}"><img src='${l.urlImage}' title='${l.titre}'/></a></td>
+                    <td><a class="" href="Controller?section=oeuvre&isbn=${l.ref}"><img src='${l.urlImage}' title='${l.titre}' width = 50%/></a></td>
                     <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
                     <td><p>${l.qty}</p></td>
                     <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>

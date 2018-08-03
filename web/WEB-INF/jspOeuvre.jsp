@@ -40,7 +40,7 @@
                                         <input type='hidden' name='section' value='panier' />
                                         <input type='hidden' name='urlImage' value='${oeuvre.oeuUrlImage}' />
                                         <input type='hidden' name='ref' value='${oeuvre.oeuIsbn}' />
-                                        <input type='hidden' name='titre' value='${oeuvre.oeuTitre}' />
+                                        <input type='hidden' name='titre' value="${oeuvre.oeuTitre}" />
                                         <input type='hidden' name='prix' value='${oeuvre.oeuPrix}' />
                                         <INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='ajout' VALUE='Ajouter' />
                                         

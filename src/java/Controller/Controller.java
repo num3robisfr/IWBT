@@ -97,6 +97,7 @@ public class Controller extends HttpServlet {
             beancl = new beanClient();
             session.setAttribute("beancl", beancl);
         }
+        
         if (c == null) {
             request.setAttribute("okay", "0");
 
