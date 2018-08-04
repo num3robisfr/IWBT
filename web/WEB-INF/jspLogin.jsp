@@ -20,31 +20,84 @@
 
                 <div id="catalogue">
                     <c:if test="${okay == '0'}">
-                        <center><form name="loginform" action="Controller?section=login" method="POST">
-                                <br>Identifiant<br><input type="text" name="login" /><br><br>
-                                Mot de passe<br><input type="password" name="password" /><br><br>
-                                <input type="submit" value="Se connecter" name="oklogin" /><br><br>
-                                <br>
-                                <a href="Controller?section=newCompteClient">Vous n'avez pas encore de compte IBWT ? Inscrivez vous</a>
-                            </form></center>                           
-                        </c:if>
+                        <form name="loginform" action="Controller?section=login" method="POST">
+                            <div class="row" style="margin-top: 100px;">
 
+                            </div>
+                            <div class="row align-items-center justify-content-center">
+
+                                <div class="col-md-6">
+                                    <div class="card text-center bg-light">
+                                        <div class="form-group mr-5 ml-5">
+                                            <label for="identifiant">Identifiant</label>
+                                            <input type="text" class="form-control" name="login" placeholder="" value="">
+                                        </div>
+                                        <div class="form-group mr-5 ml-5">
+                                            <label for="password">Mot de passe</label>
+                                            <input type="password" class="form-control" name="password" placeholder="" value="">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-primary" value="Se connecter" name="oklogin">Se connecter</button>
+                                            </div>    
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <p>
+                                                    <a href="Controller?section=newCompteClient">Vous n'avez pas encore de compte IBWT ? Inscrivez vous</a>
+                                                </p>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </c:if>
                     <c:if test="${okay == '1'}">
-                        <center><form name="loginform" action="Controller?section=login" method="POST">
-                                <br>Identifiant<br><input type="text" name="login" /><br><br>
-                                Mot de passe<br><input type="password" name="password" /><br><br>
-                                <input type="submit" value="Se connecter" name="oklogin" /><br><br>
-                                Votre identifiant et/ou mot de passe sont incorrects<br>
-                                <a href="Controller?section=newCompteClient">Vous n'avez pas encore de compte IBWT ? Inscrivez vous</a>
-                            </form></center>                             
-                        </c:if>
+                                                <form name="loginform" action="Controller?section=login" method="POST">
+                            <div class="row" style="margin-top: 100px;">
+
+                            </div>
+                            <div class="row align-items-center justify-content-center">
+
+                                <div class="col-md-6">
+                                    <div class="card text-center bg-light">
+                                        <div class="form-group mr-5 ml-5">
+                                            <label for="identifiant">Identifiant</label>
+                                            <input type="text" class="form-control" name="login" placeholder="" value="">
+                                        </div>
+                                        <div class="form-group mr-5 ml-5">
+                                            <label for="password">Mot de passe</label>
+                                            <input type="password" class="form-control" name="password" placeholder="" value="">
+                                            <span class="text-danger">Votre identifiant et/ou mot de passe sont incorrects</span>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-primary" value="Se connecter" name="oklogin">Se connecter</button>
+                                            </div>    
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col">
+                                                <p>
+                                                    <a href="Controller?section=newCompteClient">Vous n'avez pas encore de compte IBWT ? Inscrivez vous</a>
+                                                </p>
+                                            </div>
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </c:if>
+
 
                     <c:if test="${okay == '2' }">
                         <center>Bienvenue ${nom}</center>          
-                        
-                        </c:if>
 
-                </div></div>
+                    </c:if>
+
+                </div>
+            </div>
             <!-- footer -->
             <%@include file="Footer.jsp" %>
         </div>
