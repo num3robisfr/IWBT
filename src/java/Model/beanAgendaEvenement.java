@@ -63,9 +63,10 @@ public class beanAgendaEvenement implements Serializable {
             }
             rs.close();
             stmt.close();
+            connexion.close();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "ERREUR SQL " + e.getMessage());
+            System.err.print("ERREUR SQL " + e.getMessage());
         }
         return listeEvenement;
     }

@@ -1,10 +1,11 @@
 
 package classe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class Bibliotheque {
+public class Bibliotheque implements Serializable{
     
     
     /*
@@ -48,7 +49,7 @@ public class Bibliotheque {
         this.laBibliotheque.add(com);
 
     }
-    public void add(Client cli) {
+    public void add(beanClient cli) {
 
         this.laBibliotheque.add(cli);
 

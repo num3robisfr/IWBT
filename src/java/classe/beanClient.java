@@ -1,6 +1,7 @@
 
 package classe;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ import javax.swing.JOptionPane;
  *
  * @author cdi311
  */
-public class Client {
+public class beanClient implements Serializable{
     private int cliId;
     private String cliNom;
     private String cliPrenom;
@@ -25,17 +26,17 @@ public class Client {
     private String cliDateEntree;
     private String cliDateSortie;
     
-    public Client(){
+    public beanClient(){
         
     }
 
-    public Client(int cliId, String cliNom, String cliPrenom) {
+    public beanClient(int cliId, String cliNom, String cliPrenom) {
         this.cliId = cliId;
         this.cliNom = cliNom;
         this.cliPrenom = cliPrenom;
     }
     
-    public Client(int cliId, String cliNom, String cliPrenom, String cliEmail, String cliTelephone, String cliDateEntree) {
+    public beanClient(int cliId, String cliNom, String cliPrenom, String cliEmail, String cliTelephone, String cliDateEntree) {
         this.cliId = cliId;
         this.cliNom = cliNom;
         this.cliPrenom = cliPrenom;

@@ -1,5 +1,6 @@
 package Model;
 
+import classe.Evenement;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
@@ -7,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class beanClient implements Serializable {
 
@@ -31,6 +34,16 @@ public class beanClient implements Serializable {
         this.email = email;
         this.password = password;
         this.telephone = telephone;
+    }
+
+    public beanClient(int Id, String nom, String prenom, String genre, String email, String telephone, Date dateEntree) {
+        this.Id = Id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.genre = genre;
+        this.email = email;
+        this.telephone = telephone;
+        this.dateEntree = dateEntree;
     }
 
     public int getId() {
@@ -121,16 +134,16 @@ public class beanClient implements Serializable {
         try {
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            if (rs.next()!=false) {
-                nomClient = rs.getString("cliPrenom") +" "+ rs.getString("cliNom").toUpperCase();
+            if (rs.next() != false) {
+                nomClient = rs.getString("cliPrenom") + " " + rs.getString("cliNom").toUpperCase();
             }
             rs.close();
             stmt.close();
+            connexion.close();
         } catch (SQLException ex) {
             System.out.println("Oops:SQL:" + ex.getMessage());
         }
-        System.out.println(query);
-        System.out.println(nomClient);
+
         return nomClient;
     }
 
@@ -158,6 +171,8 @@ public class beanClient implements Serializable {
             if (clefs.next()) {
                 cliId = clefs.getInt(1);
             }
+            pstmt.close();
+            connexion.close();
         } catch (SQLException ex) {
             cliId = 0;
             System.out.println("erreur requete AddClient : " + ex);
@@ -165,5 +180,32 @@ public class beanClient implements Serializable {
 
         return cliId;
     }
-    
+
+    public beanClient ChargerBeanClient(int id, Connection connexion) {
+
+        beanClient c = null;
+        String query = "SELECT * FROM Client WHERE cliId = " + id;
+
+        try {
+            Statement stmt = connexion.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                c = new beanClient(rs.getInt("cliId"),
+                        rs.getString("cliNom"),
+                        rs.getString("cliPrenom"),
+                        rs.getString("cliGenre"),
+                        rs.getString("cliEmail"),
+                        rs.getString("cliTelephone"),
+                        rs.getDate("cliDateEntree"));
+
+            }
+            rs.close();
+            stmt.close();
+            connexion.close();
+
+        } catch (SQLException e) {
+            System.err.print("ERREUR SQL " + e.getMessage());
+        }
+        return c;
+    }
 }

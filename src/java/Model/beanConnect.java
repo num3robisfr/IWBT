@@ -19,10 +19,11 @@ import javax.sql.DataSource;
 public class beanConnect implements Serializable {
 
     private static DataSource ds;
-    private static Connection connexion;
 
     public Connection getConnexion() {
-
+        
+        Connection connexion  = null;
+        
         if (ds == null) {
             try {
                 InitialContext context = new InitialContext();
@@ -32,15 +33,14 @@ public class beanConnect implements Serializable {
                 System.out.println("Oops:Naming:" + ex.getMessage());
             }
         }
-        if (connexion == null) {
-            try {
-                connexion = ds.getConnection();
-
-            } catch (SQLException ex) {
-                System.out.println("Oops:SQL:" + ex.getMessage());
-            }
+        try {
+            connexion = ds.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(beanConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return connexion;
-    }
+
+    
+    return connexion ;
+}
 
 }

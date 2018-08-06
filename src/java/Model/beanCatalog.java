@@ -72,10 +72,11 @@ public class beanCatalog implements Serializable {
             }
             rs.close();
             stmt.close();
+            connexion.close();
+
         } catch (SQLException ex) {
             System.out.println("Oops:SQL:" + ex.getMessage());
         }
-        System.out.println(query);
         return listeOeuvres;
     }
 
@@ -111,6 +112,7 @@ public class beanCatalog implements Serializable {
             }
             rs.close();
             stmt.close();
+            connexion.close();
         } catch (SQLException ex) {
             System.out.println("Oops:SQL:" + ex.getMessage());
         }
@@ -121,7 +123,7 @@ public class beanCatalog implements Serializable {
 
         listeOeuvresEvenement = new ArrayList();
         String query = "SELECT * FROM ListesOeuvresEvenement WHERE EvenementId = " + filtre;
-        
+
         try {
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -149,6 +151,7 @@ public class beanCatalog implements Serializable {
             }
             rs.close();
             stmt.close();
+            connexion.close();
         } catch (SQLException ex) {
             System.out.println("Oops:SQL:" + ex.getMessage());
         }

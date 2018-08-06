@@ -16,8 +16,8 @@ import java.util.ArrayList;
  *
  * @author cdi311
  */
-public class beanTheme implements Serializable{
-    
+public class beanTheme implements Serializable {
+
     private int id;
     private String intitule;
 
@@ -45,25 +45,27 @@ public class beanTheme implements Serializable{
         this.intitule = intitule;
     }
 
-    public ArrayList<beanTheme> getAllTheme(Connection connexion){
+    public ArrayList<beanTheme> getAllTheme(Connection connexion) {
         ArrayList<beanTheme> ls = new ArrayList();
 
         try {
             String query = "SELECT * FROM Theme";
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            
-            while (rs.next()) {                
+
+            while (rs.next()) {
                 beanTheme o = new beanTheme(rs.getInt("theId"), rs.getString("theIntitule"));
                 ls.add(o);
             }
             stmt.close();
-            rs.close(); 
+            rs.close();
+            connexion.close();
+
         } catch (SQLException e) {
             System.out.println("Oops:SQL:" + e.getMessage());
         }
 
         return ls;
     }
-    
+
 }

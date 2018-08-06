@@ -1,7 +1,9 @@
 
 package classe;
 
-public class Adresse {
+import java.io.Serializable;
+
+public class Adresse implements Serializable{
     
     private int adrId;
     private int cliId;
@@ -49,6 +51,27 @@ public class Adresse {
         this.adrPays = adrPays;
     }
 
+    public Adresse(int adrId, int cliId, String nomAdresse, String prenomAdresse, String adrVoie, String adrComplement, String adrCodePostal, String adrVille, String adrPays, int adrStatut) {
+        this.adrId = adrId;
+        this.cliId = cliId;
+        this.nomAdresse = nomAdresse;
+        this.prenomAdresse = prenomAdresse;
+        this.adrVoie = adrVoie;
+        this.adrComplement = adrComplement;
+        this.adrCodePostal = adrCodePostal;
+        this.adrVille = adrVille;
+        this.adrPays = adrPays;
+        this.adrStatut = adrStatut;
+    }
+
+    public int getAdrId() {
+        return adrId;
+    }
+
+    public void setAdrId(int adrId) {
+        this.adrId = adrId;
+    }
+
     public int getCliId() {
         return cliId;
     }
@@ -71,26 +94,6 @@ public class Adresse {
 
     public void setPrenomAdresse(String prenomAdresse) {
         this.prenomAdresse = prenomAdresse;
-    }
-    
-    
-    
-    
-
-    public int getAdrStatut() {
-        return adrStatut;
-    }
-
-    public void setAdrStatut(int adrStatut) {
-        this.adrStatut = adrStatut;
-    }
-
-    public int getAdrId() {
-        return adrId;
-    }
-
-    public void setAdrId(int adrId) {
-        this.adrId = adrId;
     }
 
     public String getAdrVoie() {
@@ -132,6 +135,17 @@ public class Adresse {
     public void setAdrPays(String adrPays) {
         this.adrPays = adrPays;
     }
+
+    public int getAdrStatut() {
+        return adrStatut;
+    }
+
+    public void setAdrStatut(int adrStatut) {
+        this.adrStatut = adrStatut;
+    }
+    
+
+
 
     @Override
     public String toString() {

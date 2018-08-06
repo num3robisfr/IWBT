@@ -7,14 +7,14 @@
 
 package outil;
 
-import classe.Client;
+import classe.beanClient;
 import classe.Commande;
 import exception.Exceptions;
 import java.util.Vector;
 
 public class OutilsVector {
     
-    Client cli = new Client ();
+    beanClient cli = new beanClient ();
     Commande com = new Commande ();
     
     public Object getOutilVector() throws Exceptions {

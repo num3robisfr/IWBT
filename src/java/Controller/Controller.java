@@ -178,9 +178,7 @@ public class Controller extends HttpServlet {
 
                 if (checkLogin != null) {
                     request.setAttribute("okay", "2");
-
-                    request.setAttribute("nom", checkLogin);
-
+                    request.setAttribute("nom", checkLogin); 
                     c = new Cookie("username", checkLogin);
                     c.setMaxAge(3600 * 24 * 7);
                     response.addCookie(c);

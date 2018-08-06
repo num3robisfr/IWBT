@@ -1,6 +1,5 @@
 package classe;
 
-import exception.Exceptions;
 import java.sql.Date;
 import java.util.Vector;
 
