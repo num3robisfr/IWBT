@@ -13,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="./css/style.css" />
-        <title>IBWT Evènements</title>
+        <title>Agenda Evènements</title>
     </head>
     <body>
         <div id="bloc-page">
@@ -24,7 +24,6 @@
                 <!-- Sidebar -->     
                 <%@include file="Sidebar.jsp" %>
                 <!-- catalogue -->    
-
                 <div id="catalogue">
                     <div class="container">
 
@@ -33,8 +32,7 @@
                             <div class="row"> 
                                 <c:forEach items="${listeEvenement}" var="l">
                                     <div class="col-4"> 
-                                        <br><a class="card-img-top mx-auto d-block" href="Controller?section=evenement&intitule=${l.eveId}">${l.eveIntitule}    <p style="color: green;"> du ${l.eveDateDebut} au ${l.eveDateFin}</p><img src="${l.eveUrl}" alt=${l.eveIntitule} width="100%"></a><br>
-
+                                        <br><a class="card-img-top mx-auto d-block" href="Controller?section=evenement&intitule=${l.eveId}">${l.eveIntitule}    <p style="color: green;"> du ${l.eveDateDebut} au ${l.eveDateFin}</p><img src="${l.eveUrl}" alt=${l.eveIntitule} width="100%"></a><br>                                       
                                     </div>
                                 </c:forEach>
                             </div>
