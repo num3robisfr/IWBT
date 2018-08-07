@@ -14,7 +14,7 @@
             <c:if test="${okay == '2'}">
 
                 <div class = "nomclient" >${nom}</div> <div>&nbsp <a href="Controller?section=login">Mon Compte</a> </div>
-                <div> <br><br><a href="Controller?section=logout">Déconnection</a></div>
+                <div> <br><br><a href="Controller?section=logout">Déconnexion</a></div>
 
             </c:if>  
 
