@@ -99,7 +99,6 @@ public class beanPanier implements Serializable {
                 total += i.getSomme();
             }
         }
-        System.out.println("+++++++++++++" + total);
         return total;
     }
 
