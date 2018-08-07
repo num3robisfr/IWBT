@@ -59,7 +59,6 @@ public class beanAgendaEvenement implements Serializable {
                         rs.getString("eveUrl"),
                         rs.getString("eveObservation"));
                 listeEvenement.add(e);
-                System.out.println(e.getEveTauxPromo());
             }
             rs.close();
             stmt.close();

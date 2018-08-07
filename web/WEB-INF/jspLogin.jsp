@@ -1,3 +1,5 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -5,7 +7,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="./css/style.css" />
-        <title>IBWT - Login</title>     
+        <c:if test="${okay == '2' }">
+            <title>${nom}</title>     
+        </c:if>
+        <c:if test="${okay != '2' }">
+            <title>Connectez-vous</title>     
+        </c:if>
     </head> 
     <body>
         <div id="bloc-page">
@@ -15,8 +22,13 @@
 
             <!-- section sidebar et catalogue -->
             <div id="section">
-                <!-- Sidebar -->     
-                <%@include file="Sidebar.jsp" %>
+                <!-- Sidebar -->   
+                <c:if test="${okay == '2' }">
+                    <%@include file="Sidebar2.jsp" %>
+                </c:if>
+                <c:if test="${okay != '2' }">
+                    <%@include file="Sidebar.jsp" %>
+                </c:if>
 
                 <div id="catalogue">
                     <c:if test="${okay == '0'}">
@@ -54,7 +66,7 @@
                         </form>
                     </c:if>
                     <c:if test="${okay == '1'}">
-                                                <form name="loginform" action="Controller?section=login" method="POST">
+                        <form name="loginform" action="Controller?section=login" method="POST">
                             <div class="row" style="margin-top: 100px;">
 
                             </div>
@@ -87,13 +99,14 @@
                                 </div>
                             </div>
                         </form>
-                        
+
                     </c:if>
 
 
                     <c:if test="${okay == '2' }">
-                        <center>Bienvenue ${nom}</center>          
-
+                        <div id="user"><center>Bienvenue ${nom}</center></div>
+                        <br><hr>
+                        <h1>Dernière commande</h1>
                     </c:if>
 
                 </div>
