@@ -77,7 +77,7 @@ public class Controller extends HttpServlet {
 
         if (beanae == null) {
             beanae = new beanAgendaEvenement();
-            beanae.setListeEvenement(beanae.ChargerListeEvenement(beanc.getConnexion(), "WHERE eveDateDebut >= getdate() and eveDateDebut < (getdate()+120)"));
+            beanae.setListeEvenement(beanae.ChargerListeEvenement(beanc.getConnexion(), "WHERE eveDateDebut >= getdate() and eveDateDebut < (getdate()+90)"));
             session.setAttribute("beanae", beanae);
         }
 
@@ -115,6 +115,7 @@ public class Controller extends HttpServlet {
         if ("catalog".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspCatalog.jsp";
             request.setAttribute("listeNouv", beanca.getListeNouveautes());
+            beanae.setListeEvenement(beanae.ChargerListeEvenement(beanc.getConnexion(), "WHERE eveDateDebut >= getdate() and eveDateDebut < (getdate()+90)"));
             request.setAttribute("listeEvenement", beanae.getListeEvenement());
         }
 

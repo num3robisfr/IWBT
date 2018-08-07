@@ -9,9 +9,13 @@
             </div>
     </div>
     <ul class="un">
-        <li>MES COMMANDES</li>
-        <li>MES COMMANDES</li>
-        <li>MES COMMANDES</li>
-        <li>MES COMMANDES</li>
+        <li><a href="Controller?section=listecommande">MES COMMANDES</a></li>
+        <hr>
+        <li><a href="Controller?section=infopersonnelle">MES INFORMATIONS PERSONNELLES</a></li>
+        <hr>
+        <li><a href="Controller?section=avantages">MES AVANTAGES</a></li>
+        <hr>
+        <li><a href="Controller?section=avantages">AIDES</a></li>
+        <hr>
     </ul> 
 </div>
