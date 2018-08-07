@@ -28,8 +28,9 @@
                 <div id="catalogue">
                     <center> <br><h1>${evenement.eveIntitule}</h1><br><img src="${evenement.eveUrl}" class = "imageflottante"alt=${evenement.eveIntitule} width="40%"><br></center>
                     <p class="eveDescription">${evenement.eveDescription}</p>
-                  
-                    <c:if test="${eveTauxPromo != 0}" >
+                    
+                   
+                    <c:if test="${promo =='ok'}">
                         <p class="eveDescription">Promotion de ${evenement.eveTauxPromo}%</p>
                     </c:if>
 

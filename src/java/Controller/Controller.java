@@ -168,6 +168,10 @@ public class Controller extends HttpServlet {
                 if (e.getEveId().equals(request.getParameter("intitule"))) {
                     evt = e;
                     request.setAttribute("evenement", evt);
+                    if(e.getEveTauxPromo()!= 0){
+                    request.setAttribute("promo", "ok");
+                    }
+                    System.out.println(e.getEveTauxPromo());
                 }
             }
 

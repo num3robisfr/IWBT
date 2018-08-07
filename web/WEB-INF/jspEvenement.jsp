@@ -10,7 +10,7 @@
 
 <div id="evenement">
     <!-- bienvenue -->
-    <br><h1> Evènements</h1>
+    <br><h1>Prochains Evènements</h1>
     <div class="row"> 
         <c:forEach items="${listeEvenement}" var="l">
             <div class="col-4"> 
