@@ -9,7 +9,7 @@ public class Evenement implements Serializable {
     private String eveIntitule;
     private String eveDateDebut;
     private String eveDateFin;
-    private String eveTauxPromo;
+    private int eveTauxPromo;
     private String eveUrl;
     private String eveDescription;
 
@@ -19,7 +19,7 @@ public class Evenement implements Serializable {
     public Evenement() {
     }
 
-    public Evenement(String eveId, String eveIntitule, String eveDateDebut, String eveDateFin, String eveTauxPromo, String eveUrl, String eveDescription) {
+    public Evenement(String eveId, String eveIntitule, String eveDateDebut, String eveDateFin, int eveTauxPromo, String eveUrl, String eveDescription) {
         this.eveId = eveId;
         this.eveIntitule = eveIntitule;
         this.eveDateDebut = eveDateDebut;
@@ -83,11 +83,11 @@ public class Evenement implements Serializable {
         this.eveDateFin = eveDateFin;
     }
 
-    public String getEveTauxPromo() {
+    public int getEveTauxPromo() {
         return eveTauxPromo;
     }
 
-    public void setEveTauxPromo(String eveTauxPromo) {
+    public void setEveTauxPromo(int eveTauxPromo) {
         this.eveTauxPromo = eveTauxPromo;
     }
 

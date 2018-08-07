@@ -55,11 +55,11 @@ public class beanAgendaEvenement implements Serializable {
                         rs.getString("eveIntitule"),
                         outil.OutilsFormatage.formaterDate(rs.getDate("eveDateDebut")),
                         outil.OutilsFormatage.formaterDate(rs.getDate("eveDateFin")),
-                        rs.getString("eveTauxPromo"),
+                        rs.getInt("eveTauxPromo"),
                         rs.getString("eveUrl"),
                         rs.getString("eveObservation"));
                 listeEvenement.add(e);
-
+                System.out.println(e.getEveTauxPromo());
             }
             rs.close();
             stmt.close();

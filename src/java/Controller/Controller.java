@@ -36,7 +36,7 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+//        request.setCharacterEncoding("UTF-8");
 
 //------------------------------------------------------------------------------
 //                         LES VARIABLES GLOBALES
@@ -97,12 +97,15 @@ public class Controller extends HttpServlet {
             beancl = new beanClient();
             session.setAttribute("beancl", beancl);
         }
-        
+
         if (c == null) {
             request.setAttribute("okay", "0");
 
         } else {
             checkLogin = c.getValue();
+            c = new Cookie("username", checkLogin);
+            c.setMaxAge(3600 * 24 * 7);
+            response.addCookie(c);
             request.setAttribute("nom", checkLogin);
             request.setAttribute("okay", "2");
         }
@@ -150,17 +153,24 @@ public class Controller extends HttpServlet {
             request.setAttribute("listeOeuvSousTheme", beanca.getListeOeuvres());
             request.setAttribute("soustheme", sousTheme.toUpperCase());
         }
+        if ("agenda".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspagendaEvenement.jsp";
+            request.setAttribute("listeEvenement", beanae.getListeEvenement());
+
+        }
 
         if ("evenement".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspEvent.jsp";
             beanca.setListeOeuvresEvenement(beanca.remplirListeOeuvresEvenement(beanc.getConnexion(), request.getParameter("intitule")));
             request.setAttribute("listeevenementoeuvre", beanca.getListeOeuvresEvenement());
-
+            Evenement evt = new Evenement();
             for (Evenement e : (ArrayList<Evenement>) beanae.getListeEvenement()) {
                 if (e.getEveId().equals(request.getParameter("intitule"))) {
-                    request.setAttribute("evenement", e);
+                    evt = e;
+                    request.setAttribute("evenement", evt);
                 }
             }
+
         }
 
         if ("login".equals(request.getParameter("section"))) {
@@ -178,7 +188,7 @@ public class Controller extends HttpServlet {
 
                 if (checkLogin != null) {
                     request.setAttribute("okay", "2");
-                    request.setAttribute("nom", checkLogin); 
+                    request.setAttribute("nom", checkLogin);
                     c = new Cookie("username", checkLogin);
                     c.setMaxAge(3600 * 24 * 7);
                     response.addCookie(c);
@@ -188,17 +198,16 @@ public class Controller extends HttpServlet {
             }
             if (checkLogin == null) {
                 request.setAttribute("okay", "1");
-            } else
-            if (checkLogin.equals("0")) {
+            } else if (checkLogin.equals("0")) {
                 request.setAttribute("okay", "0");
             }
         }
         if ("logout".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
 
-                c.setMaxAge(0);
-                response.addCookie(c);
-                request.setAttribute("okay", "0");
+            c.setMaxAge(0);
+            response.addCookie(c);
+            request.setAttribute("okay", "0");
         }
 
         if ("newCompteClient".equals(request.getParameter("section"))) {

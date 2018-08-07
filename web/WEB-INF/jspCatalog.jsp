@@ -7,7 +7,7 @@
         <jsp:include page="jspEvenement.jsp" flush="true" />
         <br>
 
-        <h1>Nouveauté</h1>
+        <h1>Nouveautés</h1>
         <br>
         <div class="row d-flex wrap">
             <c:forEach items="${listeNouv}" var="p">
