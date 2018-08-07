@@ -88,7 +88,7 @@
                                 <c:if test="${oeuvre.oeuMoyenneCmt != null}">
                                     <img src="./Images/${oeuvre.oeuMoyenneCmt}_etoile.png"> 
                                 </c:if><br><br>
-                                ${oeuvre.oeuNbreCdc}  <img src='./Images/pouce.jpg' width='3%'>  de la part de la rédaction
+                                ${oeuvre.oeuNbreCdc}  <img src='./Images/coeur.png'>  de la part de la rédaction
                             </p>
                         </div>
                         <div class="col-1"></div>
