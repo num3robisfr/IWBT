@@ -27,6 +27,13 @@
                         <div class="col-5">
                             <h1 class="card-title">${oeuvre.oeuTitre}</h1>
                             <p><strong>${oeuvre.autNom}</strong>  <small>Date de parution : ${oeuvre.oeuDateParution}</small>
+                                <c:if test="${oeuvre.oeuMoyenneCmt == null}">
+                                    <br>pas de note 
+                                </c:if>
+                                <c:if test="${oeuvre.oeuMoyenneCmt != null}">
+                                    <img src="./Images/${oeuvre.oeuMoyenneCmt}_etoile.png"> 
+                                </c:if>
+
                             </p>
 
                             <div class="card bg-light mb-3 border-primary" style="max-width: 18rem;">
@@ -43,7 +50,7 @@
                                         <input type='hidden' name='titre' value="${oeuvre.oeuTitre}" />
                                         <input type='hidden' name='prix' value='${oeuvre.oeuPrix}' />
                                         <INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='ajout' VALUE='Ajouter' />
-                                        
+
                                     </form>
                                 </div>
                             </div>   
@@ -76,10 +83,10 @@
                                 ISBN : ${oeuvre.oeuIsbn}<br>
                                 Moyenne des commentaires : 
                                 <c:if test="${oeuvre.oeuMoyenneCmt == null}">
-                                    pas de note 
+                                     pas de note 
                                 </c:if>
                                 <c:if test="${oeuvre.oeuMoyenneCmt != null}">
-                                    ${oeuvre.oeuMoyenneCmt} (${oeuvre.oeuNbreCmt} commentaire(s) )
+                                    <img src="./Images/${oeuvre.oeuMoyenneCmt}_etoile.png"> 
                                 </c:if><br><br>
                                 ${oeuvre.oeuNbreCdc}  <img src='./Images/pouce.jpg' width='3%'>  de la part de la rédaction
                             </p>
