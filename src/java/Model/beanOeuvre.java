@@ -19,7 +19,6 @@ public class beanOeuvre implements Serializable {
     private String tvaTaux;
     private String oeuNbreCmt;
     private String oeuMoyenneCmt;
-    private Integer oeuQte;
     private String oeuStatut;
     private String oeuNbreCdc;
 
@@ -175,14 +174,6 @@ public class beanOeuvre implements Serializable {
 
     public void setOeuMoyenneCmt(String oeuMoyenneCmt) {
         this.oeuMoyenneCmt = oeuMoyenneCmt;
-    }
-
-    public Integer getOeuQte() {
-        return oeuQte;
-    }
-
-    public void setOeuQte(Integer oeuQte) {
-        this.oeuQte = oeuQte;
     }
 
     public String getOeuStatut() {

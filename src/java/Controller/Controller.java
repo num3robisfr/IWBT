@@ -172,7 +172,6 @@ public class Controller extends HttpServlet {
                     if (e.getEveTauxPromo() != 0) {
                         request.setAttribute("promo", "ok");
                     }
-                    System.out.println(e.getEveTauxPromo());
                 }
             }
 
