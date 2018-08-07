@@ -27,13 +27,12 @@
       
                 <div id="catalogue">
                     <center> <br><h1>${evenement.eveIntitule}</h1><br><img src="${evenement.eveUrl}" class = "imageflottante"alt=${evenement.eveIntitule} width="40%"><br></center>
-                    <p class="eveDescription">${evenement.eveDescription}</p>
-                    
+                    <p class="eveDescription">${evenement.eveDescription}</p>                   
                    
                     <c:if test="${promo =='ok'}">
                         <p class="eveDescription">Promotion de ${evenement.eveTauxPromo}%</p>
                     </c:if>
-
+                        
                     <p class="dessous" style="color: green;"><h2 class="date"><center><blink> du ${evenement.eveDateDebut} au ${evenement.eveDateFin}</blink></center></h2></p>
 
                     <h1>   <center>Livres concernés</center></h1><br>

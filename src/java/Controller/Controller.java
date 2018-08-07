@@ -77,7 +77,7 @@ public class Controller extends HttpServlet {
 
         if (beanae == null) {
             beanae = new beanAgendaEvenement();
-            beanae.setListeEvenement(beanae.ChargerListeEvenement(beanc.getConnexion()));
+            beanae.setListeEvenement(beanae.ChargerListeEvenement(beanc.getConnexion(), "WHERE eveDateDebut >= getdate() and eveDateDebut < (getdate()+120)"));
             session.setAttribute("beanae", beanae);
         }
 
@@ -155,6 +155,7 @@ public class Controller extends HttpServlet {
         }
         if ("agenda".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspagendaEvenement.jsp";
+            beanae.setListeEvenement(beanae.ChargerListeEvenement(beanc.getConnexion(), "WHERE eveDateFin >= getdate()"));
             request.setAttribute("listeEvenement", beanae.getListeEvenement());
 
         }
@@ -168,8 +169,8 @@ public class Controller extends HttpServlet {
                 if (e.getEveId().equals(request.getParameter("intitule"))) {
                     evt = e;
                     request.setAttribute("evenement", evt);
-                    if(e.getEveTauxPromo()!= 0){
-                    request.setAttribute("promo", "ok");
+                    if (e.getEveTauxPromo() != 0) {
+                        request.setAttribute("promo", "ok");
                     }
                     System.out.println(e.getEveTauxPromo());
                 }

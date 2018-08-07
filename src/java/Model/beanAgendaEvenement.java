@@ -40,11 +40,11 @@ public class beanAgendaEvenement implements Serializable {
     }
 
     /* *************************************************************************************************** */
-    public ArrayList<Evenement> ChargerListeEvenement(Connection connexion) {
+    public ArrayList<Evenement> ChargerListeEvenement(Connection connexion, String filtre) {
 
         listeEvenement = new ArrayList<Evenement>();
 
-        String query = "SELECT * FROM Evenement WHERE eveDateDebut >= getdate() and eveDateDebut < (getdate()+120)"
+        String query = "SELECT * FROM Evenement " + filtre
                 + " ORDER BY  eveDateDebut ASC ";
 
         try {
