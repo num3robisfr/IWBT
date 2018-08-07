@@ -10,8 +10,12 @@
     </div>
     <ul class="un">
         <li>MES COMMANDES</li>
-        <li>MES COMMANDES</li>
-        <li>MES COMMANDES</li>
-        <li>MES COMMANDES</li>
+        <hr>
+        <li>MES INFORMATIONS PERSONNELLES</li>
+        hr>
+        <li>MES AVANTAGES</li>
+        <hr>
+        <li>AIDES</li>
+        <hr>
     </ul> 
 </div>
