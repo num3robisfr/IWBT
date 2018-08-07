@@ -215,11 +215,10 @@ h1{
 }
 
 .imageflottante{
-    float: left;
+    float: right;
 }
 
 .eveDescription{
-    margin-left: 620px;
     font-size: 1.6em;
     color :  blue;
 

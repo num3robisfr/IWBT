@@ -34,7 +34,7 @@
                     </c:if>
                         
                     <p class="dessous" style="color: green;"><h2 class="date"><center><blink> du ${evenement.eveDateDebut} au ${evenement.eveDateFin}</blink></center></h2></p>
-
+                <hr>
                     <h1>   <center>Livres concernés</center></h1><br>
                     <div class="row">
                         <div class="container">

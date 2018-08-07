@@ -16,7 +16,7 @@
             <!-- section sidebar et catalogue -->
             <div id="section">
                 <!-- Sidebar -->     
-                <%@include file="Sidebar.jsp" %>
+    
 
                 <div id="catalogue">
                     <div class="container">

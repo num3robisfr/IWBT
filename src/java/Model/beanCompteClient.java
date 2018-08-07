@@ -22,14 +22,15 @@ public class beanCompteClient implements Serializable {
     public beanCompteClient() {
     }
 
-    public beanCompteClient(beanClient client, ArrayList<Adresse> listeAdresseLivraison) {
-        this.client = client;
-        this.listeAdresseLivraison = listeAdresseLivraison;
-    }
 
     public beanCompteClient(beanClient client, ArrayList<Adresse> listeAdresseLivraison, ArrayList<Commande> commandesClient) {
         this.client = client;
         this.listeAdresseLivraison = listeAdresseLivraison;
+        this.commandesClient = commandesClient;
+    }
+
+    public beanCompteClient(beanClient client, ArrayList<Commande> commandesClient) {
+        this.client = client;
         this.commandesClient = commandesClient;
     }
 
