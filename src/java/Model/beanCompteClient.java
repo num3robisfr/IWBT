@@ -22,7 +22,6 @@ public class beanCompteClient implements Serializable {
     public beanCompteClient() {
     }
 
-
     public beanCompteClient(beanClient client, ArrayList<Adresse> listeAdresseLivraison, ArrayList<Commande> commandesClient) {
         this.client = client;
         this.listeAdresseLivraison = listeAdresseLivraison;
@@ -151,5 +150,40 @@ public class beanCompteClient implements Serializable {
         return listeAdresseLivraison;
     }
 
+    public ArrayList<beanLigneDeCommande> ChargerListeCommande(Connection connexion, int cliId) {
+
+        ArrayList<beanLigneDeCommande> listeLigneDeCommande = new ArrayList<beanLigneDeCommande>();
+
+        String query = "SELECT * FROM DetailCommandeClient WHERE cliId = " + cliId;
+
+        try {
+            Statement stmt = connexion.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                beanLigneDeCommande l = new beanLigneDeCommande(rs.getInt("CliId"),
+                        rs.getInt("ComId"),
+                        rs.getString("Client"),
+                        rs.getDate("DateCommande"),
+                        rs.getString("Statut"),
+                        rs.getString("ISBN"),
+                        rs.getString("Titre"),
+                        rs.getInt("Quantite"),
+                        rs.getFloat("PrixUnitaireHT"),
+                        rs.getFloat("PrixUnitaireTTC"),
+                        rs.getFloat("Tva"),
+                        rs.getInt("Promo"),
+                        rs.getFloat("TotalTTC"),
+                        rs.getString("UrlImage"));
+                listeLigneDeCommande.add(l);
+
+            }
+            rs.close();
+            stmt.close();
+            connexion.close();
+        } catch (SQLException e) {
+            System.err.print("ERREUR SQL " + e.getMessage());
+        }
+        return listeLigneDeCommande;
+    }
 
 }

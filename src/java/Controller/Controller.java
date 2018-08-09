@@ -50,15 +50,18 @@ public class Controller extends HttpServlet {
         beanTheme beant = (beanTheme) session.getAttribute("beant");
         beanSousTheme beanst = (beanSousTheme) session.getAttribute("beanst");
         beanClient beancl = (beanClient) session.getAttribute("beancl");
+        ArrayList<beanLigneDeCommande> listeCommande = new ArrayList<beanLigneDeCommande>();
+        beanCompteClient bcc = new beanCompteClient();
 
         String checkLogin;
-
+        int id = 0;
         Map<String, String> erreurs = new HashMap<>();
         Map<String, String> client = new HashMap();
 
         String url = "/WEB-INF/jspAccueil.jsp";
 
         Cookie c = getCookie(request.getCookies(), "username");
+        Cookie d = getCookie(request.getCookies(), "ID");
 
 //------------------------------------------------------------------------------
 //                             SERIALIZATION
@@ -98,16 +101,27 @@ public class Controller extends HttpServlet {
             session.setAttribute("beancl", beancl);
         }
 
+        if (d == null) {
+            request.setAttribute("Id", -1);
+        } else {
+            id = Integer.valueOf(d.getValue());
+            d = new Cookie("ID", String.valueOf(id));
+            d.setMaxAge(3600 * 24 * 7);
+            response.addCookie(d);
+        }
+
         if (c == null) {
             request.setAttribute("okay", "0");
 
         } else {
             checkLogin = c.getValue();
             c = new Cookie("username", checkLogin);
+
             c.setMaxAge(3600 * 24 * 7);
             response.addCookie(c);
             request.setAttribute("nom", checkLogin);
             request.setAttribute("okay", "2");
+
         }
 //------------------------------------------------------------------------------
 //                              LES SECTIONS
@@ -158,13 +172,21 @@ public class Controller extends HttpServlet {
             url = "/WEB-INF/jspagendaEvenement.jsp";
             beanae.setListeEvenement(beanae.ChargerListeEvenement(beanc.getConnexion(), "WHERE eveDateFin >= getdate()"));
             request.setAttribute("listeEvenement", beanae.getListeEvenement());
-
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////
+        ///       Gestion jsp Event : page de connexion et de gestion de compte           ///
+        /////////////////////////////////////////////////////////////////////////////////////
+        //
         if ("evenement".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspEvent.jsp";
             beanca.setListeOeuvresEvenement(beanca.remplirListeOeuvresEvenement(beanc.getConnexion(), request.getParameter("intitule")));
             request.setAttribute("listeevenementoeuvre", beanca.getListeOeuvresEvenement());
+            if (beanca.getListeOeuvresEvenement().isEmpty()) {
+                request.setAttribute("listevide", "ok");
+            } else {
+                request.setAttribute("listevide", "notok");
+            }
             Evenement evt = new Evenement();
             for (Evenement e : (ArrayList<Evenement>) beanae.getListeEvenement()) {
                 if (e.getEveId().equals(request.getParameter("intitule"))) {
@@ -175,23 +197,50 @@ public class Controller extends HttpServlet {
                     }
                 }
             }
-
         }
 
+        if ("listecommande".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspLogin.jsp";
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        ///       Gestion jsp login : page de connexion et de gestion de compte           ///
+        /////////////////////////////////////////////////////////////////////////////////////
+        //
         if ("login".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
             checkLogin = "0";
-
             if (c != null) {
                 checkLogin = c.getValue();
                 request.setAttribute("okay", "2");
+                listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
+                session.setAttribute("listeCommande", listeCommande);
+
             } else {
                 request.setAttribute("okay", "0");
             }
+            /////////////////////////////////////////////////////////////////////////////////////
+            ///partie check login/mot de passe, créations Cookies,                      /////////
+            ///et attribution des valeur de session et requetes pour gérer affichage    /////////
+            /////////////////////////////////////////////////////////////////////////////////////
+            //
             if (request.getParameter("oklogin") != null) {
                 checkLogin = beancl.checkLogin(beanc.getConnexion(), request.getParameter("login"), request.getParameter("password"));
 
                 if (checkLogin != null) {
+                    beancl = new beanClient();
+                    beancl = beancl.ChargerBeanClient(request.getParameter("login"), beanc.getConnexion());
+                    session.setAttribute("beancl", beancl);
+                    id = beancl.getId();
+
+                    listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
+                    session.setAttribute("listeCommande", listeCommande);
+
+                    d = new Cookie("ID", String.valueOf(beancl.getId()));
+                    d.setMaxAge(3600 * 24 * 7);
+                    response.addCookie(d);
+                    request.setAttribute("Id", id);
+
                     request.setAttribute("okay", "2");
                     request.setAttribute("nom", checkLogin);
                     c = new Cookie("username", checkLogin);
@@ -201,20 +250,32 @@ public class Controller extends HttpServlet {
                     request.setAttribute("okay", "1");
                 }
             }
+            /////////////////////////////////////////////////////////////////////////////////////
+            /////////échec connexion et attribution des requetes pour affichage       ///////////
+            /////////////////////////////////////////////////////////////////////////////////////
+            //
             if (checkLogin == null) {
                 request.setAttribute("okay", "1");
             } else if (checkLogin.equals("0")) {
                 request.setAttribute("okay", "0");
             }
+
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        ////////                Déconnexion effacer Cookies                         /////////
+        /////////////////////////////////////////////////////////////////////////////////////
         if ("logout".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
-
+            d.setMaxAge(0);
+            response.addCookie(d);
+            request.setAttribute("Id", -1);
             c.setMaxAge(0);
             response.addCookie(c);
             request.setAttribute("okay", "0");
         }
 
+        //////////////////////////////////////////////////////////////////////////////////////////////
         if ("newCompteClient".equals(request.getParameter("section"))) {
             url = "/WEB-INF/newCompteClient.jsp";
         }

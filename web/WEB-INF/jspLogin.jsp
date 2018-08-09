@@ -107,6 +107,51 @@
                         <div id="user"><center>Bienvenue ${nom}</center></div>
                         <br><hr>
                         <h1>Dernière commande</h1>
+
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>Illustration</th>
+                                    <th>Date</th>
+                                    <th>Titre</th>
+                                    <th>Quantité</th>
+                                    <th>Prix unitaire HT</th>
+                                    <th>Prix unitaire TTC</th>
+                                    <th>Tva</th>
+                                    <th>Promo en %</th>
+                                    <th>Prix TTC</th>
+                                    <th>Etat de la commande</th>
+                                </tr>
+
+                            </thead>
+                            <c:set var="total" value="${0}" scope="page" />
+
+                            <c:forEach var="lc" items="${listeCommande}">
+                                <c:set var="total" value="${total + (lc.comTotalTtc*lc.comQty)}" />
+                                <tr>
+                                    <td><img class="card-img-top mx-auto d-block" style=" width: 30%;" src = "${lc.comUrlImage}" alt ="illustration" ></td>
+                                    <td>${lc.comDate}</td>
+                                    <td>${lc.comTitre}</td>
+                                    <td>${lc.comQty}</td>
+                                    <td>${lc.comPrixUnitaireHT}</td>
+                                    <td>${lc.comPrixUnitaireTTC}</td>
+                                    <td>${lc.comTva}</td>
+                                    <td>${lc.comPromo}</td>
+                                    <td>${lc.comTotalTtc}</td>
+                                    <td><span class="statut">${lc.comStatut}</span></td>
+
+                                </c:forEach>  
+
+                            </tr>
+
+                        </table>
+
+                            <br>
+                            <h3>Total TTC : <c:out value="${total}"/></h3>   
+
+
+
+
                     </c:if>
 
                 </div>

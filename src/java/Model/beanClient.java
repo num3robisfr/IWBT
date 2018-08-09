@@ -181,10 +181,10 @@ public class beanClient implements Serializable {
         return cliId;
     }
 
-    public beanClient ChargerBeanClient(int id, Connection connexion) {
+    public beanClient ChargerBeanClient(String cliEmail, Connection connexion) {
 
         beanClient c = null;
-        String query = "SELECT * FROM Client WHERE cliId = " + id;
+        String query = "SELECT * FROM Client WHERE cliEmail = '" + cliEmail + "'";
 
         try {
             Statement stmt = connexion.createStatement();

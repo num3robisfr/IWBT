@@ -219,6 +219,7 @@ h1{
 }
 
 .eveDescription{
+    margin-left: 20px;
     font-size: 1.6em;
     color :  blue;
 
@@ -226,4 +227,9 @@ h1{
 
 .dessous { 
     clear: both;
+}
+.statut {
+    color : green;
+    font-size: 0.8em;
+
 }
