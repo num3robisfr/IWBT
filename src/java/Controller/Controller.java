@@ -229,7 +229,7 @@ public class Controller extends HttpServlet {
 
                 if (checkLogin != null) {
                     beancl = new beanClient();
-                    beancl = beancl.ChargerBeanClient(request.getParameter("login"), beanc.getConnexion());
+                    beancl = beancl.ChargerBeanClient("cliEmail",request.getParameter("login"), beanc.getConnexion());
                     session.setAttribute("beancl", beancl);
                     id = beancl.getId();
 
@@ -286,7 +286,7 @@ public class Controller extends HttpServlet {
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
             String numTel = request.getParameter("telephone");
-            String dateNaissance = request.getParameter("dateNaissance");
+           
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String genre = request.getParameter("civilite");
@@ -315,12 +315,6 @@ public class Controller extends HttpServlet {
                 client.put("numTel", numTel);
             } catch (Exceptions e) {
                 erreurs.put("numTel", e.getMessage());
-            }
-            try {
-                checkDate(dateNaissance);
-                client.put("dateNaissance", dateNaissance);
-            } catch (Exceptions e) {
-                erreurs.put("dateNaissance", e.getMessage());
             }
             try {
                 checkEmail(email);
@@ -398,14 +392,11 @@ public class Controller extends HttpServlet {
 
                     if (adrId == 0) {
                         resultat.put("erreur", "erreur d'enregistrement");
-                        System.out.println("pb d'enregistrement");
                     }
                     if (adrId > 0) {
                         int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, cliId, bC);
-                        System.out.println("resultat AddrAdrFacturation :" + res);
 
                         resultat.put("message", "enregistrement effectué avec succés");
-                        System.out.println("enregistrement ok");
                     }
 
                 }
@@ -414,6 +405,86 @@ public class Controller extends HttpServlet {
             request.setAttribute("erreurs", erreurs);
             request.setAttribute("adresse", hMAdresse);
             request.setAttribute("resultat", resultat);
+        }
+        
+        //section pour la gestion du compte
+        if ("infopersonnelle".equals(request.getParameter("section"))){
+            url = "/WEB-INF/CompteManager.jsp";
+               
+        }
+    
+        if ("modCompteClient".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/modCompteClient.jsp";
+
+            if (d != null ){
+                
+                beancl = new beanClient();
+                beancl = beancl.ChargerBeanClient("cliId", d.getValue(), beanc.getConnexion());
+                
+                if (beancl != null){
+                   request.setAttribute("client", beancl);
+                }
+            }
+
+        }
+        
+        if("modClient".equals(request.getParameter("client"))){
+            url = "/WEB-INF/modCompteClient.jsp";
+            erreurs.clear();
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+            String numTel = request.getParameter("telephone");
+           
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String genre = request.getParameter("civilite");
+
+            try {
+                client.put("genre", retournerType(genre));
+            } catch (Exception e) {
+                System.out.println("Oops pb avec la methode retournerType");
+            }
+
+            try {
+                checkNom(nom);
+                client.put("nom", nom);
+            } catch (Exceptions e) {
+                erreurs.put("nom", e.getMessage());
+            }
+            try {
+                checkPrenom(prenom);
+                client.put("prenom", prenom);
+            } catch (Exceptions e) {
+                erreurs.put("prenom", e.getMessage());
+            }
+
+            try {
+                checkNumTel(numTel);
+                client.put("telephone", numTel);
+            } catch (Exceptions e) {
+                erreurs.put("numTel", e.getMessage());
+            }
+            try {
+                checkEmail(email);
+                client.put("email", email);
+            } catch (Exceptions e) {
+                erreurs.put("email", e.getMessage());
+            }
+            try {
+                checkMdp(password);
+                client.put("password", password);
+            } catch (Exceptions e) {
+                erreurs.put("password", e.getMessage());
+            }
+
+            if (erreurs.isEmpty()) {
+                System.out.println("pas d'erreur dans le formulaire");
+            }
+
+            request.setAttribute("erreurs", erreurs);
+            request.setAttribute("client", client);
+            session.setAttribute("client", client);
+            
         }
 
         if ("affichePanier".equals(request.getParameter("section"))) {
@@ -506,6 +577,10 @@ public class Controller extends HttpServlet {
 //                        request.getParameter("prix"));
 //                
 //            }
+
+
+    
+
         }
 
         request.getRequestDispatcher(url).include(request, response);

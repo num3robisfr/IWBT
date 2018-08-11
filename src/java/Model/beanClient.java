@@ -55,11 +55,11 @@ public class beanClient implements Serializable {
     }
 
     public String getNom() {
-        return nom;
+        return nom.toUpperCase();
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nom = nom.toUpperCase();
     }
 
     public String getPrenom() {
@@ -79,11 +79,11 @@ public class beanClient implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+        return email.toLowerCase();
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public String getPassword() {
@@ -181,10 +181,10 @@ public class beanClient implements Serializable {
         return cliId;
     }
 
-    public beanClient ChargerBeanClient(String cliEmail, Connection connexion) {
+    public beanClient ChargerBeanClient(String colonne, String valeurColonne, Connection connexion) {
 
         beanClient c = null;
-        String query = "SELECT * FROM Client WHERE cliEmail = '" + cliEmail + "'";
+        String query = "SELECT * FROM Client WHERE " + colonne + "= '" + valeurColonne + "'";
 
         try {
             Statement stmt = connexion.createStatement();
@@ -197,7 +197,6 @@ public class beanClient implements Serializable {
                         rs.getString("cliEmail"),
                         rs.getString("cliTelephone"),
                         rs.getDate("cliDateEntree"));
-
             }
             rs.close();
             stmt.close();

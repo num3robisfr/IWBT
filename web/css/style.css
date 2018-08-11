@@ -233,3 +233,33 @@ h1{
     font-size: 0.8em;
 
 }
+
+.btn-fix{
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    border: solid 1px;
+    border-radius: 5px;
+    border-color: #dddddd;
+    white-space: normal;
+    width: 100%;
+}
+
+.btn-fix:hover{
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    border: solid 1px;
+    background-color: #eeeeee;
+    border-radius: 5px;
+    border-color: #dddddd;
+    white-space: normal;
+    width: 100%;
+}
+
+.btn-fix p{
+    font-size: 0.9em;
+    color: #555555;
+}

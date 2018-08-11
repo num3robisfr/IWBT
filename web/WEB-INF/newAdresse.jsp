@@ -14,7 +14,9 @@
             <%@include file="Header.jsp" %>
 
             <!-- section sidebar et catalogue -->
+            
             <div id="section">
+                <%@include file="Sidebar.jsp" %>
                 <div id="catalogue">
                     <div class="container">
                         <div class="row">
