@@ -28,7 +28,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
                                             <label for="civilite">Civilité</label>
-                                            <select class="form-control" name="civilite">
+                                            <select class="form-control form-control-sm" name="civilite">
                                                 <option>M</option>
                                                 <option>Mme</option>
                                             </select>
@@ -37,30 +37,30 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="nom">Nom</label>
-                                            <input type="text" class="form-control" name="nom" placeholder="" value="${client['nom']}">
+                                            <input type="text" class="form-control form-control-sm" name="nom" placeholder="" value="${client['nom']}">
                                             <span class="text-danger">${erreurs['nom']}</span>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="prenom">Prénom</label>
-                                            <input type="text" class="form-control" name="prenom" placeholder="" value="${client['prenom']}">
+                                            <input type="text" class="form-control form-control-sm" name="prenom" placeholder="" value="${client['prenom']}">
                                             <span class="text-danger">${erreurs['prenom']}</span>
                                         </div>
                                     </div>
                                     <div class="form-row">    
                                         <div class="form-group col-md-6">
                                             <label for="telephone">Numéro de téléphone</label>
-                                            <input type="text" class="form-control" name="telephone" placeholder="" value="${client['telephone']}">
+                                            <input type="text" class="form-control form-control-sm" name="telephone" placeholder="" value="${client['telephone']}">
                                             <span class="text-danger">${erreurs['numTel']}</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Adresse mail</label>
-                                        <input type="text" class="form-control" name="email" placeholder="nom.prenom@exemple.fr" value="${client['email']}">
+                                        <input type="text" class="form-control form-control-sm" name="email" placeholder="nom.prenom@exemple.fr" value="${client['email']}">
                                         <span class="text-danger">${erreurs['email']}</span>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Mot de passe</label>
-                                        <input type="password" class="form-control" name="password" placeholder="" value="${client['password']}">
+                                        <input type="password" class="form-control form-control-sm" name="password" placeholder="" value="${client['password']}">
                                         <span class="text-danger">${erreurs['password']}</span>
                                     </div>
                                     <div class="row">

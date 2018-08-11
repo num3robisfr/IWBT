@@ -419,11 +419,17 @@ public class Controller extends HttpServlet {
             if (d != null ){
                 
                 beancl = new beanClient();
-                beancl = beancl.ChargerBeanClient("cliId", d.getValue(), beanc.getConnexion());
+                //beancl = beancl.ChargerBeanClient("cliId", d.getValue(), beanc.getConnexion());
+                beancl = (beanClient) session.getAttribute("beancl");
+                
+                if (beancl == null){
+                   url = "/WEB-INF/jspLogin.jsp";
+                }
                 
                 if (beancl != null){
                    request.setAttribute("client", beancl);
                 }
+                
             }
 
         }
