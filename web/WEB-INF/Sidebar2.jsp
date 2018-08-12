@@ -9,9 +9,9 @@
             </div>
     </div><br>
     <ul class="un">
-        <li><a href="Controller?section=listecommande">VOS COMMANDES</a></li>
-        <hr>
         <li><a href="Controller?section=infopersonnelle">GESTION DU COMPTE</a></li>
+        <hr>
+        <li><a href="Controller?section=listecommande">VOS COMMANDES</a></li>
         <hr>
         <li><a href="Controller?section=avantages">MES AVANTAGES</a></li>
         <hr>

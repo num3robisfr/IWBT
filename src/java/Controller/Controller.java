@@ -432,20 +432,20 @@ public class Controller extends HttpServlet {
         if("modClient".equals(request.getParameter("client"))){
             url = "/WEB-INF/modCompteClient.jsp";
             erreurs.clear();
+            int idClient = Integer.valueOf(request.getParameter("id"));
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
             String numTel = request.getParameter("telephone");
            
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            String genre = request.getParameter("civilite");
+            String genre = retournerType(request.getParameter("civilite"));
             Map<String, String> resultat = new HashMap<>();
+            
+            beanClient bc = new beanClient(idClient,
+            nom,prenom,genre,email,password,numTel);
 
-            try {
-                client.put("genre", retournerType(genre));
-            } catch (Exception e) {
-                System.out.println("Oops pb avec la methode retournerType");
-            }
+            
 
             try {
                 checkNom(nom);
@@ -480,7 +480,7 @@ public class Controller extends HttpServlet {
             }
 
             if (erreurs.isEmpty()) {
-                resultat.put("message", "pas de pb dans le formulaire");
+               resultat.put("message", bc.ModClient(beanc.getConnexion()) );
             }
 
             request.setAttribute("erreurs", erreurs);

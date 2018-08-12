@@ -25,6 +25,7 @@
                             <div class="col-md-6">
                                 <p>Informations personnelles</p>
                                 <form action="Controller" method="post">
+                                    <input type="hidden" name="id" value="${client['id']}" />
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
                                             <label for="civilite">Civilité</label>
