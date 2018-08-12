@@ -489,7 +489,12 @@ public class Controller extends HttpServlet {
             request.setAttribute("resultat", resultat);
             
         }
-
+        
+        if("AdresseManager".equals(request.getParameter("section"))){
+            url = "/WEB-INF/AdresseManager.jsp";
+        }
+        
+        // partie Panier 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
 

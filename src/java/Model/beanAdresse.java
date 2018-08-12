@@ -24,6 +24,7 @@ public class beanAdresse implements Serializable {
     private String codePostal;
     private String ville;
     private int statut;
+    private String type;
 
     public beanAdresse() {
     }
@@ -35,6 +36,18 @@ public class beanAdresse implements Serializable {
         this.ville = ville;
         this.statut = statut;
     }
+
+    public beanAdresse(int id, String adresse, String complement, String codePostal, String ville, int statut, String type) {
+        this.id = id;
+        this.adresse = adresse;
+        this.complement = complement;
+        this.codePostal = codePostal;
+        this.ville = ville;
+        this.statut = statut;
+        this.type = type;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -84,6 +97,16 @@ public class beanAdresse implements Serializable {
     public void setVille(String ville) {
         this.ville = ville;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    
 
     public int AddAdresse(Connection connexion) {
         int adrId = 0;
@@ -147,4 +170,5 @@ public class beanAdresse implements Serializable {
         return adrId;
     }
 
+    
 }

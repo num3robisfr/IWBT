@@ -20,7 +20,7 @@
                     <div class="row" style="height: 20px;">
 
                     </div>
-                    <div class="row">
+                    <div class="row" style="height: 245px;">
                         <div class="col-md-4" style="min-width: 250px;">
                             <a href="Controller?section=listecommande" class="btn btn-fix">
                                 <div class="media">
@@ -46,7 +46,7 @@
                             </a>
                         </div>
                         <div class="col-md-4" style="min-width: 250px;">
-                            <a href="#" class="btn btn-fix">
+                            <a href="Controller?section=AdresseManager" class="btn btn-fix">
                                 <div class="media">
                                     <img class="mr-3" src="./Images/lieux.png">
                                     <div class="media-body">
