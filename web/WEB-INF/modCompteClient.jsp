@@ -63,6 +63,7 @@
                                         <input type="password" class="form-control form-control-sm" name="password" placeholder="" value="${client['password']}">
                                         <span class="text-danger">${erreurs['password']}</span>
                                     </div>
+                                        <c:if test="${resultat['message'] == null }">
                                     <div class="row">
                                         <div class="col">
                                             <button type="submit" class="btn btn-primary mx-auto d-block" value="infopersonnelle" name="section">annuler</button>
@@ -73,9 +74,37 @@
                                             <br>
                                         </div>
 
-                                    </div>    
+                                    </div>
+                                    </c:if>
                                 </form>
-                            </div>  
+                            </div>
+                            <div class="col-md-6">
+                                            <c:if test="${resultat['message'] != null }">
+                                                    <div class="col-md-12">
+                                                        <div class="alert alert-success" role="alert">
+                                                            ${resultat['message']}
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${resultat['erreur'] != null}">
+                                                    <div class="col-md-12">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            ${resultat['erreur']}
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${resultat['message'] != null }">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        
+                                                            <a class="btn btn-primary mx-auto d-block" href="Controller?section=infopersonnelle">retourner à la gestion du compte</a>
+                                                        
+                                                    </div>
+                                       
+                                                        
+                                                </div>
+                                                 </c:if>               
+                                        </div>        
                         </div>
                     </div>
                 </div><br></div>

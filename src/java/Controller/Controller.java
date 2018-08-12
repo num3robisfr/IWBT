@@ -422,13 +422,8 @@ public class Controller extends HttpServlet {
                 //beancl = beancl.ChargerBeanClient("cliId", d.getValue(), beanc.getConnexion());
                 beancl = (beanClient) session.getAttribute("beancl");
                 
-                if (beancl == null){
-                   url = "/WEB-INF/jspLogin.jsp";
-                }
                 
-                if (beancl != null){
-                   request.setAttribute("client", beancl);
-                }
+                request.setAttribute("client", beancl);
                 
             }
 
@@ -444,6 +439,7 @@ public class Controller extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String genre = request.getParameter("civilite");
+            Map<String, String> resultat = new HashMap<>();
 
             try {
                 client.put("genre", retournerType(genre));
@@ -484,12 +480,13 @@ public class Controller extends HttpServlet {
             }
 
             if (erreurs.isEmpty()) {
-                System.out.println("pas d'erreur dans le formulaire");
+                resultat.put("message", "pas de pb dans le formulaire");
             }
 
             request.setAttribute("erreurs", erreurs);
             request.setAttribute("client", client);
             session.setAttribute("client", client);
+            request.setAttribute("resultat", resultat);
             
         }
 

@@ -36,12 +36,13 @@ public class beanClient implements Serializable {
         this.telephone = telephone;
     }
 
-    public beanClient(int Id, String nom, String prenom, String genre, String email, String telephone, Date dateEntree) {
+    public beanClient(int Id, String nom, String prenom, String genre, String email, String password, String telephone, Date dateEntree) {
         this.Id = Id;
         this.nom = nom;
         this.prenom = prenom;
         this.genre = genre;
         this.email = email;
+        this.password = password;
         this.telephone = telephone;
         this.dateEntree = dateEntree;
     }
@@ -195,6 +196,7 @@ public class beanClient implements Serializable {
                         rs.getString("cliPrenom"),
                         rs.getString("cliGenre"),
                         rs.getString("cliEmail"),
+                        rs.getString("cliMotDePasse"),
                         rs.getString("cliTelephone"),
                         rs.getDate("cliDateEntree"));
             }
