@@ -168,14 +168,22 @@ public class Controller extends HttpServlet {
             request.setAttribute("listeOeuvSousTheme", beanca.getListeOeuvres());
             request.setAttribute("soustheme", sousTheme.toUpperCase());
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        ///             Clic dans la sidebar 'Agenda Evènements':                         ///
+        ///             Affichage de la page Agenda Evènements,                           ///
+        ///          chargement du bean  et mise en attribut de la requete                ///
+        /////////////////////////////////////////////////////////////////////////////////////
+        //
         if ("agenda".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspagendaEvenement.jsp";
-            beanae.setListeEvenement(beanae.ChargerListeEvenement(beanc.getConnexion(), "WHERE eveDateFin >= getdate()"));
+            beanae.setListeEvenement(beanae.ChargerListeEvenement(beanc.getConnexion(), " WHERE eveDateFin >= getdate()"));
             request.setAttribute("listeEvenement", beanae.getListeEvenement());
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        ///       Gestion jsp Event : page de connexion et de gestion de compte           ///
+        ///                            Clic sur un Evènement:                           ///               
+        ///    Gestion jsp Event : Gère l'affichage des promos et des livres concernés    ///
         /////////////////////////////////////////////////////////////////////////////////////
         //
         if ("evenement".equals(request.getParameter("section"))) {
@@ -199,11 +207,18 @@ public class Controller extends HttpServlet {
             }
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////
+        ///       Clic sur mes commandes dans la sidebar :
+        ///   Gestion l'affichage des commandes d'un client                           ///
+        /////////////////////////////////////////////////////////////////////////////////////
+        //
         if ("listecommande".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
+
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
+        ///           Clic sur 'identifiez-vous'/'Mon compte' dans la sidebar :           ///
         ///       Gestion jsp login : page de connexion et de gestion de compte           ///
         /////////////////////////////////////////////////////////////////////////////////////
         //
@@ -263,8 +278,11 @@ public class Controller extends HttpServlet {
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        ////////                Déconnexion effacer Cookies                         /////////
+        ////////             Clic sur 'Deconnexion' dans le header :                    /////
+        ////////                      Déconnexion, efface Cookies,                      /////
+        ////////      et valorise les attributs pour gérer l'affichage  de la jsp       /////
         /////////////////////////////////////////////////////////////////////////////////////
+        //
         if ("logout".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
             d.setMaxAge(0);

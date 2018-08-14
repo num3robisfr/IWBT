@@ -14,7 +14,7 @@ public class beanCompteClient implements Serializable {
     private beanClient client;
     private ArrayList<Adresse> listeAdresseLivraison;
     private ArrayList<Adresse> listeAdresseFacturation;
-    private ArrayList<Commande> commandesClient;
+    private ArrayList<beanLigneDeCommande> commandesClient;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                    Constructeurs
@@ -22,18 +22,18 @@ public class beanCompteClient implements Serializable {
     public beanCompteClient() {
     }
 
-    public beanCompteClient(beanClient client, ArrayList<Adresse> listeAdresseLivraison, ArrayList<Commande> commandesClient) {
+    public beanCompteClient(beanClient client, ArrayList<Adresse> listeAdresseLivraison, ArrayList<beanLigneDeCommande> commandesClient) {
         this.client = client;
         this.listeAdresseLivraison = listeAdresseLivraison;
         this.commandesClient = commandesClient;
     }
 
-    public beanCompteClient(beanClient client, ArrayList<Commande> commandesClient) {
+    public beanCompteClient(beanClient client, ArrayList<beanLigneDeCommande> commandesClient) {
         this.client = client;
         this.commandesClient = commandesClient;
     }
 
-    public beanCompteClient(beanClient client, ArrayList<Adresse> listeAdresseLivraison, ArrayList<Adresse> listeAdresseFacturation, ArrayList<Commande> commandesClient) {
+    public beanCompteClient(beanClient client, ArrayList<Adresse> listeAdresseLivraison, ArrayList<Adresse> listeAdresseFacturation, ArrayList<beanLigneDeCommande> commandesClient) {
         this.client = client;
         this.listeAdresseLivraison = listeAdresseLivraison;
         this.listeAdresseFacturation = listeAdresseFacturation;
@@ -67,22 +67,24 @@ public class beanCompteClient implements Serializable {
         this.listeAdresseFacturation = listeAdresseFacturation;
     }
 
-    public ArrayList<Commande> getCommandesClient() {
+    public ArrayList<beanLigneDeCommande> getCommandesClient() {
         return commandesClient;
     }
 
-    public void setCommandesClient(ArrayList<Commande> commandesClient) {
+    public void setCommandesClient(ArrayList<beanLigneDeCommande> commandesClient) {
         this.commandesClient = commandesClient;
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                    Autres Méthodes
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     @Override
     public String toString() {
         return "beanCompteClient{" + "client=" + client + ", listeAdresseLivraison=" + listeAdresseLivraison + ", listeAdresseFacturation=" + listeAdresseFacturation + ", commandesClient=" + commandesClient + '}';
     }
 
+    
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                    remplir le bean, récupérer les infos de la base
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,7 +165,7 @@ public class beanCompteClient implements Serializable {
                 beanLigneDeCommande l = new beanLigneDeCommande(rs.getInt("CliId"),
                         rs.getInt("ComId"),
                         rs.getString("Client"),
-                        rs.getDate("DateCommande"),
+                        outil.OutilsFormatage.formaterDate(rs.getDate("DateCommande")),
                         rs.getString("Statut"),
                         rs.getString("ISBN"),
                         rs.getString("Titre"),

@@ -111,45 +111,58 @@
                         <table border="1">
                             <thead>
                                 <tr>
-                                    <th>Illustration</th>
-                                    <th>Date</th>
-                                    <th>Titre</th>
-                                    <th>Quantité</th>
-                                    <th>Prix unitaire HT</th>
-                                    <th>Prix unitaire TTC</th>
-                                    <th>Tva</th>
-                                    <th>Promo en %</th>
-                                    <th>Prix TTC</th>
-                                    <th>Etat de la commande</th>
-                                </tr>
-
-                            </thead>
-                            <c:set var="total" value="${0}" scope="page" />
-
-                            <c:forEach var="lc" items="${listeCommande}">
-                                <c:set var="total" value="${total + (lc.comTotalTtc*lc.comQty)}" />
-                                <tr>
-                                    <td><img class="card-img-top mx-auto d-block" style=" width: 30%;" src = "${lc.comUrlImage}" alt ="illustration" ></td>
-                                    <td>${lc.comDate}</td>
-                                    <td>${lc.comTitre}</td>
-                                    <td>${lc.comQty}</td>
-                                    <td>${lc.comPrixUnitaireHT}</td>
-                                    <td>${lc.comPrixUnitaireTTC}</td>
-                                    <td>${lc.comTva}</td>
-                                    <td>${lc.comPromo}</td>
-                                    <td>${lc.comTotalTtc}</td>
-                                    <td><span class="statut">${lc.comStatut}</span></td>
-
-                                </c:forEach>  
+                                    <th><center>Couverture</center></th>
+                            <th><center>Date</center></th>
+                            <th><center>Etat de la commande</center></th>
+                            <th><center>Titre</center></th>
+                            <th><center>Prix unitaire HT</center></th>
+                            <th><center>Tva</center></th>
+                            <th><center>Prix unitaire TTC</center></th>
+                            <th><center>Quantité</center></th>
+                            <th><center>Prix TTC</center></th>
+                            <th><center>Promo</center></th>
+                            <th><center>Sous-Total TTC</center></th>
+                            <th><center>Frais de port</center></th>
 
                             </tr>
 
+                            </thead>
+
+                            <c:set var="total" value="${0}" scope="page" />
+
+                            <c:forEach var="lc" items="${listeCommande}">
+                                <c:set  var="total" value="${(total + (lc.comPrixUnitaireTTC*lc.comQty))}" />
+                                <tr>
+                                    <td><a class="" href="Controller?section=oeuvre&isbn=${lc.comIsbn}"><img class="card-img-top mx-auto d-block" style=" width: 30%;" src = "${lc.comUrlImage}" alt ="illustration" ></a></td>
+                                    <td><center>${lc.comDate}</center></td>
+                                <td><center><span class="statut">${lc.comStatut}</span></center></td>
+                                <td><center>${lc.comTitre}</center></td>
+                                <td><center>${lc.comPrixUnitaireHT} €</center></td>       
+                                <td><center>${lc.comTva} %</center></td>
+                                <td><center>${lc.comPrixUnitaireTTC} €</center></td>
+                                <td><center>${lc.comQty}</center></td>
+                                <td><center>${lc.comTotalTtc} €</center></td>
+                                <td><center>${lc.comPromo} %</center></td>
+                                <td><center>${(lc.comPrixUnitaireTTC*lc.comQty)-((lc.comPrixUnitaireTTC*lc.comQty)*lc.comPromo)/100} €</center></td>
+
+                            </c:forEach>  
+
+                            </tr>
+                            <td></td>
+                            <td></td>                           
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><center>${total} €</center></td>
+                            <td><center>5 €</center></td>
                         </table>
-
-                            <br>
-                            <h3>Total TTC : <c:out value="${total}"/></h3>   
-
-
+                        <br>
+                        <h3>Total TTC : ${total+5} €</h3>
 
 
                     </c:if>

@@ -16,7 +16,7 @@ public class beanLigneDeCommande {
     private int comId;
     private int cliId;
     private String client;
-    private Date comDate;
+    private String comDate;
     private String comStatut;
     private String comIsbn;
     private String comTitre;
@@ -34,7 +34,7 @@ public class beanLigneDeCommande {
     public beanLigneDeCommande() {
     }
 
-    public beanLigneDeCommande(int comId, int cliId, String client, Date comDate, String comStatut, String comIsbn, String comTitre, int comQty, float comPrixUnitaireHT, float comPrixUnitaireTTC, float comTva, int comPromo, float comTotalTtc, String comUrlImage) {
+    public beanLigneDeCommande(int comId, int cliId, String client, String comDate, String comStatut, String comIsbn, String comTitre, int comQty, float comPrixUnitaireHT, float comPrixUnitaireTTC, float comTva, int comPromo, float comTotalTtc, String comUrlImage) {
         this.comId = comId;
         this.cliId = cliId;
         this.client = client;
@@ -74,11 +74,11 @@ public class beanLigneDeCommande {
         this.cliId = cliId;
     }
 
-    public Date getComDate() {
+    public String getComDate() {
         return comDate;
     }
 
-    public void setComDate(Date comDate) {
+    public void setComDate(String comDate) {
         this.comDate = comDate;
     }
 
@@ -182,7 +182,8 @@ public class beanLigneDeCommande {
     public String toString() {
         return "beanLigneDeCommande{" + "comId=" + comId + ", cliId=" + cliId + ", client=" + client + ", comDate=" + comDate + ", comStatut=" + comStatut + ", comIsbn=" + comIsbn + ", comTitre=" + comTitre + ", comQty=" + comQty + ", comPrixUnitaireHT=" + comPrixUnitaireHT + ", comPrixUnitaireTTC=" + comPrixUnitaireTTC + ", comTva=" + comTva + ", comPromo=" + comPromo + ", comTotalTtc=" + comTotalTtc + ", comUrlImage=" + comUrlImage + '}';
     }
-    
+
+
     
     
 
