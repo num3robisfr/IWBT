@@ -112,7 +112,7 @@ public class Controller extends HttpServlet {
             listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
             session.setAttribute("listeCommande", listeCommande);
         }
-
+       
         if (c == null) {
             request.setAttribute("okay", "0");
 
