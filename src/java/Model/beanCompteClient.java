@@ -78,13 +78,11 @@ public class beanCompteClient implements Serializable {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                    Autres Méthodes
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     @Override
     public String toString() {
         return "beanCompteClient{" + "client=" + client + ", listeAdresseLivraison=" + listeAdresseLivraison + ", listeAdresseFacturation=" + listeAdresseFacturation + ", commandesClient=" + commandesClient + '}';
     }
 
-    
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                    remplir le bean, récupérer les infos de la base
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +90,7 @@ public class beanCompteClient implements Serializable {
 
         listeAdresseFacturation = new ArrayList<Adresse>();
 
-        String query ="SELECT adr.adrId as 'adrId', " 
+        String query = "SELECT adr.adrId as 'adrId', "
                 + "cli.cliId as 'cliId', "
                 + "fac.facNom as 'Nom', "
                 + "fac.facPrenom as 'Prenom', "
@@ -108,7 +106,7 @@ public class beanCompteClient implements Serializable {
                 + "JOIN FactureAdresse fac "
                 + "ON adr.adrId = fac.adrId "
                 + "JOIN Client cli "
-                + "ON fac.cliId = cli.cliId " 
+                + "ON fac.cliId = cli.cliId "
                 + "WHERE cli.cliId = " + cliId;
 
         try {
@@ -149,17 +147,18 @@ public class beanCompteClient implements Serializable {
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-//                Adresse a = new Adresse(rs.getInt(Integer.valueOf("AdresseId")),
-//                        rs.getInt(Integer.valueOf("LivClientId")),
-//                        rs.getString("LivraisonNom"),
-//                        rs.getString("LivraisonPrenom"),
-//                        rs.getString("AdresseVoie"),
-//                        rs.getString("AdresseComplement"),
-//                        rs.getString("AdresseVille"),
-//                        rs.getString("AdressePays"),
-//                        rs.getString("AdresseObservation"),
-//                        rs.getInt(Integer.valueOf("AdresseStatut")));
-//                listeAdresseLivraison.add(a);
+                Adresse a = new Adresse(rs.getInt(Integer.valueOf("AdresseId")),
+                        rs.getInt(Integer.valueOf("LivClientId")),
+                        rs.getString("LivraisonNom"),
+                        rs.getString("LivraisonPrenom"),
+                        rs.getString("LivraisonGenre"),
+                        rs.getString("AdresseVoie"),
+                        rs.getString("AdresseComplement"),
+                        rs.getString("AdresseVille"),
+                        rs.getString("AdressePays"),
+                        rs.getString("AdresseObservation"),
+                        rs.getInt(Integer.valueOf("AdresseStatut")));
+                listeAdresseLivraison.add(a);
 
             }
             rs.close();

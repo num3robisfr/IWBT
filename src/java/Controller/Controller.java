@@ -4,6 +4,7 @@ import Model.*;
 import Model.beanAgendaEvenement;
 import classe.Adresse;
 import classe.Evenement;
+import classe.LigneDeCommande;
 import exception.Exceptions;
 import static outil.VerifSaisie.*;
 import static outil.OutilsFormatage.*;
@@ -58,7 +59,7 @@ public class Controller extends HttpServlet {
         int id = 0;
         Map<String, String> erreurs = new HashMap<>();
         Map<String, String> client = new HashMap();
-
+        ArrayList<Integer> commande = null;
         String url = "/WEB-INF/jspAccueil.jsp";
 
         Cookie c = getCookie(request.getCookies(), "username");
@@ -112,7 +113,7 @@ public class Controller extends HttpServlet {
             listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
             session.setAttribute("listeCommande", listeCommande);
         }
-       
+
         if (c == null) {
             request.setAttribute("okay", "0");
 
