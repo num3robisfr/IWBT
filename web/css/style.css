@@ -233,6 +233,75 @@ h1{
     font-size: 0.7em;
 
 }
+
+.btn-fix{
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    border: solid 1px;
+    border-radius: 5px;
+    border-color: #dddddd;
+    white-space: normal;
+    width: 100%;
+}
+
+.btn-fix:hover{
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    border: solid 1px;
+    background-color: #eeeeee;
+    border-radius: 5px;
+    border-color: #dddddd;
+    white-space: normal;
+    width: 100%;
+}
+
+.btn-fix p{
+    font-size: 0.9em;
+    color: #555555;
+}
+
+.btn-adr{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-decoration: none;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.btn-adr:hover{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    text-decoration: none;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.btn-adr h1{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    font-size: 6em;
+    color: #dddddd;
+}
+
+.btn-adr p{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #555555;
+}
+
+
 .lien{
     font-size: 1.2em;
     

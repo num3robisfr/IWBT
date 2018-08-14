@@ -36,14 +36,25 @@ public class beanClient implements Serializable {
         this.telephone = telephone;
     }
 
-    public beanClient(int Id, String nom, String prenom, String genre, String email, String telephone, Date dateEntree) {
+    public beanClient(int Id, String nom, String prenom, String genre, String email, String password, String telephone, Date dateEntree) {
         this.Id = Id;
         this.nom = nom;
         this.prenom = prenom;
         this.genre = genre;
         this.email = email;
+        this.password = password;
         this.telephone = telephone;
         this.dateEntree = dateEntree;
+    }
+    
+        public beanClient(int Id, String nom, String prenom, String genre, String email, String password, String telephone) {
+        this.Id = Id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.genre = genre;
+        this.email = email;
+        this.password = password;
+        this.telephone = telephone;
     }
 
     public int getId() {
@@ -55,11 +66,11 @@ public class beanClient implements Serializable {
     }
 
     public String getNom() {
-        return nom;
+        return nom.toUpperCase();
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nom = nom.toUpperCase();
     }
 
     public String getPrenom() {
@@ -79,11 +90,11 @@ public class beanClient implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+        return email.toLowerCase();
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public String getPassword() {
@@ -181,10 +192,10 @@ public class beanClient implements Serializable {
         return cliId;
     }
 
-    public beanClient ChargerBeanClient(String cliEmail, Connection connexion) {
+    public beanClient ChargerBeanClient(String colonne, String valeurColonne, Connection connexion) {
 
         beanClient c = null;
-        String query = "SELECT * FROM Client WHERE cliEmail = '" + cliEmail + "'";
+        String query = "SELECT * FROM Client WHERE " + colonne + "= '" + valeurColonne + "'";
 
         try {
             Statement stmt = connexion.createStatement();
@@ -195,9 +206,9 @@ public class beanClient implements Serializable {
                         rs.getString("cliPrenom"),
                         rs.getString("cliGenre"),
                         rs.getString("cliEmail"),
+                        rs.getString("cliMotDePasse"),
                         rs.getString("cliTelephone"),
                         rs.getDate("cliDateEntree"));
-
             }
             rs.close();
             stmt.close();
@@ -207,5 +218,40 @@ public class beanClient implements Serializable {
             System.err.print("ERREUR SQL " + e.getMessage());
         }
         return c;
+    }
+
+    public String ModClient(Connection connexion){
+        String message = "";
+        
+                try {
+
+            String query = "UPDATE Client "
+                    + "SET cliNom = ?, "
+                    + "cliPrenom = ?, "
+                    + "cliGenre = ?,"
+                    + "cliEmail =?,"
+                    + "cliMotDePasse = ?,"
+                    + "cliTelephone = ? "
+                    + "WHERE "
+                    + "cliId = ?";
+            PreparedStatement pstmt = connexion.prepareStatement(query);
+            pstmt.setString(1, this.nom);
+            pstmt.setString(2, this.prenom);
+            pstmt.setString(3, this.genre);
+            pstmt.setString(4, this.email);
+            pstmt.setString(5, this.password);
+            pstmt.setString(6, this.telephone);
+            pstmt.setInt(7, this.Id);
+
+            pstmt.executeUpdate();
+            message = "Modification effectuée";
+
+            pstmt.close();
+            connexion.close();
+        } catch (SQLException ex) {
+            message = "Erreur de modification du client";
+        }
+        
+        return message;
     }
 }

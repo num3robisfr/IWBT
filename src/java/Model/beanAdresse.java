@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import static outil.OutilsFormatage.*;
 
 /**
  *
@@ -19,14 +20,33 @@ import java.sql.Statement;
 public class beanAdresse implements Serializable {
     
     private int id;
+    private String genre;
+    private String nom;
+    private String prenom;
     private String adresse;
     private String complement;
     private String codePostal;
     private String ville;
     private int statut;
+    private String type;
 
     public beanAdresse() {
     }
+
+    public beanAdresse(int id, String genre, String nom, String prenom, String adresse, String complement, String codePostal, String ville, int statut, String type) {
+        this.id = id;
+        this.genre = genre;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.adresse = adresse;
+        this.complement = complement;
+        this.codePostal = codePostal;
+        this.ville = ville;
+        this.statut = statut;
+        this.type = type;
+    }
+    
+    
 
     public beanAdresse(String adresse, String complement, String codePostal, String ville, int statut) {
         this.adresse = adresse;
@@ -35,6 +55,18 @@ public class beanAdresse implements Serializable {
         this.ville = ville;
         this.statut = statut;
     }
+
+    public beanAdresse(int id, String adresse, String complement, String codePostal, String ville, int statut, String type) {
+        this.id = id;
+        this.adresse = adresse;
+        this.complement = complement;
+        this.codePostal = codePostal;
+        this.ville = ville;
+        this.statut = statut;
+        this.type = type;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -84,6 +116,42 @@ public class beanAdresse implements Serializable {
     public void setVille(String ville) {
         this.ville = ville;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+    
+    
+    
+    
 
     public int AddAdresse(Connection connexion) {
         int adrId = 0;
@@ -147,4 +215,70 @@ public class beanAdresse implements Serializable {
         return adrId;
     }
 
+    public beanAdresse getAdressefacturation(Connection connexion, int cliId){
+        beanAdresse ba = null;
+
+        String query = "SELECT "
+                + "fac.cliId as 'cliId', adr.adrId as 'adrId',facGenre as 'Genre', facNom as 'Nom', facPrenom as 'Prenom', adrVoie as 'Voie', adrComplement as 'Complement', adrCodePostal as 'CodePostal', adrVille as 'Ville', adrStatut as 'Statut' "
+                + "FROM "
+                + "FactureAdresse fac "
+                + "JOIN Adresse adr "
+                + "ON fac.adrId = adr.adrId "
+                + "where fac.cliId = " + cliId;
+        
+        try {
+            Statement stmt = connexion.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                ba = new beanAdresse(rs.getInt("cliId"),
+                        retournerCivilite(rs.getString("Genre")),
+                        rs.getString("Nom"), rs.getString("Prenom"),
+                        rs.getString("Voie"), rs.getString("Complement"), rs.getString("CodePostal"),
+                        rs.getString("Ville"), rs.getInt("Statut"), "facturation");
+            }
+            
+            rs.close();
+            stmt.close();
+            connexion.close();
+            
+        } catch (SQLException e) {
+            System.out.println("erreur requete getAdresseFacturation" + e);
+        }
+       
+        return ba;
+    }
+    
+     public beanAdresse getAdresselivraison(Connection connexion, int cliId){
+        beanAdresse ba = null;
+
+        String query = "SELECT "
+                + "liv.cliId as 'cliId', adr.adrId as 'adrId',livGenre as 'Genre', livNom as 'Nom', livPrenom as 'Prenom', adrVoie as 'Voie', adrComplement as 'Complement', adrCodePostal as 'CodePostal', adrVille as 'Ville', adrStatut as 'Statut' "
+                + "FROM "
+                + "LivraisonAdresse liv "
+                + "JOIN Adresse adr "
+                + "ON liv.adrId = adr.adrId "
+                + "where liv.cliId = " + cliId;
+        
+        try {
+            Statement stmt = connexion.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                ba = new beanAdresse(rs.getInt("cliId"),
+                        retournerCivilite(rs.getString("Genre")),
+                        rs.getString("Nom"), rs.getString("Prenom"),
+                        rs.getString("Voie"), rs.getString("Complement"), rs.getString("CodePostal"),
+                        rs.getString("Ville"), rs.getInt("Statut"), "livraison");
+            }
+            
+            rs.close();
+            stmt.close();
+            connexion.close();
+            
+        } catch (SQLException e) {
+            System.out.println("erreur requete getAdresselivraison" + e);
+        }
+       
+        return ba;
+    }
+   
 }

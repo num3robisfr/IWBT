@@ -40,13 +40,13 @@
 
                                 <div class="col-md-6">
                                     <div class="card text-center bg-light">
-                                        <div class="form-group mr-5 ml-5">
+                                        <div class="form-group mr-5 ml-5" style="padding-top: 15px;">
                                             <label for="identifiant">Identifiant</label>
-                                            <input type="text" class="form-control" name="login" placeholder="" value="">
+                                            <input type="text" class="form-control form-control-sm" name="login" placeholder="" value="">
                                         </div>
                                         <div class="form-group mr-5 ml-5">
                                             <label for="password">Mot de passe</label>
-                                            <input type="password" class="form-control" name="password" placeholder="" value="">
+                                            <input type="password" class="form-control form-control-sm" name="password" placeholder="" value="">
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">

@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import Model.beanAgendaEvenement;
+import classe.Adresse;
 import classe.Evenement;
 import exception.Exceptions;
 import static outil.VerifSaisie.*;
@@ -244,7 +245,7 @@ public class Controller extends HttpServlet {
 
                 if (checkLogin != null) {
                     beancl = new beanClient();
-                    beancl = beancl.ChargerBeanClient(request.getParameter("login"), beanc.getConnexion());
+                    beancl = beancl.ChargerBeanClient("cliEmail",request.getParameter("login"), beanc.getConnexion());
                     session.setAttribute("beancl", beancl);
                     id = beancl.getId();
 
@@ -304,7 +305,7 @@ public class Controller extends HttpServlet {
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
             String numTel = request.getParameter("telephone");
-            String dateNaissance = request.getParameter("dateNaissance");
+           
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String genre = request.getParameter("civilite");
@@ -333,12 +334,6 @@ public class Controller extends HttpServlet {
                 client.put("numTel", numTel);
             } catch (Exceptions e) {
                 erreurs.put("numTel", e.getMessage());
-            }
-            try {
-                checkDate(dateNaissance);
-                client.put("dateNaissance", dateNaissance);
-            } catch (Exceptions e) {
-                erreurs.put("dateNaissance", e.getMessage());
             }
             try {
                 checkEmail(email);
@@ -416,14 +411,11 @@ public class Controller extends HttpServlet {
 
                     if (adrId == 0) {
                         resultat.put("erreur", "erreur d'enregistrement");
-                        System.out.println("pb d'enregistrement");
                     }
                     if (adrId > 0) {
                         int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, cliId, bC);
-                        System.out.println("resultat AddrAdrFacturation :" + res);
 
                         resultat.put("message", "enregistrement effectué avec succés");
-                        System.out.println("enregistrement ok");
                     }
 
                 }
@@ -433,7 +425,112 @@ public class Controller extends HttpServlet {
             request.setAttribute("adresse", hMAdresse);
             request.setAttribute("resultat", resultat);
         }
+        
+        //section pour la gestion du compte
+        if ("infopersonnelle".equals(request.getParameter("section"))){
+            url = "/WEB-INF/CompteManager.jsp";
+               
+        }
+    
+        if ("modCompteClient".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/modCompteClient.jsp";
 
+            if (d != null ){
+                
+                beancl = new beanClient();
+                //beancl = beancl.ChargerBeanClient("cliId", d.getValue(), beanc.getConnexion());
+                beancl = (beanClient) session.getAttribute("beancl");
+                
+                
+                request.setAttribute("client", beancl);
+                
+            }
+
+        }
+        
+        if("modClient".equals(request.getParameter("client"))){
+            url = "/WEB-INF/modCompteClient.jsp";
+            erreurs.clear();
+            int idClient = Integer.valueOf(request.getParameter("id"));
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+            String numTel = request.getParameter("telephone");
+           
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String genre = retournerType(request.getParameter("civilite"));
+            Map<String, String> resultat = new HashMap<>();
+            
+            beanClient bc = new beanClient(idClient,
+            nom,prenom,genre,email,password,numTel);
+
+            
+
+            try {
+                checkNom(nom);
+                client.put("nom", nom);
+            } catch (Exceptions e) {
+                erreurs.put("nom", e.getMessage());
+            }
+            try {
+                checkPrenom(prenom);
+                client.put("prenom", prenom);
+            } catch (Exceptions e) {
+                erreurs.put("prenom", e.getMessage());
+            }
+
+            try {
+                checkNumTel(numTel);
+                client.put("telephone", numTel);
+            } catch (Exceptions e) {
+                erreurs.put("numTel", e.getMessage());
+            }
+            try {
+                checkEmail(email);
+                client.put("email", email);
+            } catch (Exceptions e) {
+                erreurs.put("email", e.getMessage());
+            }
+            try {
+                checkMdp(password);
+                client.put("password", password);
+            } catch (Exceptions e) {
+                erreurs.put("password", e.getMessage());
+            }
+
+            if (erreurs.isEmpty()) {
+               resultat.put("message", bc.ModClient(beanc.getConnexion()) );
+            }
+
+            request.setAttribute("erreurs", erreurs);
+            request.setAttribute("client", client);
+            session.setAttribute("client", client);
+            request.setAttribute("resultat", resultat);
+            
+        }
+        
+        if("AdresseManager".equals(request.getParameter("section"))){
+            url = "/WEB-INF/AdresseManager.jsp";
+            
+          beanAdresse b = new beanAdresse();
+           
+           if (d != null){
+
+               b = b.getAdressefacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+               if(b != null){
+                 request.setAttribute("adrfac", b);   
+               }
+               b = b.getAdresselivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+               if(b != null){
+                 request.setAttribute("adrliv", b);  
+               }
+               
+                
+           }
+            
+        }
+        
+        // partie Panier 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
 
@@ -524,6 +621,10 @@ public class Controller extends HttpServlet {
 //                        request.getParameter("prix"));
 //                
 //            }
+
+
+    
+
         }
 
         request.getRequestDispatcher(url).include(request, response);

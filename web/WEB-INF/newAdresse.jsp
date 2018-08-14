@@ -14,7 +14,9 @@
             <%@include file="Header.jsp" %>
 
             <!-- section sidebar et catalogue -->
+            
             <div id="section">
+                <%@include file="Sidebar.jsp" %>
                 <div id="catalogue">
                     <div class="container">
                         <div class="row">
@@ -26,23 +28,23 @@
                                 <form action="Controller" method="post">
                                     <div class="form-group">
                                         <label for="adresse">Adresse</label>
-                                        <input type="text" class="form-control" name="adresse" placeholder="" value="${adresse['adresse']}">
+                                        <input type="text" class="form-control form-control-sm" name="adresse" placeholder="" value="${adresse['adresse']}">
                                         <span class="text-danger">${erreurs['adresse']}</span>
                                     </div>
                                     <div class="form-group">
                                         <label for="complement">Complement d'adresse</label>
-                                        <input type="text" class="form-control" name="complement" placeholder="Appartement, étage, etc ..." value="${adresse['complement']}">
+                                        <input type="text" class="form-control form-control-sm" name="complement" placeholder="Appartement, étage, etc ..." value="${adresse['complement']}">
                                         <span class="text-danger">${erreurs['complement']}</span>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="codePostal">Code postal</label>
-                                            <input type="text" class="form-control" name="codePostal" placeholder="75000" value="${adresse['codePostal']}">
+                                            <input type="text" class="form-control form-control-sm" name="codePostal" placeholder="75000" value="${adresse['codePostal']}">
                                             <span class="text-danger">${erreurs['codePostal']}</span>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="ville">Ville</label>
-                                            <input type="text" class="form-control" name="ville" placeholder="Paris" value="${adresse['ville']}">
+                                            <input type="text" class="form-control form-control-sm" name="ville" placeholder="Paris" value="${adresse['ville']}">
                                             <span class="text-danger">${erreurs['ville']}</span>
                                         </div>
                                     </div>
