@@ -109,6 +109,8 @@ public class Controller extends HttpServlet {
             d = new Cookie("ID", String.valueOf(id));
             d.setMaxAge(3600 * 24 * 7);
             response.addCookie(d);
+            listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
+            session.setAttribute("listeCommande", listeCommande);
         }
 
         if (c == null) {
@@ -209,8 +211,8 @@ public class Controller extends HttpServlet {
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        ///       Clic sur mes commandes dans la sidebar :
-        ///   Gestion l'affichage des commandes d'un client                           ///
+        ///       Clic sur mes commandes dans la sidebar :                                ///
+        ///   Gestion l'affichage des commandes d'un client                               ///
         /////////////////////////////////////////////////////////////////////////////////////
         //
         if ("listecommande".equals(request.getParameter("section"))) {
@@ -245,7 +247,7 @@ public class Controller extends HttpServlet {
 
                 if (checkLogin != null) {
                     beancl = new beanClient();
-                    beancl = beancl.ChargerBeanClient("cliEmail",request.getParameter("login"), beanc.getConnexion());
+                    beancl = beancl.ChargerBeanClient("cliEmail", request.getParameter("login"), beanc.getConnexion());
                     session.setAttribute("beancl", beancl);
                     id = beancl.getId();
 
@@ -305,7 +307,7 @@ public class Controller extends HttpServlet {
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
             String numTel = request.getParameter("telephone");
-           
+
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String genre = request.getParameter("civilite");
@@ -425,46 +427,43 @@ public class Controller extends HttpServlet {
             request.setAttribute("adresse", hMAdresse);
             request.setAttribute("resultat", resultat);
         }
-        
+
         //section pour la gestion du compte
-        if ("infopersonnelle".equals(request.getParameter("section"))){
+        if ("infopersonnelle".equals(request.getParameter("section"))) {
             url = "/WEB-INF/CompteManager.jsp";
-               
+
         }
-    
+
         if ("modCompteClient".equals(request.getParameter("section"))) {
             url = "/WEB-INF/modCompteClient.jsp";
 
-            if (d != null ){
-                
+            if (d != null) {
+
                 beancl = new beanClient();
                 //beancl = beancl.ChargerBeanClient("cliId", d.getValue(), beanc.getConnexion());
                 beancl = (beanClient) session.getAttribute("beancl");
-                
-                
+
                 request.setAttribute("client", beancl);
-                
+
             }
 
         }
-        
-        if("modClient".equals(request.getParameter("client"))){
+
+        if ("modClient".equals(request.getParameter("client"))) {
             url = "/WEB-INF/modCompteClient.jsp";
             erreurs.clear();
             int idClient = Integer.valueOf(request.getParameter("id"));
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
             String numTel = request.getParameter("telephone");
-           
+
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String genre = retournerType(request.getParameter("civilite"));
             Map<String, String> resultat = new HashMap<>();
-            
-            beanClient bc = new beanClient(idClient,
-            nom,prenom,genre,email,password,numTel);
 
-            
+            beanClient bc = new beanClient(idClient,
+                    nom, prenom, genre, email, password, numTel);
 
             try {
                 checkNom(nom);
@@ -499,37 +498,36 @@ public class Controller extends HttpServlet {
             }
 
             if (erreurs.isEmpty()) {
-               resultat.put("message", bc.ModClient(beanc.getConnexion()) );
+                resultat.put("message", bc.ModClient(beanc.getConnexion()));
             }
 
             request.setAttribute("erreurs", erreurs);
             request.setAttribute("client", client);
             session.setAttribute("client", client);
             request.setAttribute("resultat", resultat);
-            
-        }
-        
-        if("AdresseManager".equals(request.getParameter("section"))){
-            url = "/WEB-INF/AdresseManager.jsp";
-            
-          beanAdresse b = new beanAdresse();
-           
-           if (d != null){
 
-               b = b.getAdressefacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
-               if(b != null){
-                 request.setAttribute("adrfac", b);   
-               }
-               b = b.getAdresselivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
-               if(b != null){
-                 request.setAttribute("adrliv", b);  
-               }
-               
-                
-           }
-            
         }
-        
+
+        if ("AdresseManager".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/AdresseManager.jsp";
+
+            beanAdresse b = new beanAdresse();
+
+            if (d != null) {
+
+                b = b.getAdressefacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+                if (b != null) {
+                    request.setAttribute("adrfac", b);
+                }
+                b = b.getAdresselivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+                if (b != null) {
+                    request.setAttribute("adrliv", b);
+                }
+
+            }
+
+        }
+
         // partie Panier 
         if ("affichePanier".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspPanier.jsp";
@@ -614,22 +612,10 @@ public class Controller extends HttpServlet {
                 session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
             }
 
-//            if (request.getParameter("ref") != null) {
-//                panier.add(request.getParameter("urlImage"), 
-//                        request.getParameter("ref"), 
-//                        request.getParameter("titre"), 
-//                        request.getParameter("prix"));
-//                
-//            }
-
-
-    
-
         }
 
         request.getRequestDispatcher(url).include(request, response);
     }
-//    }
 
 //------------------------------------------------------------------------------
 //                                 AUTRES
