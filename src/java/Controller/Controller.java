@@ -499,9 +499,15 @@ public class Controller extends HttpServlet {
            if (d != null){
 
                b = b.getAdressefacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
-               request.setAttribute("adrfac", b);
+               if(b != null){
+                 request.setAttribute("adrfac", b);   
+               }
                b = b.getAdresselivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
-               request.setAttribute("adrliv", b); 
+               if(b != null){
+                 request.setAttribute("adrliv", b);  
+               }
+               
+                
            }
             
         }

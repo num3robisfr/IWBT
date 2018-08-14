@@ -12,9 +12,9 @@
             </c:if> 
 
             <c:if test="${okay == '2'}">
-
-                <div class = "nomclient" >${nom}</div> <div>&nbsp <a href="Controller?section=infopersonnelle">Mon Compte</a> </div>
-                <div> <br><br><a href="Controller?section=logout">Déconnexion</a></div>
+                
+                <a href="Controller?section=infopersonnelle">${nom}</a><br>
+                <a href="Controller?section=logout"><img style="width: 30px; height: 30px; margin-left: 5px;" src="./Images/shutdown.png"></a>
 
             </c:if>  
 
