@@ -90,24 +90,43 @@ public class beanCompteClient implements Serializable {
 
         listeAdresseFacturation = new ArrayList<Adresse>();
 
-        String query = "SELECT * FROM ListeAdresseClientFacturation WHERE FacClientId = " + cliId;
+        String query ="SELECT adr.adrId as 'adrId', " 
+                + "cli.cliId as 'cliId', "
+                + "fac.facNom as 'Nom', "
+                + "fac.facPrenom as 'Prenom', "
+                + "fac.facGenre as 'Genre', "
+                + "adr.adrVoie as 'NomVoie', "
+                + "adr.adrComplement as 'Complement', "
+                + "adr.adrCodePostal as 'CodePostal', "
+                + "adr.adrVille as 'Ville', "
+                + "adr.adrPays as 'Pays', "
+                + "adr.adrStatut as 'Statut' "
+                + "FROM "
+                + "Adresse adr "
+                + "JOIN FactureAdresse fac "
+                + "ON adr.adrId = fac.adrId "
+                + "JOIN Client cli "
+                + "ON fac.cliId = cli.cliId " 
+                + "WHERE cli.cliId = " + cliId;
 
         try {
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                Adresse a = new Adresse(rs.getInt(Integer.valueOf("AdresseId")),
-                        rs.getInt(Integer.valueOf("FacClientId")),
-                        rs.getString("FactureNom"),
-                        rs.getString("FacturePrenom"),
-                        rs.getString("AdresseVoie"),
-                        rs.getString("AdresseComplement"),
-                        rs.getString("AdresseVille"),
-                        rs.getString("AdressePays"),
-                        rs.getString("AdresseObservation"),
-                        rs.getInt(Integer.valueOf("AdresseStatut")));
+                Adresse a = new Adresse(
+                        rs.getInt("adrId"),
+                        rs.getInt("cliId"),
+                        rs.getString("Nom"),
+                        rs.getString("Prenom"),
+                        rs.getString("Genre"),
+                        rs.getString("NomVoie"),
+                        rs.getString("Complement"),
+                        rs.getString("CodePostal"),
+                        rs.getString("Ville"),
+                        rs.getString("Pays"),
+                        rs.getInt("Statut"));
                 listeAdresseFacturation.add(a);
-
+                System.out.println("adresse facturation :" + listeAdresseFacturation);
             }
             rs.close();
             stmt.close();
@@ -128,17 +147,17 @@ public class beanCompteClient implements Serializable {
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                Adresse a = new Adresse(rs.getInt(Integer.valueOf("AdresseId")),
-                        rs.getInt(Integer.valueOf("LivClientId")),
-                        rs.getString("LivraisonNom"),
-                        rs.getString("LivraisonPrenom"),
-                        rs.getString("AdresseVoie"),
-                        rs.getString("AdresseComplement"),
-                        rs.getString("AdresseVille"),
-                        rs.getString("AdressePays"),
-                        rs.getString("AdresseObservation"),
-                        rs.getInt(Integer.valueOf("AdresseStatut")));
-                listeAdresseLivraison.add(a);
+//                Adresse a = new Adresse(rs.getInt(Integer.valueOf("AdresseId")),
+//                        rs.getInt(Integer.valueOf("LivClientId")),
+//                        rs.getString("LivraisonNom"),
+//                        rs.getString("LivraisonPrenom"),
+//                        rs.getString("AdresseVoie"),
+//                        rs.getString("AdresseComplement"),
+//                        rs.getString("AdresseVille"),
+//                        rs.getString("AdressePays"),
+//                        rs.getString("AdresseObservation"),
+//                        rs.getInt(Integer.valueOf("AdresseStatut")));
+//                listeAdresseLivraison.add(a);
 
             }
             rs.close();

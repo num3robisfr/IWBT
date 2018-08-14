@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import Model.beanAgendaEvenement;
+import classe.Adresse;
 import classe.Evenement;
 import exception.Exceptions;
 import static outil.VerifSaisie.*;
@@ -492,6 +493,17 @@ public class Controller extends HttpServlet {
         
         if("AdresseManager".equals(request.getParameter("section"))){
             url = "/WEB-INF/AdresseManager.jsp";
+            
+          beanAdresse b = new beanAdresse();
+           
+           if (d != null){
+
+               b = b.getAdressefacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+               request.setAttribute("adrfac", b);
+               b = b.getAdresselivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+               request.setAttribute("adrliv", b); 
+           }
+            
         }
         
         // partie Panier 

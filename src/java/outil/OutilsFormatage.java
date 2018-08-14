@@ -15,23 +15,34 @@ import java.text.SimpleDateFormat;
  * @author nicolas
  */
 public class OutilsFormatage {
-    
-    public static String formaterDate(Date laDate){
+
+    public static String formaterDate(Date laDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String Date = sdf.format(laDate);
         return Date;
     }
-    
-    public static String retournerType(String genre){
-       String s = ""; 
-       
-       if(genre.equals("M")){
-           s = "H";
-       }else{
-           s= "F";
-       }
-       
-       return s;
+
+    public static String retournerType(String genre) {
+        String s = "";
+
+        if (genre.equals("M")) {
+            s = "H";
+        } else {
+            s = "F";
+        }
+
+        return s;
     }
-    
+
+    public static String retournerCivilite(String genre) {
+        String s = "";
+
+        if (genre.equals("H")) {
+            s = "M.";
+        } else {
+            s = "Mme";
+        }
+
+        return s;
+    }
 }

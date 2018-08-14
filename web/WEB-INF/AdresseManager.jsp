@@ -30,26 +30,52 @@
                                 </a> 
                             </div>
                         </div>
-                        <div class="col-md-4" style="min-width: 250px;">
-                            <div class="card border-grey" style="height: 245px;">
-                                <div class="card-header bg-transparent"><small>Adresse de Facturation</small></div>
-                                <div class="card-body text-dark">
-                                    <p class="card-text">
-                                        <strong>M. PHALEMPIN Nicolas</strong>
-                                        <br>
-                                        <small>
-                                        35 rue Simone Veil
-                                        <br>
-                                        80110 MOREUIL
-                                        </small>
-                                    </p>
-                                    <div class="row" style="padding-top: 45px; padding-left: 15px">
-                                        <a href="#">Modifier</a>
+                        <c:if test="${adrfac != null}">
+
+                            <div class="col-md-4" style="min-width: 250px;">
+                                <div class="card border-grey" style="height: 245px;">
+                                    <div class="card-header bg-transparent"><small>Adresse de ${adrfac['type']}</small></div>
+                                    <div class="card-body text-dark">
+                                        <p class="card-text">
+                                            <strong>${adrfac['genre']} ${adrfac['nom']} ${adrfac['prenom']}</strong>
+                                            <br>
+                                            <small>
+                                                ${adrfac['adresse']}
+                                                <br>
+
+                                                ${adrfac['codePostal']} ${adrfac['ville']}
+                                            </small>
+                                        </p>
+                                        <div class="row" style="padding-top: 45px; padding-left: 15px">
+                                            <a href="#">Modifier</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
+                        </c:if>
+                        <c:if test="${adrliv != null}">
+
+                            <div class="col-md-4" style="min-width: 250px;">
+                                <div class="card border-grey" style="height: 245px;">
+                                    <div class="card-header bg-transparent"><small>Adresse de ${adrliv['type']}</small></div>
+                                    <div class="card-body text-dark">
+                                        <p class="card-text">
+                                            <strong>${adrliv['genre']} ${adrliv['nom']} ${adrliv['prenom']}</strong>
+                                            <br>
+                                            <small>
+                                                ${adrliv['adresse']}
+                                                <br>
+
+                                                ${adrliv['codePostal']} ${adrliv['ville']}
+                                            </small>
+                                        </p>
+                                        <div class="row" style="padding-top: 45px; padding-left: 15px">
+                                            <a href="#">Modifier</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
 

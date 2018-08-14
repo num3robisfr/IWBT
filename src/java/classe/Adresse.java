@@ -7,8 +7,9 @@ public class Adresse implements Serializable{
     
     private int adrId;
     private int cliId;
-    private String nomAdresse;
-    private String prenomAdresse;
+    private String adrNom;
+    private String adrPrenom;
+    private String adrGenre;
     private String adrVoie;
     private String adrComplement;
     private String adrCodePostal;
@@ -19,43 +20,12 @@ public class Adresse implements Serializable{
     public Adresse() {
     }
 
-    public Adresse(int adrId, int cliId, String adrVoie, String adrComplement, String adrCodePostal, String adrVille) {
+    public Adresse(int adrId, int cliId, String adrNom, String adrPrenom, String adrGenre, String adrVoie, String adrComplement, String adrCodePostal, String adrVille, String adrPays, int adrStatut) {
         this.adrId = adrId;
         this.cliId = cliId;
-        this.adrVoie = adrVoie;
-        this.adrComplement = adrComplement;
-        this.adrCodePostal = adrCodePostal;
-        this.adrVille = adrVille;
-    }
-
-    public Adresse(int adrId, int cliId, String nomAdresse, String prenomAdresse, String adrVoie, String adrComplement, String adrCodePostal, String adrVille) {
-        this.adrId = adrId;
-        this.cliId = cliId;
-        this.nomAdresse = nomAdresse;
-        this.prenomAdresse = prenomAdresse;
-        this.adrVoie = adrVoie;
-        this.adrComplement = adrComplement;
-        this.adrCodePostal = adrCodePostal;
-        this.adrVille = adrVille;
-    }
-    
-    public Adresse(int adrId, int cliId, String nomAdresse, String prenomAdresse, String adrVoie, String adrComplement, String adrCodePostal, String adrVille, String adrPays) {
-        this.adrId = adrId;
-        this.cliId = cliId;
-        this.nomAdresse = nomAdresse;
-        this.prenomAdresse = prenomAdresse;
-        this.adrVoie = adrVoie;
-        this.adrComplement = adrComplement;
-        this.adrCodePostal = adrCodePostal;
-        this.adrVille = adrVille;
-        this.adrPays = adrPays;
-    }
-
-    public Adresse(int adrId, int cliId, String nomAdresse, String prenomAdresse, String adrVoie, String adrComplement, String adrCodePostal, String adrVille, String adrPays, int adrStatut) {
-        this.adrId = adrId;
-        this.cliId = cliId;
-        this.nomAdresse = nomAdresse;
-        this.prenomAdresse = prenomAdresse;
+        this.adrNom = adrNom;
+        this.adrPrenom = adrPrenom;
+        this.adrGenre = adrGenre;
         this.adrVoie = adrVoie;
         this.adrComplement = adrComplement;
         this.adrCodePostal = adrCodePostal;
@@ -80,20 +50,28 @@ public class Adresse implements Serializable{
         this.cliId = cliId;
     }
 
-    public String getNomAdresse() {
-        return nomAdresse;
+    public String getAdrNom() {
+        return adrNom;
     }
 
-    public void setNomAdresse(String nomAdresse) {
-        this.nomAdresse = nomAdresse;
+    public void setAdrNom(String adrNom) {
+        this.adrNom = adrNom;
     }
 
-    public String getPrenomAdresse() {
-        return prenomAdresse;
+    public String getAdrPrenom() {
+        return adrPrenom;
     }
 
-    public void setPrenomAdresse(String prenomAdresse) {
-        this.prenomAdresse = prenomAdresse;
+    public void setAdrPrenom(String adrPrenom) {
+        this.adrPrenom = adrPrenom;
+    }
+
+    public String getAdrGenre() {
+        return adrGenre;
+    }
+
+    public void setAdrGenre(String adrGenre) {
+        this.adrGenre = adrGenre;
     }
 
     public String getAdrVoie() {
@@ -143,14 +121,20 @@ public class Adresse implements Serializable{
     public void setAdrStatut(int adrStatut) {
         this.adrStatut = adrStatut;
     }
+
+    @Override
+    public String toString() {
+        return "Adresse{" + "adrId=" + adrId + ", cliId=" + cliId + ", adrNom=" + adrNom + ", adrPrenom=" + adrPrenom + ", adrGenre=" + adrGenre + ", adrVoie=" + adrVoie + ", adrComplement=" + adrComplement + ", adrCodePostal=" + adrCodePostal + ", adrVille=" + adrVille + ", adrPays=" + adrPays + ", adrStatut=" + adrStatut + '}';
+    }
+
+    
+    
+
+
     
 
 
 
-    @Override
-    public String toString() {
-        return "Adresse{" + ", adrId=" + adrId + ", adrVoie=" + adrVoie +", adrComplement=" + adrComplement + ", adrCodePostal=" + adrCodePostal + ", adrVille=" + adrVille + ", adrPays=" + adrPays + '}';
-    }
     
     
     
