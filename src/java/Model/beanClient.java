@@ -57,6 +57,14 @@ public class beanClient implements Serializable {
         this.telephone = telephone;
     }
 
+    public beanClient(String nom, String prenom, String genre) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.genre = genre;
+    }
+        
+        
+
     public int getId() {
         return Id;
     }
