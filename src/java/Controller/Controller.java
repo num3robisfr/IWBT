@@ -57,10 +57,8 @@ public class Controller extends HttpServlet {
 
         String checkLogin;
         int id = 0;
-        Map<String, String> erreurs = new HashMap();
+        Map<String, String> erreurs = new HashMap<>();
         Map<String, String> client = new HashMap();
-        Map<String, String> resultat = new HashMap();
-
         ArrayList<Integer> commande = null;
         String url = "/WEB-INF/jspAccueil.jsp";
 
@@ -370,9 +368,9 @@ public class Controller extends HttpServlet {
         if ("addAdresse".equals(request.getParameter("adr"))) {
             url = "/WEB-INF/newAdresse.jsp";
             erreurs.clear();
-            resultat.clear();
             Map<String, String> hMClient = (HashMap) session.getAttribute("client");
             Map<String, String> hMAdresse = new HashMap<>();
+            Map<String, String> resultat = new HashMap<>();
 
             beanClient bC = new beanClient(hMClient.get("nom"), hMClient.get("prenom"),
                     hMClient.get("genre"), hMClient.get("email"), hMClient.get("password"),
@@ -455,7 +453,6 @@ public class Controller extends HttpServlet {
         if ("modClient".equals(request.getParameter("client"))) {
             url = "/WEB-INF/modCompteClient.jsp";
             erreurs.clear();
-            resultat.clear();
             int idClient = Integer.valueOf(request.getParameter("id"));
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
@@ -464,6 +461,10 @@ public class Controller extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String genre = retournerType(request.getParameter("civilite"));
+            Map<String, String> resultat = new HashMap<>();
+
+            beanClient bc = new beanClient(idClient,
+                    nom, prenom, genre, email, password, numTel);
 
             try {
                 checkNom(nom);
@@ -498,8 +499,6 @@ public class Controller extends HttpServlet {
             }
 
             if (erreurs.isEmpty()) {
-                beanClient bc = new beanClient(idClient,
-                        nom, prenom, genre, email, password, numTel);
                 resultat.put("message", bc.ModClient(beanc.getConnexion()));
             }
 
@@ -530,176 +529,99 @@ public class Controller extends HttpServlet {
 
         }
 
-        if ("Add".equals(request.getParameter("Adresse"))) {
-            url = "/WEB-INF/AddAdresse.jsp";
-        }
+        // partie Panier 
+        if ("affichePanier".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspPanier.jsp";
 
-        if ("checkAdd".equals(request.getParameter("Adresse"))) {
-            url = "/WEB-INF/AddAdresse.jsp";
-            erreurs.clear();
-            resultat.clear();
-            int idClient = Integer.valueOf(d.getValue());
-            String nom = request.getParameter("nom");
-            String prenom = request.getParameter("prenom");
-            String genre = retournerType(request.getParameter("civilite"));
-            String adresse = request.getParameter("adresse");
-            String complement = request.getParameter("complement");
-            String codePostal = request.getParameter("codePostal");
-            String ville = request.getParameter("ville");
-            String type = request.getParameter("type");
+            beanPanier panier = (beanPanier) session.getAttribute("panier");
+            if (panier == null) {
+                panier = new beanPanier();
+                session.setAttribute("panier", panier);
 
-            try {
-                checkNom(nom);
-                client.put("nom", nom);
-            } catch (Exceptions e) {
-                erreurs.put("nom", e.getMessage());
             }
-            try {
-                checkPrenom(prenom);
-                client.put("prenom", prenom);
-            } catch (Exceptions e) {
-                erreurs.put("prenom", e.getMessage());
-            }
-            try {
-                checkAdresse(adresse);
-                client.put("adresse", adresse);
-            } catch (Exceptions e) {
-                erreurs.put("adresse", e.getMessage());
-            }
-            client.put("complement", complement);
-            try {
-                checkCodePostal(codePostal);
-                client.put("codePostal", codePostal);
-            } catch (Exceptions e) {
-                erreurs.put("codePostal", e.getMessage());
-            }
-            try {
-                checkVille(ville);
-                client.put("ville", ville);
-            } catch (Exceptions e) {
-                erreurs.put("ville", e.getMessage());
-            }
+            request.setAttribute("isempty", panier.isEmpty());
+            request.setAttribute("list", panier.getList());
 
-            if (erreurs.isEmpty()) {
-                beanAdresse bA = new beanAdresse(idClient, genre, nom, prenom, adresse, complement, codePostal, ville, 1, type);
-                beanClient bC = new beanClient(nom, prenom, genre);
-
-                if (type.contains("facturation")) {
-                    int adrId = bA.AddAdresse(beanc.getConnexion());
-                    if (adrId == '0') {
-                        resultat.put("erreur", "erreur d'enregistrement");
-                    }
-                    if (adrId != '0') {
-                        int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, idClient, bC);
-                        if(res == '0'){
-                          resultat.put("erreur", "erreur d'enregistrement");  
-                        }
-                        if(res != '0'){
-                          resultat.put("message", "adresse ajoutée");  
-                        }
-                    }
-
-                }
-                request.setAttribute("erreurs", erreurs);
-                request.setAttribute("client", client);
-                request.setAttribute("resultat", resultat);
-            }
-
-            // partie Panier 
-            if ("affichePanier".equals(request.getParameter("section"))) {
+            if (request.getParameter("add") != null) {
+                panier.add(request.getParameter("urlImage"),
+                        request.getParameter("ref"),
+                        request.getParameter("titre"),
+                        request.getParameter("prix"));
                 url = "/WEB-INF/jspPanier.jsp";
 
-                beanPanier panier = (beanPanier) session.getAttribute("panier");
-                if (panier == null) {
-                    panier = new beanPanier();
-                    session.setAttribute("panier", panier);
-
-                }
-                request.setAttribute("isempty", panier.isEmpty());
-                request.setAttribute("list", panier.getList());
-
-                if (request.getParameter("add") != null) {
-                    panier.add(request.getParameter("urlImage"),
-                            request.getParameter("ref"),
-                            request.getParameter("titre"),
-                            request.getParameter("prix"));
-                    url = "/WEB-INF/jspPanier.jsp";
-
-                }
-                if (request.getParameter("dec") != null) {
-                    panier.dec(request.getParameter("urlImage"),
-                            request.getParameter("ref"),
-                            request.getParameter("titre"),
-                            request.getParameter("prix"));
-                    session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
-                    if (panier.isEmpty()) {
-                        request.setAttribute("isempty", panier.isEmpty());
-                        session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
-                        url = "/WEB-INF/jspPanier.jsp";
-                    }
-                }
-                if (request.getParameter("del") != null) {
-                    panier.del(request.getParameter("ref"));
-                    session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
-                    if (panier.isEmpty()) {
-                        request.setAttribute("isempty", panier.isEmpty());
-                        session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
-                        url = "/WEB-INF/jspPanier.jsp";
-                    }
-                }
-
-                if (request.getParameter("clean") != null) {
-                    panier.clean();
-                    session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
-                    request.setAttribute("isempty", panier.isEmpty());
-                    url = "/WEB-INF/jspPanier.jsp";
-                }
-
+            }
+            if (request.getParameter("dec") != null) {
+                panier.dec(request.getParameter("urlImage"),
+                        request.getParameter("ref"),
+                        request.getParameter("titre"),
+                        request.getParameter("prix"));
                 session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
-                System.out.println("panier.getTotal() = " + panier.getTotal(request.getParameter("ref")));
+                if (panier.isEmpty()) {
+                    request.setAttribute("isempty", panier.isEmpty());
+                    session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
+                    url = "/WEB-INF/jspPanier.jsp";
+                }
+            }
+            if (request.getParameter("del") != null) {
+                panier.del(request.getParameter("ref"));
+                session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
+                if (panier.isEmpty()) {
+                    request.setAttribute("isempty", panier.isEmpty());
+                    session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
+                    url = "/WEB-INF/jspPanier.jsp";
+                }
             }
 
-            if ("panier".equals(request.getParameter("section"))) {
-
-                beanPanier panier = (beanPanier) session.getAttribute("panier");
-                if (panier == null) {
-                    panier = new beanPanier();
-                    session.setAttribute("panier", panier);
-                }
-
-                if (request.getParameter("ajout") != null) {
-                    panier.add(request.getParameter("urlImage"),
-                            request.getParameter("ref"),
-                            request.getParameter("titre"),
-                            request.getParameter("prix"));
-                    session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
-                    url = "Controller?section=oeuvre&isbn=request.getParameter(\"ref\")";
-                    for (beanOeuvre b : (ArrayList<beanOeuvre>) beanca.getListeOeuvres()) {
-                        if (b.getOeuIsbn().equals(request.getParameter("ref"))) {
-                            request.setAttribute("oeuvre", b);
-                        }
-                    }
-                }
-
-                if (request.getParameter("ajoutV2") != null) {
-                    panier.add(request.getParameter("urlImage"),
-                            request.getParameter("ref"),
-                            request.getParameter("titre"),
-                            request.getParameter("prix"));
-                    session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
-                }
-
+            if (request.getParameter("clean") != null) {
+                panier.clean();
+                session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
+                request.setAttribute("isempty", panier.isEmpty());
+                url = "/WEB-INF/jspPanier.jsp";
             }
 
-            request.getRequestDispatcher(url).include(request, response);
+            session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
+            System.out.println("panier.getTotal() = " + panier.getTotal(request.getParameter("ref")));
         }
 
+        if ("panier".equals(request.getParameter("section"))) {
+
+            beanPanier panier = (beanPanier) session.getAttribute("panier");
+            if (panier == null) {
+                panier = new beanPanier();
+                session.setAttribute("panier", panier);
+            }
+
+            if (request.getParameter("ajout") != null) {
+                panier.add(request.getParameter("urlImage"),
+                        request.getParameter("ref"),
+                        request.getParameter("titre"),
+                        request.getParameter("prix"));
+                session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
+                url = "Controller?section=oeuvre&isbn=request.getParameter(\"ref\")";
+                for (beanOeuvre b : (ArrayList<beanOeuvre>) beanca.getListeOeuvres()) {
+                    if (b.getOeuIsbn().equals(request.getParameter("ref"))) {
+                        request.setAttribute("oeuvre", b);
+                    }
+                }
+            }
+
+            if (request.getParameter("ajoutV2") != null) {
+                panier.add(request.getParameter("urlImage"),
+                        request.getParameter("ref"),
+                        request.getParameter("titre"),
+                        request.getParameter("prix"));
+                session.setAttribute("total", panier.getTotal(request.getParameter("ref")));
+            }
+
+        }
+
+        request.getRequestDispatcher(url).include(request, response);
     }
+
 //------------------------------------------------------------------------------
 //                                 AUTRES
 //------------------------------------------------------------------------------ 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *
