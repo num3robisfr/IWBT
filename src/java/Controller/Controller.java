@@ -221,16 +221,20 @@ public class Controller extends HttpServlet {
         if ("listecommande".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
             tampon = 0;
+             
+             System.out.println("coucou = " + request.getParameter("datelimit"));
+                 
+         if ("3 mois".equals(request.getParameter("datelimit"))) {
+                System.out.println("ça marche");
+            }
             if (c != null) {
                 if (listeCommande != null) {
-//                    tampon = listeCommande.get(0).getComId();
                     try {
                         tampon = listeCommande.get(0).getComId();
                         commande.add(tampon);
                     } catch (Exception e) {
                         System.err.println(e);
                     }
-//                    commande.add(tampon);
                     listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
                     session.setAttribute("listeCommande", listeCommande);
 
@@ -241,9 +245,13 @@ public class Controller extends HttpServlet {
                         tampon = listeCommande.get(i).getComId();
                     }
                     request.setAttribute("tabCommande", commande);
+
                 }
+
             }
+          
         }
+    
 
         /////////////////////////////////////////////////////////////////////////////////////
         ///           Clic sur 'identifiez-vous'/'Mon compte' dans la sidebar :           ///
@@ -272,10 +280,10 @@ public class Controller extends HttpServlet {
                     tampon = listeCommande.get(i).getComId();
                 }
                 request.setAttribute("tabCommande", commande);
-
             } else {
                 request.setAttribute("okay", "0");
             }
+
             /////////////////////////////////////////////////////////////////////////////////////
             ///partie check login/mot de passe, créations Cookies,                      /////////
             ///et attribution des valeur de session et requetes pour gérer affichage    /////////
@@ -475,16 +483,16 @@ public class Controller extends HttpServlet {
                     if (adrId > 0) {
                         int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, cliId, bC);
 
-                    resultat.put("message", "enregistrement effectué avec succés");
-                    request.setAttribute("nom", bC.getPrenom() + " " + bC.getNom());
-                    d = new Cookie("ID", String.valueOf(cliId));
-                    d.setMaxAge(3600 * 24 * 7);
-                    response.addCookie(d);
-                    
-                    c = new Cookie("username", bC.getPrenom() + " " + bC.getNom());
-                    c.setMaxAge(3600 * 24 * 7);
-                    response.addCookie(c);
-                    
+                        resultat.put("message", "enregistrement effectué avec succés");
+                        request.setAttribute("nom", bC.getPrenom() + " " + bC.getNom());
+                        d = new Cookie("ID", String.valueOf(cliId));
+                        d.setMaxAge(3600 * 24 * 7);
+                        response.addCookie(d);
+
+                        c = new Cookie("username", bC.getPrenom() + " " + bC.getNom());
+                        c.setMaxAge(3600 * 24 * 7);
+                        response.addCookie(c);
+
                     }
 
                 }
@@ -583,11 +591,11 @@ public class Controller extends HttpServlet {
             ArrayList<beanAdresse> bAdrLiv = new ArrayList<beanAdresse>();
 
             if (d != null) {
-            bAdrFac = bcc.ChargerListeAdresseFacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
-            request.setAttribute("adrfac", bAdrFac);
-            bAdrLiv = bcc.ChargerListeAdresseLivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
-            request.setAttribute("adrliv", bAdrLiv);
-            request.setAttribute("numClient",d.getValue());
+                bAdrFac = bcc.ChargerListeAdresseFacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+                request.setAttribute("adrfac", bAdrFac);
+                bAdrLiv = bcc.ChargerListeAdresseLivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+                request.setAttribute("adrliv", bAdrLiv);
+                request.setAttribute("numClient", d.getValue());
             }
 
         }
@@ -683,9 +691,9 @@ public class Controller extends HttpServlet {
             request.setAttribute("resultat", resultat);
 
         }
-        
-        if("Mod".equals(request.getParameter("Adresse"))){
-          url = "/WEB-INF/ModAdresse.jsp";  
+
+        if ("Mod".equals(request.getParameter("Adresse"))) {
+            url = "/WEB-INF/ModAdresse.jsp";
         }
 
         // partie Panier 

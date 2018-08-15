@@ -43,7 +43,7 @@
                 </c:if>
 
                 <div id="catalogue">
-
+                    <br>
                     <%--S'il y a pas de cookie 'username' sur le navigateur :
                on affiche les champs 'login' et 'password' --%>
 
@@ -126,8 +126,15 @@
                             si oui : accès direct à la page compte client--%>
 
                     <c:if test="${okay == '2' }">     
-
-
+                        <p><strong>Historique des commandes</strong></p>
+                        <select name="datelimit"> 
+                            <option>3 mois</option>
+                            <option>6 mois</option>
+                            <option>1 ans</option>
+                            <option>Toutes les commandes</option>
+                        </select>
+                        <br>
+                        <br>
                         <%--Test s'il y a des commandes précédentes existantes :
                         si oui, afficher la derniere commande dans un tableau
                         sinon, afficher un message 'Aucune commande effectuée'--%>
