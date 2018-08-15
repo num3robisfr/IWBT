@@ -48,7 +48,7 @@
                                                 </small>
                                             </p>
                                             <div class="row" style="padding-top: 45px; padding-left: 15px">
-                                                <a href="#">Modifier</a>
+                                                <a href="Controller?Adresse=Mod?cliId=${numClient}?adrId=${p.id}">Modifier</a>
                                             </div>
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@
                                                 </small>
                                             </p>
                                             <div class="row" style="padding-top: 45px; padding-left: 15px">
-                                                <a href="#">Modifier</a>
+                                                <a href="Controller?Adresse=Mod?cliId=${numClient}?adrId=${p.id}">Modifier</a>
                                             </div>
                                         </div>
                                     </div>
