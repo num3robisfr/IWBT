@@ -52,7 +52,7 @@
                                                 <div class="card-body">
                                                     <h6 class="card-title">${p.oeuTitre}</h6>
                                                     <p>${p.autNom}</p>
-                                                    <p>${p.oeuPrix}€</p>
+                                                    <p>${p.oeuPrix}€ - ${evenement.eveTauxPromo}%</p>
                                                     <a class="btn btn-primary mx-auto d-block" href="Controller?section=oeuvre&isbn=${p.oeuIsbn}">Sélectionner</a>
                                                 </div>
                                             </div>

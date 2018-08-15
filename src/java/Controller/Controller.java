@@ -193,7 +193,7 @@ public class Controller extends HttpServlet {
         if ("evenement".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspEvent.jsp";
             beanca.setListeOeuvresEvenement(beanca.remplirListeOeuvresEvenement(beanc.getConnexion(), request.getParameter("intitule")));
-            request.setAttribute("listeevenementoeuvre", beanca.getListeOeuvresEvenement());
+            session.setAttribute("listeevenementoeuvre", beanca.getListeOeuvresEvenement());
             if (beanca.getListeOeuvresEvenement().isEmpty()) {
                 request.setAttribute("listevide", "ok");
             } else {
