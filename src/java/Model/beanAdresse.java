@@ -277,37 +277,144 @@ public class beanAdresse implements Serializable {
         return ba;
     }
     
-     public beanAdresse getAdresselivraison(Connection connexion, int cliId){
-        beanAdresse ba = null;
-
-        String query = "SELECT "
-                + "liv.cliId as 'cliId', adr.adrId as 'adrId',livGenre as 'Genre', livNom as 'Nom', livPrenom as 'Prenom', adrVoie as 'Voie', adrComplement as 'Complement', adrCodePostal as 'CodePostal', adrVille as 'Ville', adrStatut as 'Statut' "
+    public beanAdresse getAdresselivraison(Connection connexion, int cliId){
+         
+         beanAdresse listeAdresseFacturation = new beanAdresse();
+         
+         String query = "SELECT adr.adrId as 'adrId', "
+                + "cli.cliId as 'cliId', "
+                + "liv.livNom as 'Nom', "
+                + "liv.livPrenom as 'Prenom', "
+                + "liv.livGenre as 'Genre', "
+                + "adr.adrVoie as 'NomVoie', "
+                + "adr.adrComplement as 'Complement', "
+                + "adr.adrCodePostal as 'CodePostal', "
+                + "adr.adrVille as 'Ville', "
+                + "adr.adrPays as 'Pays', "
+                + "adr.adrStatut as 'Statut' "
                 + "FROM "
-                + "LivraisonAdresse liv "
-                + "JOIN Adresse adr "
-                + "ON liv.adrId = adr.adrId "
-                + "where liv.cliId = " + cliId;
-        
+                + "Adresse adr "
+                + "JOIN LivraisonAdresse liv "
+                + "ON adr.adrId = liv.adrId "
+                + "JOIN Client cli "
+                + "ON liv.cliId = cli.cliId "
+                + "WHERE cli.cliId = " + cliId;
+
         try {
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                ba = new beanAdresse(rs.getInt("cliId"),
+                listeAdresseFacturation = new beanAdresse(
+                        rs.getInt("adrId"),
                         retournerCivilite(rs.getString("Genre")),
-                        rs.getString("Nom"), rs.getString("Prenom"),
-                        rs.getString("Voie"), rs.getString("Complement"), rs.getString("CodePostal"),
-                        rs.getString("Ville"), rs.getInt("Statut"), "livraison");
+                        rs.getString("Nom"),
+                        rs.getString("Prenom"),
+                        rs.getString("NomVoie"),
+                        rs.getString("Complement"),
+                        rs.getString("CodePostal"),
+                        rs.getString("Ville"),
+                        rs.getInt("Statut"),
+                        "facturation");
+                System.out.println("listeAdresseFacturation : " + listeAdresseFacturation);
             }
-            
             rs.close();
             stmt.close();
             connexion.close();
-            
         } catch (SQLException e) {
-            System.out.println("erreur requete getAdresselivraison" + e);
+            System.err.print("ERREUR SQL " + e.getMessage());
         }
-       
-        return ba;
+        return listeAdresseFacturation;
+
     }
    
+    public String updateAdresse(Connection connexion){
+           String message = "";
+        
+                try {
+
+            String query = "UPDATE Adresse "
+                    + "SET adrVoie = ?, "
+                    + "adrComplement = ?, "
+                    + "adrCodePostal = ?,"
+                    + "adrVille =? "
+                    + "WHERE "
+                    + "adrId = ?";
+            PreparedStatement pstmt = connexion.prepareStatement(query);
+            pstmt.setString(1, this.adresse);
+            pstmt.setString(2, this.complement);
+            pstmt.setString(3, this.codePostal);
+            pstmt.setString(4, this.ville);
+            pstmt.setInt(5, this.id);
+
+            pstmt.executeUpdate();
+            message = "Modification effectuée";
+
+            pstmt.close();
+            connexion.close();
+        } catch (SQLException ex) {
+            message = "Erreur de modification de l'adresse";
+        }
+        
+        return message;
+    }
+    
+    public String updateAdresseFacture(Connection connexion, int cliId){
+                   String message = "";
+        
+                try {
+
+            String query = "UPDATE FactureAdresse "
+                    + "SET facNom = ?, "
+                    + "facPrenom = ?, "
+                    + "facGenre = ? "
+                    + "WHERE "
+                    + "adrId = ? and cliId = ?";
+            PreparedStatement pstmt = connexion.prepareStatement(query);
+            pstmt.setString(1, this.nom);
+            pstmt.setString(2, this.prenom);
+            pstmt.setString(3, this.genre);
+            pstmt.setInt(4, this.id);
+            pstmt.setInt(5, cliId);
+
+            pstmt.executeUpdate();
+            message = "Modification effectuée";
+
+            pstmt.close();
+            connexion.close();
+        } catch (SQLException ex) {
+            message = "Erreur de modification de la table FactureAdresse";
+        }
+        
+        return message;
+    }
+    
+    public String updateAdresseLivraison(Connection connexion, int cliId){
+                          String message = "";
+        
+                try {
+
+            String query = "UPDATE LivraisonAdresse "
+                    + "SET livNom = ?, "
+                    + "livPrenom = ?, "
+                    + "livGenre = ? "
+                    + "WHERE "
+                    + "adrId = ? and cliId = ?";
+            PreparedStatement pstmt = connexion.prepareStatement(query);
+            pstmt.setString(1, this.nom);
+            pstmt.setString(2, this.prenom);
+            pstmt.setString(3, this.genre);
+            pstmt.setInt(4, this.id);
+            pstmt.setInt(5, cliId);
+
+            pstmt.executeUpdate();
+            message = "Modification effectuée";
+
+            pstmt.close();
+            connexion.close();
+        } catch (SQLException ex) {
+            message = "Erreur de modification de la table FactureAdresse";
+        }
+        
+        return message; 
+    }
 }

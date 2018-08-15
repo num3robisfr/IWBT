@@ -713,7 +713,93 @@ public class Controller extends HttpServlet {
             String cliId = request.getParameter("cliId");
             String adrId = request.getParameter("adrId");
             String type = request.getParameter("type");
+            
+            beanAdresse bAdr = new beanAdresse();
+
+            
+            if(type.equals("facturation")){
+              bAdr = bAdr.getAdressefacturation(beanc.getConnexion(), Integer.valueOf(cliId)); 
+              
+            }
+            if(type.equals("livraison")){
+              bAdr = bAdr.getAdresselivraison(beanc.getConnexion(), Integer.valueOf(cliId));  
+            }
+            request.setAttribute("client", bAdr);
+            request.setAttribute("cliId", cliId);
+            request.setAttribute("adrId", adrId);
+            request.setAttribute("type", type);
+            
         }
+        
+        if ("checkMod".equals(request.getParameter("Adresse"))) {
+            url = "/WEB-INF/ModAdresse.jsp";
+            erreurs.clear();
+            resultat.clear();
+            int cliId = Integer.valueOf(request.getParameter("cliId"));
+            int adrId = Integer.valueOf(request.getParameter("adrId"));
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+            String genre = retournerType(request.getParameter("civilite"));
+            String adresse = request.getParameter("adresse");
+            String complement = request.getParameter("complement");
+            String codePostal = request.getParameter("codePostal");
+            String ville = request.getParameter("ville");
+            String type = request.getParameter("type");
+
+            System.out.println(">>>>>> type : "+ type);
+            try {
+                checkNom(nom);
+                client.put("nom", nom);
+            } catch (Exceptions e) {
+                erreurs.put("nom", e.getMessage());
+            }
+            try {
+                checkPrenom(prenom);
+                client.put("prenom", prenom);
+            } catch (Exceptions e) {
+                erreurs.put("prenom", e.getMessage());
+            }
+            try {
+                checkAdresse(adresse);
+                client.put("adresse", adresse);
+            } catch (Exceptions e) {
+                erreurs.put("adresse", e.getMessage());
+            }
+            client.put("complement", complement);
+            try {
+                checkCodePostal(codePostal);
+                client.put("codePostal", codePostal);
+            } catch (Exceptions e) {
+                erreurs.put("codePostal", e.getMessage());
+            }
+            try {
+                checkVille(ville);
+                client.put("ville", ville);
+            } catch (Exceptions e) {
+                erreurs.put("ville", e.getMessage());
+            }
+
+            if (erreurs.isEmpty()) {
+                beanAdresse bA = new beanAdresse(adrId,genre,nom,prenom,adresse,complement,codePostal,ville,1,type);
+                
+                resultat.put("message", bA.updateAdresse(beanc.getConnexion()));
+                
+                if(type.equalsIgnoreCase("facturation")){
+                    resultat.put("message", bA.updateAdresseFacture(beanc.getConnexion(),cliId));
+                }
+                if(type.equalsIgnoreCase("livraison")){
+                    System.out.println("cliId : " + cliId);
+                    System.out.println("bA :" + bA);
+                    resultat.put("message", bA.updateAdresseLivraison(beanc.getConnexion(),cliId));
+                }
+
+            }
+            request.setAttribute("erreurs", erreurs);
+            request.setAttribute("client", client);
+            request.setAttribute("resultat", resultat);
+
+        }
+
 
         // partie Panier 
         if ("affichePanier".equals(request.getParameter("section"))) {
