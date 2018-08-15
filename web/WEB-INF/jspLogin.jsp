@@ -126,13 +126,18 @@
                             si oui : accès direct à la page compte client--%>
 
                     <c:if test="${okay == '2' }">     
-                        <p><strong>Historique des commandes</strong></p>
-                        <select name="datelimit"> 
-                            <option>3 mois</option>
-                            <option>6 mois</option>
-                            <option>1 ans</option>
-                            <option>Toutes les commandes</option>
-                        </select>
+                        <p><strong>Historique des commandes sur :</strong></p>
+                        <form action="Controller?section=listecommande" method="POST">
+                            <select name="datelimit"> 
+                                <option>${combo}</option>
+                                <option>1 mois</option>
+                                <option>6 mois</option>
+                                <option>1 an</option>
+                                <option>Toutes les commandes</option>
+                            </select>
+                            <button type="submit"  value="historique" name="historique">Ok</button>
+
+                        </form>
                         <br>
                         <br>
                         <%--Test s'il y a des commandes précédentes existantes :
@@ -144,11 +149,17 @@
                         </c:if>
 
                         <c:if test="${not empty listeCommande }">
+                            <c:if test="${tabTaille >1}">
+                                <p>Vous avez ${tabTaille} commandes sur cette pèriode</p>
+                            </c:if>
+                            <c:if test="${tabTaille ==1}">
+                                <p>Vous avez ${tabTaille} commande sur cette pèriode</p>
+                            </c:if>
+
                             <c:forEach var="t" items="${tabCommande}">
                                 <c:set var="total" value="${0}" scope="page" />
 
-                                <h1>Commande n° ${t}</h1>
-
+                                <a class="" href="Controller?section=commande&comId=${t}"><h1>Commande n° ${t}</h1></a>
                                 <table border="1">
                                     <thead>
                                         <tr>
@@ -207,9 +218,9 @@
 
                                 <hr>
                             </c:forEach>
-                            </c:if>
-                        
                         </c:if>
+
+                    </c:if>
                 </div>
             </div>
             <!-- footer -->

@@ -171,11 +171,12 @@ public class beanCompteClient implements Serializable {
         return listeAdresseLivraison;
     }
 
-    public ArrayList<beanLigneDeCommande> ChargerListeCommande(Connection connexion, int cliId) {
+    public ArrayList<beanLigneDeCommande> ChargerListeCommande(Connection connexion, int cliId, String filtre) {
 
         ArrayList<beanLigneDeCommande> listeLigneDeCommande = new ArrayList<beanLigneDeCommande>();
 
-        String query = "SELECT * FROM DetailCommandeClient WHERE cliId = " + cliId;
+        String query = "SELECT * FROM DetailCommandeClient WHERE cliId = " + cliId + " " + filtre
+                + " ORDER BY  DateCommande DESC ";
 
         try {
             Statement stmt = connexion.createStatement();
