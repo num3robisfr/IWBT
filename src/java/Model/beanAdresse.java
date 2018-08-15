@@ -110,11 +110,11 @@ public class beanAdresse implements Serializable {
     }
 
     public String getVille() {
-        return ville;
+        return ville.toUpperCase();
     }
 
     public void setVille(String ville) {
-        this.ville = ville;
+        this.ville = ville.toUpperCase();
     }
 
     public String getType() {
@@ -126,11 +126,11 @@ public class beanAdresse implements Serializable {
     }
 
     public String getNom() {
-        return nom;
+        return nom.toUpperCase();
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nom = nom.toUpperCase();
     }
 
     public String getPrenom() {
@@ -148,10 +148,12 @@ public class beanAdresse implements Serializable {
     public void setGenre(String genre) {
         this.genre = genre;
     }
-    
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "beanAdresse{" + "id=" + id + ", genre=" + genre + ", nom=" + nom + ", prenom=" + prenom + ", adresse=" + adresse + ", complement=" + complement + ", codePostal=" + codePostal + ", ville=" + ville + ", statut=" + statut + ", type=" + type + '}';
+    }
+       
 
     public int AddAdresse(Connection connexion) {
         int adrId = 0;
