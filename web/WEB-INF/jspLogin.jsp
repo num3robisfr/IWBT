@@ -126,13 +126,18 @@
                             si oui : accès direct à la page compte client--%>
 
                     <c:if test="${okay == '2' }">     
-                        <p><strong>Historique des commandes</strong></p>
-                        <select name="datelimit"> 
-                            <option>3 mois</option>
-                            <option>6 mois</option>
-                            <option>1 ans</option>
-                            <option>Toutes les commandes</option>
-                        </select>
+                        <p><strong>Historique des commandes sur :</strong></p>
+                        <form action="Controller?section=listecommande" method="POST">
+                            <select name="datelimit"> 
+                                <option>${combo}</option>
+                                <option>1 mois</option>
+                                <option>6 mois</option>
+                                <option>1 an</option>
+                                <option>Toutes les commandes</option>
+                            </select>
+                            <button type="submit"  value="historique" name="historique">Ok</button>
+
+                        </form>
                         <br>
                         <br>
                         <%--Test s'il y a des commandes précédentes existantes :
@@ -207,9 +212,9 @@
 
                                 <hr>
                             </c:forEach>
-                            </c:if>
-                        
                         </c:if>
+
+                    </c:if>
                 </div>
             </div>
             <!-- footer -->

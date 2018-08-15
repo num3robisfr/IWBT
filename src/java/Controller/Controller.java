@@ -112,8 +112,8 @@ public class Controller extends HttpServlet {
             d = new Cookie("ID", String.valueOf(id));
             d.setMaxAge(3600 * 24 * 7);
             response.addCookie(d);
-            listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
-            session.setAttribute("listeCommande", listeCommande);
+//            listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
+//            session.setAttribute("listeCommande", listeCommande);
         }
 
         if (c == null) {
@@ -221,37 +221,47 @@ public class Controller extends HttpServlet {
         if ("listecommande".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
             tampon = 0;
-             
-             System.out.println("coucou = " + request.getParameter("datelimit"));
-                 
-         if ("3 mois".equals(request.getParameter("datelimit"))) {
-                System.out.println("ça marche");
-            }
+            String filtre = null;
+            listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id, filtre);
+            session.setAttribute("listeCommande", listeCommande);
+            
             if (c != null) {
+                request.setAttribute("combo", "1 mois");
                 if (listeCommande != null) {
+                    if ("1 mois".equals(request.getParameter("datelimit"))) {
+                        filtre = " AND DateCommande >= (getdate()-31)";
+                    }
+                    if ("6 mois".equals(request.getParameter("datelimit"))) {
+                        filtre = " AND DateCommande >= (getdate()-184)";
+                        request.setAttribute("combo", "6 mois");
+                    }
+                    if ("1 an".equals(request.getParameter("datelimit"))) {
+                        filtre = " AND DateCommande >= (getdate()-365)";
+                        request.setAttribute("combo", "1 an");
+                    }
+                    if ("Toutes les commandes".equals(request.getParameter("datelimit"))) {
+                        filtre = "";
+                        request.setAttribute("combo", "Toutes les commandes");
+                    }
                     try {
                         tampon = listeCommande.get(0).getComId();
                         commande.add(tampon);
                     } catch (Exception e) {
                         System.err.println(e);
                     }
-                    listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
+                    listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id, filtre);
                     session.setAttribute("listeCommande", listeCommande);
 
-                    for (int i = 1; i < listeCommande.size(); i++) {
+                    for (int i = 0; i < listeCommande.size(); i++) {
                         if (listeCommande.get(i).getComId() != tampon) {
                             commande.add(listeCommande.get(i).getComId());
                         }
                         tampon = listeCommande.get(i).getComId();
                     }
                     request.setAttribute("tabCommande", commande);
-
                 }
-
             }
-          
         }
-    
 
         /////////////////////////////////////////////////////////////////////////////////////
         ///           Clic sur 'identifiez-vous'/'Mon compte' dans la sidebar :           ///
@@ -261,28 +271,14 @@ public class Controller extends HttpServlet {
         if ("login".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
             checkLogin = "0";
+            
             if (c != null) {
                 checkLogin = c.getValue();
                 request.setAttribute("okay", "2");
-                listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
-                session.setAttribute("listeCommande", listeCommande);
-                try {
-                    tampon = listeCommande.get(0).getComId();
-                    commande.add(tampon);
-                } catch (Exception e) {
-                    System.err.println(e);
-                }
-
-                for (int i = 1; i < listeCommande.size(); i++) {
-                    if (listeCommande.get(i).getComId() != tampon) {
-                        commande.add(listeCommande.get(i).getComId());
-                    }
-                    tampon = listeCommande.get(i).getComId();
-                }
-                request.setAttribute("tabCommande", commande);
-            } else {
-                request.setAttribute("okay", "0");
-            }
+                } 
+            else {
+                    request.setAttribute("okay", "0");
+                }  
 
             /////////////////////////////////////////////////////////////////////////////////////
             ///partie check login/mot de passe, créations Cookies,                      /////////
@@ -297,27 +293,7 @@ public class Controller extends HttpServlet {
                     beancl = beancl.ChargerBeanClient("cliEmail", request.getParameter("login"), beanc.getConnexion());
                     session.setAttribute("beancl", beancl);
                     id = beancl.getId();
-
-                    listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
-                    session.setAttribute("listeCommande", listeCommande);
-                    if (listeCommande != null) {
-                        try {
-                            tampon = listeCommande.get(0).getComId();
-                            commande.add(tampon);
-                        } catch (Exception e) {
-                            System.err.println(e);
-                        }
-
-                        for (int i = 0; i < listeCommande.size(); i++) {
-                            if (listeCommande.get(i).getComId() != tampon) {
-                                commande.add(listeCommande.get(i).getComId());
-                            }
-                            tampon = listeCommande.get(i).getComId();
-
-                        }
-                        request.setAttribute("tabCommande", commande);
-                    }
-
+                    
                     d = new Cookie("ID", String.valueOf(beancl.getId()));
                     d.setMaxAge(3600 * 24 * 7);
                     response.addCookie(d);
