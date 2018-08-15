@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import outil.OutilsFormatage;
+import static outil.OutilsFormatage.retournerCivilite;
 
 public class beanCompteClient implements Serializable {
 
@@ -99,7 +101,7 @@ public class beanCompteClient implements Serializable {
             while (rs.next()) {
                 beanAdresse a = new beanAdresse(
                         rs.getInt("adrId"),
-                        rs.getString("Genre"),
+                        retournerCivilite(rs.getString("Genre")),
                         rs.getString("Nom"),
                         rs.getString("Prenom"),
                         rs.getString("NomVoie"),
@@ -149,7 +151,7 @@ public class beanCompteClient implements Serializable {
             while (rs.next()) {
                 beanAdresse a = new beanAdresse(
                         rs.getInt("adrId"),
-                        rs.getString("Genre"),
+                        retournerCivilite(rs.getString("Genre")),
                         rs.getString("Nom"),
                         rs.getString("Prenom"),
                         rs.getString("NomVoie"),

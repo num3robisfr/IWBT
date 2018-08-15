@@ -27,7 +27,7 @@
             <c:forEach items="${listeSearch}" var="p">
 
                 <div class="col-4">
-                    <div class="card" style="width: 18rem; height: 410px;">
+                    <div class="card" style="width: 18rem; height: 410px; margin-top: 15px; margin-bottom: 15px;">
                         <img class="card-img-top mx-auto d-block" style="max-height: 200px; width: auto;" src="${p.oeuUrlImage}" alt="${p.oeuTitre}">
                         <div class="card-body">
                             <h6 class="card-title">${p.oeuTitre}</h6>

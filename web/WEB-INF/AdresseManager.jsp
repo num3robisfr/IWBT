@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,63 +23,67 @@
                     </div>
                     <h1>Vos Adresses</h1>
                     <div class="row">
-                        <div class="col-md-4 flex flex-column align-items-center justify-content-center" style="min-width: 250px;">
+                        <div class="col-md-4 flex flex-column align-items-center justify-content-center" style="min-width: 250px; margin-top: 15px; margin-bottom: 15px;">
                             <div class="card border-grey" style="height: 245px;">
-                                <a href="#" class="btn btn-adr">
+                                <a href="Controller?Adresse=Add" class="btn btn-adr">
                                     <h1 class="btn btn-adr">+</h1>
                                     <p class="btn btn-adr">Ajouter une adresse</p>
                                 </a> 
                             </div>
                         </div>
                         <c:if test="${adrfac != null}">
-
-                            <div class="col-md-4" style="min-width: 250px;">
-                                <div class="card border-grey" style="height: 245px;">
-                                    <div class="card-header bg-transparent"><small>Adresse de ${adrfac['type']}</small></div>
-                                    <div class="card-body text-dark">
-                                        <p class="card-text">
-                                            <strong>${adrfac['genre']} ${adrfac['nom']} ${adrfac['prenom']}</strong>
-                                            <br>
-                                            <small>
-                                                ${adrfac['adresse']}
+                            <c:forEach items="${adrfac}" var="p">
+                                <div class="col-md-4" style="min-width: 250px; margin-top: 15px; margin-bottom: 15px;">
+                                    <div class="card border-grey" style="height: 245px;">
+                                        <div class="card-header bg-transparent"><small>Adresse de ${p.type}</small></div>
+                                        <div class="card-body text-dark">
+                                            <p class="card-text">
+                                                <strong>${p.genre} ${p.nom} ${p.prenom}</strong>
                                                 <br>
+                                                <small>
+                                                    ${p.adresse}
+                                                    <br>
 
-                                                ${adrfac['codePostal']} ${adrfac['ville']}
-                                            </small>
-                                        </p>
-                                        <div class="row" style="padding-top: 45px; padding-left: 15px">
-                                            <a href="#">Modifier</a>
+                                                    ${p.codePostal} ${p.ville}
+                                                </small>
+                                            </p>
+                                            <div class="row" style="padding-top: 45px; padding-left: 15px">
+                                                <a href="#">Modifier</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </c:forEach>                    
                         </c:if>
                         <c:if test="${adrliv != null}">
-
-                            <div class="col-md-4" style="min-width: 250px;">
-                                <div class="card border-grey" style="height: 245px;">
-                                    <div class="card-header bg-transparent"><small>Adresse de ${adrliv['type']}</small></div>
-                                    <div class="card-body text-dark">
-                                        <p class="card-text">
-                                            <strong>${adrliv['genre']} ${adrliv['nom']} ${adrliv['prenom']}</strong>
-                                            <br>
-                                            <small>
-                                                ${adrliv['adresse']}
+                            <c:forEach items="${adrliv}" var="p">
+                                <div class="col-md-4" style="min-width: 250px; margin-top: 15px; margin-bottom: 15px;">
+                                    <div class="card border-grey" style="height: 245px;">
+                                        <div class="card-header bg-transparent"><small>Adresse de ${p.type}</small></div>
+                                        <div class="card-body text-dark">
+                                            <p class="card-text">
+                                                <strong>${p.genre} ${p.nom} ${p.prenom}</strong>
                                                 <br>
+                                                <small>
+                                                    ${p.adresse}
+                                                    <br>
 
-                                                ${adrliv['codePostal']} ${adrliv['ville']}
-                                            </small>
-                                        </p>
-                                        <div class="row" style="padding-top: 45px; padding-left: 15px">
-                                            <a href="#">Modifier</a>
+                                                    ${p.codePostal} ${p.ville}
+                                                </small>
+                                            </p>
+                                            <div class="row" style="padding-top: 45px; padding-left: 15px">
+                                                <a href="#">Modifier</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </c:forEach>
                         </c:if>
                     </div>
-                </div>
+                    <div class="row" style="height: 20px;">
 
+                    </div>
+                </div>
             </div>
             <!-- footer -->
             <%@include file="Footer.jsp" %>
