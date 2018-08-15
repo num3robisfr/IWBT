@@ -230,7 +230,7 @@ h1{
 }
 .statut {
     color : green;
-    font-size: 0.7em;
+    font-size: 0.6em;
 
 }
 
@@ -305,4 +305,8 @@ h1{
 .lien{
     font-size: 1.2em;
     
+}
+
+.titre {
+        font-size: 0.8em;
 }

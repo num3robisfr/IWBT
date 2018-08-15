@@ -286,14 +286,13 @@ public class Controller extends HttpServlet {
                         tampon = listeCommande.get(0).getComId();
                         commande.add(tampon);
 
-                        for (int i = 1; i < listeCommande.size(); i++) {
+                        for (int i = 0; i < listeCommande.size(); i++) {
                             if (listeCommande.get(i).getComId() != tampon) {
                                 commande.add(listeCommande.get(i).getComId());
                             }
                             tampon = listeCommande.get(i).getComId();
 
                         }
-                        System.out.println(commande);
                         request.setAttribute("tabCommande", commande);
                     }
 
@@ -572,15 +571,14 @@ public class Controller extends HttpServlet {
 
             }
 
-
         }
-        
+
         if ("Add".equals(request.getParameter("Adresse"))) {
             url = "/WEB-INF/AddAdresse.jsp";
         }
-        
+
         if ("checkAdd".equals(request.getParameter("Adresse"))) {
-                        url = "/WEB-INF/AddAdresse.jsp";
+            url = "/WEB-INF/AddAdresse.jsp";
             erreurs.clear();
             resultat.clear();
             int idClient = Integer.valueOf(d.getValue());
@@ -592,7 +590,7 @@ public class Controller extends HttpServlet {
             String codePostal = request.getParameter("codePostal");
             String ville = request.getParameter("ville");
             String type = request.getParameter("type");
-            
+
             try {
                 checkNom(nom);
                 client.put("nom", nom);
@@ -625,34 +623,32 @@ public class Controller extends HttpServlet {
                 erreurs.put("ville", e.getMessage());
             }
 
-            if(erreurs.isEmpty()){
+            if (erreurs.isEmpty()) {
                 beanAdresse bA = new beanAdresse(idClient, genre, nom, prenom, adresse, complement, codePostal, ville, 1, type);
                 beanClient bC = new beanClient(nom, prenom, genre);
-                
+
                 if (type.equals("facturation")) {
                     int adrId = bA.AddAdresse(beanc.getConnexion());
                     if (adrId == '0') {
                         resultat.put("erreur", "erreur d'enregistrement");
                     }
-                                        if (adrId != '0') {
+                    if (adrId != '0') {
                         int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, idClient, bC);
-                        if(res == '0'){
-                          resultat.put("erreur", "erreur d'enregistrement");  
+                        if (res == '0') {
+                            resultat.put("erreur", "erreur d'enregistrement");
                         }
-                        if(res != '0'){
-                          resultat.put("message", "adresse ajoutée");  
+                        if (res != '0') {
+                            resultat.put("message", "adresse ajoutée");
                         }
                     }
                 }
-                
+
             }
-        request.setAttribute("erreurs", erreurs);
-        request.setAttribute("client", client);
-        request.setAttribute("resultat", resultat);    
-            
+            request.setAttribute("erreurs", erreurs);
+            request.setAttribute("client", client);
+            request.setAttribute("resultat", resultat);
+
         }
-        
-        
 
         // partie Panier 
         if ("affichePanier".equals(request.getParameter("section"))) {

@@ -147,16 +147,16 @@
                                     <thead>
                                         <tr>
                                             <th><center>Date</center></th>
-                                    <th><center>Couverture</center></th>
+                                    <th><center>Article</center></th>
                                     <th><center>Etat de la commande</center></th>
                                     <th><center>Titre</center></th>
                                     <th><center>Prix unitaire HT</center></th>
                                     <th><center>Tva</center></th>
                                     <th><center>Prix unitaire TTC</center></th>
                                     <th><center>Quantité</center></th>
-                                    <th><center>&nbsp&nbsp&nbspPrix TTC&nbsp&nbsp&nbsp</center></th>
+                                    <th><center>&nbsp&nbsp&nbspPrix&nbsp&nbsp TTC&nbsp&nbsp&nbsp</center></th>
                                     <th><center>Promo</center></th>
-                                    <th><center>Sous-Total TTC</center></th>
+                                    <th><center>&nbsp&nbspSous-Total TTC&nbsp&nbsp</center></th>
                                     <th><center>Frais de port</center></th>
 
                                     </tr>
@@ -169,7 +169,7 @@
                                                 <td><center><strong>${lc.comDate}</strong></center></td>
                                             <td><a class="" href="Controller?section=oeuvre&isbn=${lc.comIsbn}"><img class="card-img-top mx-auto d-block" style=" width: 30%;" src = "${lc.comUrlImage}" alt ="illustration" ></a></td>
                                             <td><center><span class="statut">${lc.comStatut}</span></center></td>
-                                            <td><center>${lc.comTitre}</center></td>
+                                            <td><center><div class = "titre">${lc.comTitre}</div></center></td>
                                             <td><center><strong><fmt:formatNumber value="${lc.comPrixUnitaireHT}" type="currency"/></center></td>       
                                             <td><center>${lc.comTva} %</center></td>
                                             <td><center><strong><fmt:formatNumber value="${lc.comPrixUnitaireTTC}" type="currency"/></center></td>
@@ -201,9 +201,9 @@
 
                                 <hr>
                             </c:forEach>
-
+                            </c:if>
+                        
                         </c:if>
-                    </c:if>
                 </div>
             </div>
             <!-- footer -->
