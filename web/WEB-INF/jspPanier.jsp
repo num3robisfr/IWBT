@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" href="./css/style.css" />
@@ -7,6 +8,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="./css/style.css" />
+        <fmt:setLocale value="fr_FR"/>
+
         <title>IBWT</title>
     </head>
     <body>
@@ -44,9 +47,9 @@
                     <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
                     <td><p>${l.titre}</p></td>
                     <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
-                    <td><p>${l.prix} €</p></td>
+                    <td><p><fmt:formatNumber value="${l.prix}" type="currency"/></p></td>
                     <td>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</td>
-                    <td><p> ${l.somme} €TTC</p></td>
+                    <td><p> <fmt:formatNumber value="${l.somme}" type="currency"/> TTC</p></td>
                     <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
                     
                         <form action="Controller" method="get">
@@ -84,7 +87,7 @@
                 
                 <br />
                 <br />
-                <p class="panier">Total du panier : ${total} €TTC
+                <p class="panier">Total du panier : <fmt:formatNumber value="${total}" type="currency"/> TTC
                 &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp
                 <a class="btn btn-primary mx-auto d-block" href="Controller?section=accueil">Valider la commande </a></p>
                 

@@ -1,10 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="./css/style.css" />
+        <fmt:setLocale value="fr_FR"/>
+
         <title>${oeuvre.oeuTitre}</title>     
     </head>
     <body>
@@ -38,7 +42,7 @@
 
                             <div class="card bg-light mb-3 border-primary" style="max-width: 18rem;">
                                 <div class="card-body">
-                                    <h1 class="card-title text-danger text-center"><strong>${oeuvre.oeuPrix}€</strong></h1>
+                                    <h1 class="card-title text-danger text-center"><strong><fmt:formatNumber value="${oeuvre.oeuPrix}" type="currency"/></strong></h1>
 
                                 </div>
                                 <div class="card-footer">
@@ -83,7 +87,7 @@
                                 ISBN : ${oeuvre.oeuIsbn}<br>
                                 Moyenne des commentaires : 
                                 <c:if test="${oeuvre.oeuMoyenneCmt == null}">
-                                     pas de note 
+                                    pas de note 
                                 </c:if>
                                 <c:if test="${oeuvre.oeuMoyenneCmt != null}">
                                     <img src="./Images/${oeuvre.oeuMoyenneCmt}_etoile.png"> 

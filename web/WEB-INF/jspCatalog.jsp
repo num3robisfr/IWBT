@@ -1,6 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<fmt:setLocale value="fr_FR"/>
+
 <div id="catalogue">
     <div class="container">
 
@@ -18,7 +20,7 @@
                         <div class="card-body">
                             <h6 class="card-title">${p.oeuTitre}</h6>
                             <p>${p.autNom}</p>
-                            <p>${p.oeuPrix}€</p>
+                            <p><fmt:formatNumber value="${p.oeuPrix}" type="currency"/></p>
                             <a class="btn btn-primary mx-auto d-block" href="Controller?section=oeuvre&isbn=${p.oeuIsbn}">Sélectionner</a>
                             <%--<br />
                             <a class="btn btn-primary mx-auto d-block" href="Controller?section=panier&ajoutV2=&urlImage=${p.oeuUrlImage}&ref=${p.oeuIsbn}&titre=${p.oeuTitre}&prix=${p.oeuPrix}"> + </a>--%>

@@ -4,6 +4,7 @@
     Author     : thierry
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,6 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="./css/style.css" />
+        <fmt:setLocale value="fr_FR"/>
 
         <title>Evènement ${evenement.eveIntitule}</title>
     </head>
@@ -52,7 +54,7 @@
                                                 <div class="card-body">
                                                     <h6 class="card-title">${p.oeuTitre}</h6>
                                                     <p>${p.autNom}</p>
-                                                    <p>${p.oeuPrix}€ - ${evenement.eveTauxPromo}%</p>
+                                                    <p><fmt:formatNumber value="${p.oeuPrix}" type="currency"/> - ${evenement.eveTauxPromo}% <span class="prixpromo"> Prix Promo : <fmt:formatNumber value="${p.oeuPrix - ((p.oeuPrix*evenement.eveTauxPromo)/100)}" type="currency"/></span></p>
                                                     <a class="btn btn-primary mx-auto d-block" href="Controller?section=oeuvre&isbn=${p.oeuIsbn}">Sélectionner</a>
                                                 </div>
                                             </div>

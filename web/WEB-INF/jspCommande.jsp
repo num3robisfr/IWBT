@@ -50,13 +50,13 @@
                             <td><a class="" href="Controller?section=oeuvre&isbn=${lc.comIsbn}"><img class="card-img-top mx-auto d-block" style=" width: 30%;" src = "${lc.comUrlImage}" alt ="illustration" ></a></td>
                             <td><center><span class="statut">${lc.comStatut}</span></center></td>
                             <td><center><div class = "titre">${lc.comTitre}</div></center></td>
-                            <td><center><strong><fmt:formatNumber value="${lc.comPrixUnitaireHT}" type="currency"/></center></td>       
+                            <td><center><strong><fmt:formatNumber value="${lc.comPrixUnitaireHT}" type="currency"/></strong></center></td>       
                             <td><center>${lc.comTva} % </center></td>
-                            <td><center><strong><fmt:formatNumber value="${lc.comPrixUnitaireTTC}" type="currency"/></center></td>
-                            <td><center><strong>${lc.comQty}</center></td>
-                            <td><center><strong> <fmt:formatNumber value="${lc.comTotalTtc}" type="currency"/> </center></td>
+                            <td><center><strong><fmt:formatNumber value="${lc.comPrixUnitaireTTC}" type="currency"/></strong></center></td>
+                            <td><center><strong>${lc.comQty}</strong></center></td>
+                            <td><center><strong> <fmt:formatNumber value="${lc.comTotalTtc}" type="currency"/> </strong></center></td>
                             <td><center>${lc.comPromo} %</center></td>
-                            <td><center><strong> <fmt:formatNumber value="${(lc.comPrixUnitaireTTC*lc.comQty)-((lc.comPrixUnitaireTTC*lc.comQty)*lc.comPromo)/100}" type="currency"/></center></td>
+                            <td><center><strong> <fmt:formatNumber value="${(lc.comPrixUnitaireTTC*lc.comQty)-((lc.comPrixUnitaireTTC*lc.comQty)*lc.comPromo)/100}" type="currency"/></strong></center></td>
 
                         </c:forEach>  
 
