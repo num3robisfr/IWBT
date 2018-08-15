@@ -112,8 +112,6 @@ public class Controller extends HttpServlet {
             d = new Cookie("ID", String.valueOf(id));
             d.setMaxAge(3600 * 24 * 7);
             response.addCookie(d);
-//            listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
-//            session.setAttribute("listeCommande", listeCommande);
         }
 
         if (c == null) {
