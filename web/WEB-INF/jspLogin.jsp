@@ -159,7 +159,7 @@
                             <c:forEach var="t" items="${tabCommande}">
                                 <c:set var="total" value="${0}" scope="page" />
 
-                                <h1>Commande n° ${t}</h1>
+                                <a class="" href="Controller?section=commande&comId=${t}"><h1>Commande n° ${t}</h1></a>
                                 <table border="1">
                                     <thead>
                                         <tr>

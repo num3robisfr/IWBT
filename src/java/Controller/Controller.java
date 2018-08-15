@@ -258,9 +258,24 @@ public class Controller extends HttpServlet {
                     }
                     request.setAttribute("tabCommande", commande);
                     request.setAttribute("tabTaille", commande.size());
-
                 }
             }
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        ///           Clic sur 'identifiez-vous'/'Mon compte' dans la sidebar :           ///
+        ///       Gestion jsp login : page de connexion et de gestion de compte           ///
+        /////////////////////////////////////////////////////////////////////////////////////
+        //    
+        if ("commande".equals(request.getParameter("section"))) {
+            url = "/WEB-INF/jspCommande.jsp";
+            String filtre = null;
+
+            filtre = " AND comId = " + request.getParameter("comId");
+            request.setAttribute("comId", request.getParameter("comId"));
+            listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id, filtre);
+            session.setAttribute("listeCommande", listeCommande);
+            request.setAttribute("date", listeCommande.get(0).getComDate());
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
