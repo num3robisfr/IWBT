@@ -52,15 +52,16 @@ public class Controller extends HttpServlet {
         beanTheme beant = (beanTheme) session.getAttribute("beant");
         beanSousTheme beanst = (beanSousTheme) session.getAttribute("beanst");
         beanClient beancl = (beanClient) session.getAttribute("beancl");
-        ArrayList<beanLigneDeCommande> listeCommande = new ArrayList<beanLigneDeCommande>();
+        ArrayList<beanLigneDeCommande> listeCommande = new ArrayList<>();
         beanCompteClient bcc = new beanCompteClient();
 
         String checkLogin;
         int id = 0;
+        int tampon = 0;
         Map<String, String> erreurs = new HashMap<>();
         Map<String, String> client = new HashMap();
         Map<String, String> resultat = new HashMap();
-        ArrayList<Integer> commande = null;
+        ArrayList<Integer> commande = new ArrayList<>();
         String url = "/WEB-INF/jspAccueil.jsp";
 
         Cookie c = getCookie(request.getCookies(), "username");
@@ -219,7 +220,23 @@ public class Controller extends HttpServlet {
         //
         if ("listecommande".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
+            tampon = 0;
+            if (c != null) {
+                if (listeCommande != null) {
+                    tampon = listeCommande.get(0).getComId();
+                    commande.add(tampon);
+                    listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
+                    session.setAttribute("listeCommande", listeCommande);
 
+                    for (int i = 1; i < listeCommande.size(); i++) {
+                        if (listeCommande.get(i).getComId() != tampon) {
+                            commande.add(listeCommande.get(i).getComId());
+                        }
+                        tampon = listeCommande.get(i).getComId();
+                    }
+                    request.setAttribute("tabCommande", commande);
+                }
+            }
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
@@ -235,6 +252,16 @@ public class Controller extends HttpServlet {
                 request.setAttribute("okay", "2");
                 listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
                 session.setAttribute("listeCommande", listeCommande);
+                tampon = listeCommande.get(0).getComId();
+                commande.add(tampon);
+
+                for (int i = 1; i < listeCommande.size(); i++) {
+                    if (listeCommande.get(i).getComId() != tampon) {
+                        commande.add(listeCommande.get(i).getComId());
+                    }
+                    tampon = listeCommande.get(i).getComId();
+                }
+                request.setAttribute("tabCommande", commande);
 
             } else {
                 request.setAttribute("okay", "0");
@@ -255,6 +282,20 @@ public class Controller extends HttpServlet {
 
                     listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id);
                     session.setAttribute("listeCommande", listeCommande);
+                    if (listeCommande != null) {
+                        tampon = listeCommande.get(0).getComId();
+                        commande.add(tampon);
+
+                        for (int i = 1; i < listeCommande.size(); i++) {
+                            if (listeCommande.get(i).getComId() != tampon) {
+                                commande.add(listeCommande.get(i).getComId());
+                            }
+                            tampon = listeCommande.get(i).getComId();
+
+                        }
+                        System.out.println(commande);
+                        request.setAttribute("tabCommande", commande);
+                    }
 
                     d = new Cookie("ID", String.valueOf(beancl.getId()));
                     d.setMaxAge(3600 * 24 * 7);

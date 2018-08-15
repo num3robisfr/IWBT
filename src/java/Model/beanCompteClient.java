@@ -182,8 +182,8 @@ public class beanCompteClient implements Serializable {
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                beanLigneDeCommande l = new beanLigneDeCommande(rs.getInt("CliId"),
-                        rs.getInt("ComId"),
+                beanLigneDeCommande l = new beanLigneDeCommande(rs.getInt("ComId"),
+                        rs.getInt("CliId"),
                         rs.getString("Client"),
                         outil.OutilsFormatage.formaterDate(rs.getDate("DateCommande")),
                         rs.getString("Statut"),

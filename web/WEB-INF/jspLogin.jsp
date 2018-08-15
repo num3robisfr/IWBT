@@ -10,7 +10,6 @@
 
         <%--Déclaration variable 'total' --%>
 
-        <c:set var="total" value="${0}" scope="page" />
         <fmt:setLocale value="fr_FR"/>
 
         <%--Test si il y a un cookie 'username' sur le navigateur
@@ -139,21 +138,23 @@
                         </c:if>
 
                         <c:if test="${not empty listeCommande }">
+                            <c:forEach var="t" items="${tabCommande}">
+                                <c:set var="total" value="${0}" scope="page" />
 
-                                <h1>Dernière commande</h1>
+                                <h1>Commande n° ${t}</h1>
 
                                 <table border="1">
                                     <thead>
                                         <tr>
-                                            <th><center>Couverture</center></th>
-                                    <th><center>Date</center></th>
+                                            <th><center>Date</center></th>
+                                    <th><center>Couverture</center></th>
                                     <th><center>Etat de la commande</center></th>
                                     <th><center>Titre</center></th>
                                     <th><center>Prix unitaire HT</center></th>
                                     <th><center>Tva</center></th>
                                     <th><center>Prix unitaire TTC</center></th>
                                     <th><center>Quantité</center></th>
-                                    <th><center>Prix TTC</center></th>
+                                    <th><center>&nbsp&nbsp&nbspPrix TTC&nbsp&nbsp&nbsp</center></th>
                                     <th><center>Promo</center></th>
                                     <th><center>Sous-Total TTC</center></th>
                                     <th><center>Frais de port</center></th>
@@ -161,44 +162,45 @@
                                     </tr>
 
                                     </thead>
-                                        <c:forEach var="lc" items="${listeCommande}">
+                                    <c:forEach var="lc" items="${listeCommande}">
+                                        <c:if test="${t ==lc.comId}">
                                             <c:set  var="total" value="${(total + (lc.comPrixUnitaireTTC*lc.comQty))}" />
                                             <tr>
-                                                <td><a class="" href="Controller?section=oeuvre&isbn=${lc.comIsbn}"><img class="card-img-top mx-auto d-block" style=" width: 30%;" src = "${lc.comUrlImage}" alt ="illustration" ></a></td>
-                                                <td><center>${lc.comDate}</center></td>
+                                                <td><center><strong>${lc.comDate}</strong></center></td>
+                                            <td><a class="" href="Controller?section=oeuvre&isbn=${lc.comIsbn}"><img class="card-img-top mx-auto d-block" style=" width: 30%;" src = "${lc.comUrlImage}" alt ="illustration" ></a></td>
                                             <td><center><span class="statut">${lc.comStatut}</span></center></td>
                                             <td><center>${lc.comTitre}</center></td>
                                             <td><center><strong><fmt:formatNumber value="${lc.comPrixUnitaireHT}" type="currency"/></center></td>       
                                             <td><center>${lc.comTva} %</center></td>
                                             <td><center><strong><fmt:formatNumber value="${lc.comPrixUnitaireTTC}" type="currency"/></center></td>
                                             <td><center><strong>${lc.comQty}</center></td>
-                                            <td><center><strong><fmt:formatNumber value="${lc.comTotalTtc}" type="currency"/></center></td>
+                                            <td><center><strong> <fmt:formatNumber value="${lc.comTotalTtc}" type="currency"/> </center></td>
                                             <td><center>${lc.comPromo} %</center></td>
-                                            <td><center><strong><fmt:formatNumber value="${(lc.comPrixUnitaireTTC*lc.comQty)-((lc.comPrixUnitaireTTC*lc.comQty)*lc.comPromo)/100}" type="currency"/></center></td>
+                                            <td><center><strong> <fmt:formatNumber value="${(lc.comPrixUnitaireTTC*lc.comQty)-((lc.comPrixUnitaireTTC*lc.comQty)*lc.comPromo)/100}" type="currency"/></center></td>
+                                            </c:if>
 
-                                        </c:forEach>  
+                                    </c:forEach>  
 
-                                        </tr>
-                                        <td><center><strong>Tous vos articles</strong></center></td>
-                                        <td></td>                           
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><center><strong><fmt:formatNumber value="${total}" type="currency"/></center></td>
-                                        <td><center>5 €</center></td>
-                                    </table>
-                                    <br>  
-                                    <h3>Total de la commande TTC : <strong><fmt:formatNumber value="${total+5}" type="currency"/></p></strong></h3>
-
-
-                                    <hr>
+                                    </tr>
+                                    <td><center><strong>Tous vos articles</strong></center></td>
+                                    <td></td>                           
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><center><strong><fmt:formatNumber value="${total}" type="currency"/></center></td>
+                                    <td><center>5 €</center></td>
+                                </table>
+                                <br>  
+                                <h3>Total de la commande TTC : <strong><fmt:formatNumber value="${total+5}" type="currency"/></p></strong></h3>
 
 
+                                <hr>
+                            </c:forEach>
 
                         </c:if>
                     </c:if>
