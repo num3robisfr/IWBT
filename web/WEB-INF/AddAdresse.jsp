@@ -24,7 +24,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <form action="Controller" method="get">
+                                <form action="Controller" method="post">
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
