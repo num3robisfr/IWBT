@@ -171,7 +171,7 @@
                                             <td><center><span class="statut">${lc.comStatut}</span></center></td>
                                             <td><center><div class = "titre">${lc.comTitre}</div></center></td>
                                             <td><center><strong><fmt:formatNumber value="${lc.comPrixUnitaireHT}" type="currency"/></center></td>       
-                                            <td><center>${lc.comTva} %</center></td>
+                                            <td><center>${lc.comTva} % </center></td>
                                             <td><center><strong><fmt:formatNumber value="${lc.comPrixUnitaireTTC}" type="currency"/></center></td>
                                             <td><center><strong>${lc.comQty}</center></td>
                                             <td><center><strong> <fmt:formatNumber value="${lc.comTotalTtc}" type="currency"/> </center></td>
