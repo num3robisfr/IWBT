@@ -149,11 +149,17 @@
                         </c:if>
 
                         <c:if test="${not empty listeCommande }">
+                            <c:if test="${tabTaille >1}">
+                                <p>Vous avez ${tabTaille} commandes sur cette pèriode</p>
+                            </c:if>
+                            <c:if test="${tabTaille ==1}">
+                                <p>Vous avez ${tabTaille} commande sur cette pèriode</p>
+                            </c:if>
+
                             <c:forEach var="t" items="${tabCommande}">
                                 <c:set var="total" value="${0}" scope="page" />
 
                                 <h1>Commande n° ${t}</h1>
-
                                 <table border="1">
                                     <thead>
                                         <tr>

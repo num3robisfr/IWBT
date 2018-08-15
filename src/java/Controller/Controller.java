@@ -222,7 +222,7 @@ public class Controller extends HttpServlet {
             String filtre = null;
             listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id, filtre);
             session.setAttribute("listeCommande", listeCommande);
-            
+
             if (c != null) {
                 request.setAttribute("combo", "1 mois");
                 if (listeCommande != null) {
@@ -257,6 +257,8 @@ public class Controller extends HttpServlet {
                         tampon = listeCommande.get(i).getComId();
                     }
                     request.setAttribute("tabCommande", commande);
+                    request.setAttribute("tabTaille", commande.size());
+
                 }
             }
         }
@@ -269,14 +271,13 @@ public class Controller extends HttpServlet {
         if ("login".equals(request.getParameter("section"))) {
             url = "/WEB-INF/jspLogin.jsp";
             checkLogin = "0";
-            
+
             if (c != null) {
                 checkLogin = c.getValue();
                 request.setAttribute("okay", "2");
-                } 
-            else {
-                    request.setAttribute("okay", "0");
-                }  
+            } else {
+                request.setAttribute("okay", "0");
+            }
 
             /////////////////////////////////////////////////////////////////////////////////////
             ///partie check login/mot de passe, créations Cookies,                      /////////
@@ -291,7 +292,7 @@ public class Controller extends HttpServlet {
                     beancl = beancl.ChargerBeanClient("cliEmail", request.getParameter("login"), beanc.getConnexion());
                     session.setAttribute("beancl", beancl);
                     id = beancl.getId();
-                    
+
                     d = new Cookie("ID", String.valueOf(beancl.getId()));
                     d.setMaxAge(3600 * 24 * 7);
                     response.addCookie(d);

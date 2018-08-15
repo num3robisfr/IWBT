@@ -176,8 +176,8 @@ public class beanCompteClient implements Serializable {
 
         ArrayList<beanLigneDeCommande> listeLigneDeCommande = new ArrayList<beanLigneDeCommande>();
 
-        String query = "SELECT * FROM DetailCommandeClient WHERE cliId = " + cliId + " " + filtre;
-//                + " ORDER BY  DateCommande ASC ";
+        String query = "SELECT * FROM DetailCommandeClient WHERE cliId = " + cliId + " " + filtre
+                + " ORDER BY  DateCommande DESC ";
 
         try {
             Statement stmt = connexion.createStatement();
