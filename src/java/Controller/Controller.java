@@ -461,9 +461,9 @@ public class Controller extends HttpServlet {
                     if (adrId > 0) {
                         int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, cliId, bC);
 
-                        resultat.put("message", "enregistrement effectué avec succés");
-                        request.setAttribute("nom", bC.getPrenom() + " " + bC.getNom());
-                    d = new Cookie("ID", String.valueOf(beancl.getId()));
+                    resultat.put("message", "enregistrement effectué avec succés");
+                    request.setAttribute("nom", bC.getPrenom() + " " + bC.getNom());
+                    d = new Cookie("ID", String.valueOf(cliId));
                     d.setMaxAge(3600 * 24 * 7);
                     response.addCookie(d);
                     
