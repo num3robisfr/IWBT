@@ -48,7 +48,11 @@
                                                 </small>
                                             </p>
                                             <div class="row" style="padding-top: 45px; padding-left: 15px">
-                                                <a href="Controller?Adresse=Mod?cliId=${numClient}?adrId=${p.id}">Modifier</a>
+                                                <form action="Controller" method="post">
+                                                    <input type="hidden" name="cliId" value="${numClient}">
+                                                    <input type="hidden" name="adrId" value="${p.id}">
+                                                    <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -72,7 +76,11 @@
                                                 </small>
                                             </p>
                                             <div class="row" style="padding-top: 45px; padding-left: 15px">
-                                                <a href="Controller?Adresse=Mod?cliId=${numClient}?adrId=${p.id}">Modifier</a>
+                                                <form action="Controller" method="post">
+                                                    <input type="hidden" name="cliId" value="${numClient}">
+                                                    <input type="hidden" name="adrId" value="${p.id}">
+                                                    <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

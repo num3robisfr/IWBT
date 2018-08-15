@@ -573,6 +573,7 @@ public class Controller extends HttpServlet {
             request.setAttribute("adrfac", bAdrFac);
             bAdrLiv = bcc.ChargerListeAdresseLivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
             request.setAttribute("adrliv", bAdrLiv);
+            request.setAttribute("numClient",d.getValue());
             }
         }
         
@@ -668,7 +669,9 @@ public class Controller extends HttpServlet {
             
         }
         
-        
+        if("Mod".equals(request.getParameter("Adresse"))){
+          url = "/WEB-INF/ModAdresse.jsp";  
+        }
 
         // partie Panier 
         if ("affichePanier".equals(request.getParameter("section"))) {
