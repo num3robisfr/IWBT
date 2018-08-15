@@ -59,6 +59,7 @@ public class Controller extends HttpServlet {
         int id = 0;
         Map<String, String> erreurs = new HashMap<>();
         Map<String, String> client = new HashMap();
+        Map<String, String> resultat = new HashMap();
         ArrayList<Integer> commande = null;
         String url = "/WEB-INF/jspAccueil.jsp";
 
@@ -368,9 +369,10 @@ public class Controller extends HttpServlet {
         if ("addAdresse".equals(request.getParameter("adr"))) {
             url = "/WEB-INF/newAdresse.jsp";
             erreurs.clear();
+            resultat.clear();
             Map<String, String> hMClient = (HashMap) session.getAttribute("client");
             Map<String, String> hMAdresse = new HashMap<>();
-            Map<String, String> resultat = new HashMap<>();
+            //Map<String, String> resultat = new HashMap<>();
 
             beanClient bC = new beanClient(hMClient.get("nom"), hMClient.get("prenom"),
                     hMClient.get("genre"), hMClient.get("email"), hMClient.get("password"),
@@ -453,6 +455,7 @@ public class Controller extends HttpServlet {
         if ("modClient".equals(request.getParameter("client"))) {
             url = "/WEB-INF/modCompteClient.jsp";
             erreurs.clear();
+            resultat.clear();
             int idClient = Integer.valueOf(request.getParameter("id"));
             String nom = request.getParameter("nom");
             String prenom = request.getParameter("prenom");
@@ -461,7 +464,7 @@ public class Controller extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             String genre = retournerType(request.getParameter("civilite"));
-            Map<String, String> resultat = new HashMap<>();
+            //Map<String, String> resultat = new HashMap<>();
 
             beanClient bc = new beanClient(idClient,
                     nom, prenom, genre, email, password, numTel);
@@ -519,6 +522,7 @@ public class Controller extends HttpServlet {
                 b = b.getAdressefacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
                 if (b != null) {
                     request.setAttribute("adrfac", b);
+                    System.out.println("affiche bean adresse: " + b);
                 }
                 b = b.getAdresselivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
                 if (b != null) {
@@ -527,7 +531,87 @@ public class Controller extends HttpServlet {
 
             }
 
+
         }
+        
+        if ("Add".equals(request.getParameter("Adresse"))) {
+            url = "/WEB-INF/AddAdresse.jsp";
+        }
+        
+        if ("checkAdd".equals(request.getParameter("Adresse"))) {
+                        url = "/WEB-INF/AddAdresse.jsp";
+            erreurs.clear();
+            resultat.clear();
+            int idClient = Integer.valueOf(d.getValue());
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+            String genre = retournerType(request.getParameter("civilite"));
+            String adresse = request.getParameter("adresse");
+            String complement = request.getParameter("complement");
+            String codePostal = request.getParameter("codePostal");
+            String ville = request.getParameter("ville");
+            String type = request.getParameter("type");
+            
+            try {
+                checkNom(nom);
+                client.put("nom", nom);
+            } catch (Exceptions e) {
+                erreurs.put("nom", e.getMessage());
+            }
+            try {
+                checkPrenom(prenom);
+                client.put("prenom", prenom);
+            } catch (Exceptions e) {
+                erreurs.put("prenom", e.getMessage());
+            }
+            try {
+                checkAdresse(adresse);
+                client.put("adresse", adresse);
+            } catch (Exceptions e) {
+                erreurs.put("adresse", e.getMessage());
+            }
+            client.put("complement", complement);
+            try {
+                checkCodePostal(codePostal);
+                client.put("codePostal", codePostal);
+            } catch (Exceptions e) {
+                erreurs.put("codePostal", e.getMessage());
+            }
+            try {
+                checkVille(ville);
+                client.put("ville", ville);
+            } catch (Exceptions e) {
+                erreurs.put("ville", e.getMessage());
+            }
+
+            if(erreurs.isEmpty()){
+                beanAdresse bA = new beanAdresse(idClient, genre, nom, prenom, adresse, complement, codePostal, ville, 1, type);
+                beanClient bC = new beanClient(nom, prenom, genre);
+                
+                if (type.equals("facturation")) {
+                    int adrId = bA.AddAdresse(beanc.getConnexion());
+                    if (adrId == '0') {
+                        resultat.put("erreur", "erreur d'enregistrement");
+                    }
+                                        if (adrId != '0') {
+                        int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, idClient, bC);
+                        if(res == '0'){
+                          resultat.put("erreur", "erreur d'enregistrement");  
+                        }
+                        if(res != '0'){
+                          resultat.put("message", "adresse ajoutée");  
+                        }
+                    }
+                }
+                
+            }
+        request.setAttribute("erreurs", erreurs);
+        request.setAttribute("client", client);
+        request.setAttribute("resultat", resultat);    
+            
+        }
+        
+        
 
         // partie Panier 
         if ("affichePanier".equals(request.getParameter("section"))) {

@@ -12,8 +12,7 @@ import java.util.ArrayList;
 public class beanCompteClient implements Serializable {
 
     private beanClient client;
-    private ArrayList<Adresse> listeAdresseLivraison;
-    private ArrayList<Adresse> listeAdresseFacturation;
+    private ArrayList<beanAdresse> listeAdresse;
     private ArrayList<beanLigneDeCommande> commandesClient;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,24 +20,18 @@ public class beanCompteClient implements Serializable {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
     public beanCompteClient() {
     }
-
-    public beanCompteClient(beanClient client, ArrayList<Adresse> listeAdresseLivraison, ArrayList<beanLigneDeCommande> commandesClient) {
-        this.client = client;
-        this.listeAdresseLivraison = listeAdresseLivraison;
-        this.commandesClient = commandesClient;
-    }
+    
 
     public beanCompteClient(beanClient client, ArrayList<beanLigneDeCommande> commandesClient) {
         this.client = client;
         this.commandesClient = commandesClient;
     }
 
-    public beanCompteClient(beanClient client, ArrayList<Adresse> listeAdresseLivraison, ArrayList<Adresse> listeAdresseFacturation, ArrayList<beanLigneDeCommande> commandesClient) {
-        this.client = client;
-        this.listeAdresseLivraison = listeAdresseLivraison;
-        this.listeAdresseFacturation = listeAdresseFacturation;
-        this.commandesClient = commandesClient;
+    public beanCompteClient(ArrayList<beanAdresse> listeAdresse) {
+        this.listeAdresse = listeAdresse;
     }
+
+    
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                    Getters & Setters
@@ -51,21 +44,15 @@ public class beanCompteClient implements Serializable {
         this.client = client;
     }
 
-    public ArrayList<Adresse> getListeAdresseLivraison() {
-        return listeAdresseLivraison;
+    public ArrayList<beanAdresse> getListeAdresse() {
+        return listeAdresse;
     }
 
-    public void setListeAdresseLivraison(ArrayList<Adresse> listeAdresseLivraison) {
-        this.listeAdresseLivraison = listeAdresseLivraison;
+    public void setListeAdresse(ArrayList<beanAdresse> listeAdresse) {
+        this.listeAdresse = listeAdresse;
     }
 
-    public ArrayList<Adresse> getListeAdresseFacturation() {
-        return listeAdresseFacturation;
-    }
-
-    public void setListeAdresseFacturation(ArrayList<Adresse> listeAdresseFacturation) {
-        this.listeAdresseFacturation = listeAdresseFacturation;
-    }
+    
 
     public ArrayList<beanLigneDeCommande> getCommandesClient() {
         return commandesClient;
@@ -78,17 +65,14 @@ public class beanCompteClient implements Serializable {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                    Autres Méthodes
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @Override
-    public String toString() {
-        return "beanCompteClient{" + "client=" + client + ", listeAdresseLivraison=" + listeAdresseLivraison + ", listeAdresseFacturation=" + listeAdresseFacturation + ", commandesClient=" + commandesClient + '}';
-    }
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                    remplir le bean, récupérer les infos de la base
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public ArrayList<Adresse> ChargerListeAdresseFacturation(Connection connexion, int cliId) {
+    public ArrayList<beanAdresse> ChargerListeAdresseFacturation(Connection connexion, int cliId) {
 
-        listeAdresseFacturation = new ArrayList<Adresse>();
+        ArrayList<beanAdresse> listeAdresseFacturation = new ArrayList<beanAdresse>();
 
         String query = "SELECT adr.adrId as 'adrId', "
                 + "cli.cliId as 'cliId', "
@@ -113,18 +97,17 @@ public class beanCompteClient implements Serializable {
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                Adresse a = new Adresse(
+                beanAdresse a = new beanAdresse(
                         rs.getInt("adrId"),
-                        rs.getInt("cliId"),
+                        rs.getString("Genre"),
                         rs.getString("Nom"),
                         rs.getString("Prenom"),
-                        rs.getString("Genre"),
                         rs.getString("NomVoie"),
                         rs.getString("Complement"),
                         rs.getString("CodePostal"),
                         rs.getString("Ville"),
-                        rs.getString("Pays"),
-                        rs.getInt("Statut"));
+                        rs.getInt("Statut"),
+                        "facturation");
                 listeAdresseFacturation.add(a);
                 System.out.println("adresse facturation :" + listeAdresseFacturation);
             }
@@ -137,27 +120,44 @@ public class beanCompteClient implements Serializable {
         return listeAdresseFacturation;
     }
 
-    public ArrayList<Adresse> ChargerListeAdresseLivraison(Connection connexion, int cliId) {
+    public ArrayList<beanAdresse> ChargerListeAdresseLivraison(Connection connexion, int cliId) {
 
-        listeAdresseLivraison = new ArrayList<Adresse>();
+        ArrayList<beanAdresse> listeAdresseLivraison = new ArrayList<beanAdresse>();
 
-        String query = "SELECT * FROM ListeAdresseClientLivraison WHERE LivClientId = " + cliId;
+                String query = "SELECT adr.adrId as 'adrId', "
+                + "cli.cliId as 'cliId', "
+                + "liv.livNom as 'Nom', "
+                + "liv.livPrenom as 'Prenom', "
+                + "liv.livGenre as 'Genre', "
+                + "adr.adrVoie as 'NomVoie', "
+                + "adr.adrComplement as 'Complement', "
+                + "adr.adrCodePostal as 'CodePostal', "
+                + "adr.adrVille as 'Ville', "
+                + "adr.adrPays as 'Pays', "
+                + "adr.adrStatut as 'Statut' "
+                + "FROM "
+                + "Adresse adr "
+                + "JOIN LivraisonAdresse liv "
+                + "ON adr.adrId = liv.adrId "
+                + "JOIN Client cli "
+                + "ON liv.cliId = cli.cliId "
+                + "WHERE cli.cliId = " + cliId;
 
         try {
             Statement stmt = connexion.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                Adresse a = new Adresse(rs.getInt(Integer.valueOf("AdresseId")),
-                        rs.getInt(Integer.valueOf("LivClientId")),
-                        rs.getString("LivraisonNom"),
-                        rs.getString("LivraisonPrenom"),
-                        rs.getString("LivraisonGenre"),
-                        rs.getString("AdresseVoie"),
-                        rs.getString("AdresseComplement"),
-                        rs.getString("AdresseVille"),
-                        rs.getString("AdressePays"),
-                        rs.getString("AdresseObservation"),
-                        rs.getInt(Integer.valueOf("AdresseStatut")));
+                beanAdresse a = new beanAdresse(
+                        rs.getInt("adrId"),
+                        rs.getString("Genre"),
+                        rs.getString("Nom"),
+                        rs.getString("Prenom"),
+                        rs.getString("NomVoie"),
+                        rs.getString("Complement"),
+                        rs.getString("CodePostal"),
+                        rs.getString("Ville"),
+                        rs.getInt("Statut"),
+                        "livraison");
                 listeAdresseLivraison.add(a);
 
             }

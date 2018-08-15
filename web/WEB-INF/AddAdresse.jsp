@@ -30,8 +30,8 @@
                                         <div class="form-group col-md-6">
                                             <label for="civilite">Type</label>
                                             <select class="form-control form-control-sm" name="type">
-                                                <option>Facturation</option>
-                                                <option>Livraison</option>
+                                                <option>facturation</option>
+                                                <option>livraison</option>
                                             </select>
                                         </div>  
                                         <div class="form-group col-md-6">
