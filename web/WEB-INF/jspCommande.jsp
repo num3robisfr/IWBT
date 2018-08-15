@@ -7,12 +7,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="./css/style.css" />
-
-        <%--Déclaration variable 'total' --%>
+            <title>Commande</title>     
 
         <fmt:setLocale value="fr_FR"/>
-
-
+        
     </head> 
     <body>
         <div id="bloc-page">
@@ -77,11 +75,10 @@
                     </table>
                     <br>  
                     <h3>Total de la commande TTC : <strong><fmt:formatNumber value="${total+5}" type="currency"/></p></strong></h3>
-
-
                     <hr>
-
-
+                    <form action="Controller?section=reclamation" method="POST">
+                        <center> <input type="submit" value="Réclamation" name="Reclamation" /></center>
+                    </form>
                 </div>
             </div>
             <!-- footer -->

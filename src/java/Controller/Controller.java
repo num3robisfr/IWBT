@@ -263,8 +263,8 @@ public class Controller extends HttpServlet {
         }
 
         /////////////////////////////////////////////////////////////////////////////////////
-        ///           Clic sur 'identifiez-vous'/'Mon compte' dans la sidebar :           ///
-        ///       Gestion jsp login : page de connexion et de gestion de compte           ///
+        ///           Clic sur une Commande, Gestion jsp jspCommande :                    ///
+        ///           chargement du bean avec les données de la commande                  ///
         /////////////////////////////////////////////////////////////////////////////////////
         //    
         if ("commande".equals(request.getParameter("section"))) {
@@ -272,10 +272,36 @@ public class Controller extends HttpServlet {
             String filtre = null;
 
             filtre = " AND comId = " + request.getParameter("comId");
-            request.setAttribute("comId", request.getParameter("comId"));
+            session.setAttribute("comId", request.getParameter("comId"));
             listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id, filtre);
             session.setAttribute("listeCommande", listeCommande);
             request.setAttribute("date", listeCommande.get(0).getComDate());
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        ///           Clic sur 'Réclamation':                                             ///
+        ///       Gestion jsp jspReclamation                                              ///
+        /////////////////////////////////////////////////////////////////////////////////////
+        //    
+        if (request.getParameter("Reclamation") != null) {
+            url = "/WEB-INF/jspReclamation.jsp";
+            String filtre = null;
+            String idcom = null;
+
+            filtre = " AND comId = " + session.getAttribute("comId");
+            listeCommande = bcc.ChargerListeCommande(beanc.getConnexion(), id, filtre);
+            session.setAttribute("listeCommande", listeCommande);
+            System.out.println(listeCommande);
+            idcom = "Commande n° " + listeCommande.get(0).getComId();
+            request.setAttribute("Idcom", idcom);
+            request.setAttribute("date", listeCommande.get(0).getComDate());
+        }
+        if (request.getParameter("Soumettre") != null) {
+            request.setAttribute("Soumettre", "ok");
+            url = "/WEB-INF/jspReclamation.jsp";
+        } else {
+            request.setAttribute("Soumettre", "notok");
+
         }
 
         /////////////////////////////////////////////////////////////////////////////////////

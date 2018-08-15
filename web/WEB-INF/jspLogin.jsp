@@ -16,7 +16,7 @@
                  pour afficher le nom du client --%>
 
         <c:if test="${okay == '2' }">
-            <title>${nom}</title>     
+            <title>Vos Commandes</title>     
         </c:if>
         <c:if test="${okay != '2' }">
             <title>Connectez-vous</title>     
