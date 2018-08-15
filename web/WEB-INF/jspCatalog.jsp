@@ -13,7 +13,7 @@
             <c:forEach items="${listeNouv}" var="p">
 
                 <div class="col-4 mb-3">
-                    <div class="card" style="width: 18rem; height: 410px;">
+                    <div class="card" style="width: 18rem; height: 410px; margin-top: 15px; margin-bottom: 15px;">
                         <a href="Controller?section=oeuvre&isbn=${p.oeuIsbn}"><img class="card-img-top mx-auto d-block" style="max-height: 200px; width: auto; margin-bottom: 15px;" src="${p.oeuUrlImage}" alt="${p.oeuTitre}"></a>
                         <div class="card-body">
                             <h6 class="card-title">${p.oeuTitre}</h6>

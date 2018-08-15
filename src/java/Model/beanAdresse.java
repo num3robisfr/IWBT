@@ -187,8 +187,6 @@ public class beanAdresse implements Serializable {
     }
 
     public int AddAdrFacturation(Connection connexion, int adrId, int cliId, beanClient bC) {
-        
-
         try {
 
             String query = "INSERT INTO FactureAdresse "
@@ -217,6 +215,35 @@ public class beanAdresse implements Serializable {
         return adrId;
     }
 
+    public int AddAdrLivraison(Connection connexion, int adrId, int cliId, beanClient bC){
+        try {
+
+            String query = "INSERT INTO LivraisonAdresse "
+                    + "(adrId, cliId, livNom, livPrenom, livGenre) "
+                    + "VALUES "
+                    + "(?,?,?,?,?)";
+            PreparedStatement pstmt = connexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setInt(1, adrId);
+            pstmt.setInt(2, cliId);
+            pstmt.setString(3, bC.getNom());
+            pstmt.setString(4, bC.getPrenom());
+            pstmt.setString(5, bC.getGenre());
+
+            pstmt.executeUpdate();
+
+            ResultSet clefs = pstmt.getGeneratedKeys();
+
+            if (clefs.next()) {
+                adrId = clefs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            adrId = 0;
+            System.out.println("erreur requete AddAdrFacturation : " + ex);
+        }
+
+        return adrId;
+    }
+    
     public beanAdresse getAdressefacturation(Connection connexion, int cliId){
         beanAdresse ba = null;
 

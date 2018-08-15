@@ -515,23 +515,15 @@ public class Controller extends HttpServlet {
         if ("AdresseManager".equals(request.getParameter("section"))) {
             url = "/WEB-INF/AdresseManager.jsp";
 
-            beanAdresse b = new beanAdresse();
-
+            ArrayList<beanAdresse> bAdrFac = new ArrayList<beanAdresse>();
+            ArrayList<beanAdresse> bAdrLiv = new ArrayList<beanAdresse>();
+            
             if (d != null) {
-
-                b = b.getAdressefacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
-                if (b != null) {
-                    request.setAttribute("adrfac", b);
-                    System.out.println("affiche bean adresse: " + b);
-                }
-                b = b.getAdresselivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
-                if (b != null) {
-                    request.setAttribute("adrliv", b);
-                }
-
+            bAdrFac = bcc.ChargerListeAdresseFacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+            request.setAttribute("adrfac", bAdrFac);
+            bAdrLiv = bcc.ChargerListeAdresseLivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+            request.setAttribute("adrliv", bAdrLiv);
             }
-
-
         }
         
         if ("Add".equals(request.getParameter("Adresse"))) {
@@ -593,13 +585,28 @@ public class Controller extends HttpServlet {
                     if (adrId == '0') {
                         resultat.put("erreur", "erreur d'enregistrement");
                     }
-                                        if (adrId != '0') {
+                    if (adrId != '0') {
                         int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, idClient, bC);
-                        if(res == '0'){
-                          resultat.put("erreur", "erreur d'enregistrement");  
+                        if (res == '0') {
+                            resultat.put("erreur", "erreur d'enregistrement");
                         }
-                        if(res != '0'){
-                          resultat.put("message", "adresse ajoutée");  
+                        if (res != '0') {
+                            resultat.put("message", "adresse ajoutée");
+                        }
+                    }
+                }
+                   if (type.equals("livraison")) {
+                    int adrId = bA.AddAdresse(beanc.getConnexion());
+                    if (adrId == '0') {
+                        resultat.put("erreur", "erreur d'enregistrement");
+                    }
+                    if (adrId != '0') {
+                        int res = bA.AddAdrLivraison(beanc.getConnexion(), adrId, idClient, bC);
+                        if (res == '0') {
+                            resultat.put("erreur", "erreur d'enregistrement");
+                        }
+                        if (res != '0') {
+                            resultat.put("message", "adresse ajoutée");
                         }
                     }
                 }
