@@ -111,7 +111,6 @@ public class beanCompteClient implements Serializable {
                         rs.getInt("Statut"),
                         "facturation");
                 listeAdresseFacturation.add(a);
-                System.out.println("adresse facturation :" + listeAdresseFacturation);
             }
             rs.close();
             stmt.close();

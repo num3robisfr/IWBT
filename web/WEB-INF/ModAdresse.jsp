@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="./css/style.css" />
-        <title>IBWT - ajout d'une adresse</title>     
+        <title>IBWT - modification d'une adresse</title>     
     </head>
     <body>
         <div id="bloc-page">
@@ -20,25 +20,24 @@
                 <div id="catalogue">
                     <div class="container">
                         <div class="row">
-                            <h1>Ajouter une nouvelle adresse</h1>
+                            <h1>Modifier votre adresse</h1>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <form action="Controller" method="post">
 
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="civilite">Type</label>
-                                            <select class="form-control form-control-sm" name="type">
-                                                <option>facturation</option>
-                                                <option>livraison</option>
-                                            </select>
-                                        </div>  
-                                        <div class="form-group col-md-6">
+                                    <div class="form-row"> 
+                                        <div class="form-group col-md-3">
                                             <label for="civilite">Civilité</label>
                                             <select class="form-control form-control-sm" name="civilite">
+                                                <c:if test="${client['genre'] == 'M.'}">
                                                 <option>M</option>
                                                 <option>Mme</option>
+                                                </c:if>
+                                                <c:if test="${client['genre'] == 'Mme'}">
+                                                <option>Mme</option>
+                                                <option>M</option>
+                                                </c:if>
                                             </select>
                                         </div>
                                     </div>
@@ -72,6 +71,9 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="ville">Ville</label>
+                                            <input type="hidden" name="type" value="${type}">
+                                            <input type="hidden" name="cliId" value="${cliId}">
+                                            <input type="hidden" name="adrId" value="${adrId}">
                                             <input type="text" class="form-control form-control-sm" name="ville" placeholder="Paris" value="${client['ville']}">
                                             <span class="text-danger">${erreurs['ville']}</span>
                                         </div>
@@ -84,7 +86,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <c:if test="${resultat['message'] == null }">
-                                                <button type="submit" class="btn btn-primary mx-auto d-block" value="checkAdd" name="Adresse">Ajouter l'adresse</button>
+                                                <button type="submit" class="btn btn-primary mx-auto d-block" value="checkMod" name="Adresse">Modifier</button>
                                             </c:if>
                                         </div>
 
@@ -113,12 +115,10 @@
                                     <div class="row">
                                         <div class="col-md-6">
 
-                                            <a class="btn btn-primary mx-auto d-block" href="Controller?section=accueil">retourner à l'accueil</a>
+                                            <a class="btn btn-primary mx-auto d-block" href="Controller?section=AdresseManager">OK</a>
 
                                         </div>
-                                        <div class="col-md-6">
-                                            <a class="btn btn-primary mx-auto d-block" href="Controller?section=affichePanier">valider votre panier</a>
-                                        </div>
+                                        
 
                                     </div>
                                 </c:if>               

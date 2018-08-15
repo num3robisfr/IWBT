@@ -30,8 +30,14 @@
                                         <div class="form-group col-md-3">
                                             <label for="civilite">Civilité</label>
                                             <select class="form-control form-control-sm" name="civilite">
+                                                <c:if test="${client['genre'] == 'M.'}">
                                                 <option>M</option>
                                                 <option>Mme</option>
+                                                </c:if>
+                                                <c:if test="${client['genre'] == 'Mme'}">
+                                                <option>Mme</option>
+                                                <option>M</option>
+                                                </c:if>
                                             </select>
                                         </div>
                                     </div>

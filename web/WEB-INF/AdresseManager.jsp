@@ -51,7 +51,7 @@
                                                 <form action="Controller" method="post">
                                                     <input type="hidden" name="cliId" value="${numClient}">
                                                     <input type="hidden" name="adrId" value="${p.id}">
-                                                    <input type="hidden" name="type" value="${p.type}">
+                                                    <input type="hidden" name="type" value="facturation">
                                                     <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button>
                                                 </form>
                                             </div>
@@ -80,6 +80,7 @@
                                                 <form action="Controller" method="post">
                                                     <input type="hidden" name="cliId" value="${numClient}">
                                                     <input type="hidden" name="adrId" value="${p.id}">
+                                                    <input type="hidden" name="type" value="livraison">
                                                     <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button>
                                                 </form>
                                             </div>

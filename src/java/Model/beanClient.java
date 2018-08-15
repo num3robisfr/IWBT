@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import outil.OutilsFormatage;
+import static outil.OutilsFormatage.retournerCivilite;
+import static outil.OutilsFormatage.retournerType;
 
 public class beanClient implements Serializable {
 
@@ -212,7 +215,7 @@ public class beanClient implements Serializable {
                 c = new beanClient(rs.getInt("cliId"),
                         rs.getString("cliNom"),
                         rs.getString("cliPrenom"),
-                        rs.getString("cliGenre"),
+                        retournerCivilite(rs.getString("cliGenre")),
                         rs.getString("cliEmail"),
                         rs.getString("cliMotDePasse"),
                         rs.getString("cliTelephone"),
