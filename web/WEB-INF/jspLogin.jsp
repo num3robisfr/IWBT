@@ -126,8 +126,7 @@
                             si oui : accès direct à la page compte client--%>
 
                     <c:if test="${okay == '2' }">     
-                        <div id="user"><center>Bienvenue ${nom}</center></div>
-                        <br><hr>
+
 
                         <%--Test s'il y a des commandes précédentes existantes :
                         si oui, afficher la derniere commande dans un tableau

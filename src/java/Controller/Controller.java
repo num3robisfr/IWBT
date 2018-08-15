@@ -320,6 +320,7 @@ public class Controller extends HttpServlet {
                     c = new Cookie("username", checkLogin);
                     c.setMaxAge(3600 * 24 * 7);
                     response.addCookie(c);
+                    url = "/WEB-INF/CompteManager.jsp";
                 } else {
                     request.setAttribute("okay", "1");
                 }

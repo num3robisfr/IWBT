@@ -17,6 +17,8 @@
             <div id="section">
                 <%@include file="Sidebar2.jsp" %>
                 <div id="catalogue">
+                    <div id="user"><center>Bienvenue ${nom}</center></div>
+                    <br><hr>
                     <div class="row" style="height: 20px;">
 
                     </div>
