@@ -474,7 +474,16 @@ public class Controller extends HttpServlet {
                     if (adrId > 0) {
                         int res = bA.AddAdrFacturation(beanc.getConnexion(), adrId, cliId, bC);
 
-                        resultat.put("message", "enregistrement effectué avec succés");
+                    resultat.put("message", "enregistrement effectué avec succés");
+                    request.setAttribute("nom", bC.getPrenom() + " " + bC.getNom());
+                    d = new Cookie("ID", String.valueOf(cliId));
+                    d.setMaxAge(3600 * 24 * 7);
+                    response.addCookie(d);
+                    
+                    c = new Cookie("username", bC.getPrenom() + " " + bC.getNom());
+                    c.setMaxAge(3600 * 24 * 7);
+                    response.addCookie(c);
+                    
                     }
 
                 }
@@ -573,10 +582,11 @@ public class Controller extends HttpServlet {
             ArrayList<beanAdresse> bAdrLiv = new ArrayList<beanAdresse>();
 
             if (d != null) {
-                bAdrFac = bcc.ChargerListeAdresseFacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
-                request.setAttribute("adrfac", bAdrFac);
-                bAdrLiv = bcc.ChargerListeAdresseLivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
-                request.setAttribute("adrliv", bAdrLiv);
+            bAdrFac = bcc.ChargerListeAdresseFacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+            request.setAttribute("adrfac", bAdrFac);
+            bAdrLiv = bcc.ChargerListeAdresseLivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+            request.setAttribute("adrliv", bAdrLiv);
+            request.setAttribute("numClient",d.getValue());
             }
 
         }
@@ -671,6 +681,10 @@ public class Controller extends HttpServlet {
             request.setAttribute("client", client);
             request.setAttribute("resultat", resultat);
 
+        }
+        
+        if("Mod".equals(request.getParameter("Adresse"))){
+          url = "/WEB-INF/ModAdresse.jsp";  
         }
 
         // partie Panier 
