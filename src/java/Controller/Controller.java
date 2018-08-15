@@ -468,7 +468,7 @@ public class Controller extends HttpServlet {
                         c = new Cookie("username", bC.getPrenom() + " " + bC.getNom());
                         c.setMaxAge(3600 * 24 * 7);
                         response.addCookie(c);
-
+                        session.setAttribute("client", bC);
                     }
 
                 }
@@ -670,6 +670,9 @@ public class Controller extends HttpServlet {
 
         if ("Mod".equals(request.getParameter("Adresse"))) {
             url = "/WEB-INF/ModAdresse.jsp";
+            String cliId = request.getParameter("cliId");
+            String adrId = request.getParameter("adrId");
+            String type = request.getParameter("type");
         }
 
         // partie Panier 

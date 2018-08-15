@@ -51,6 +51,7 @@
                                                 <form action="Controller" method="post">
                                                     <input type="hidden" name="cliId" value="${numClient}">
                                                     <input type="hidden" name="adrId" value="${p.id}">
+                                                    <input type="hidden" name="type" value="${p.type}">
                                                     <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button>
                                                 </form>
                                             </div>
