@@ -508,7 +508,6 @@ public class Controller extends HttpServlet {
                         c = new Cookie("username", bC.getPrenom() + " " + bC.getNom());
                         c.setMaxAge(3600 * 24 * 7);
                         response.addCookie(c);
-                        session.setAttribute("client", bC);
                     }
 
                 }
