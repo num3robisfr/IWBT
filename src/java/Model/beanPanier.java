@@ -61,18 +61,9 @@ public class beanPanier implements Serializable {
         add(urlImage, ref, titre, prix, -qty);
     }
 
-//    public void dec(String urlImage, String ref, String titre, int qty) {
-//        Item i = null;
-//        if (map.containsKey(ref)) {
-//        i = map.get(ref);
-//            i.minus(qty);
-//        }if (i.getQty() < 1) {
-//            del(ref);
-//        }
-//    }
+
     public void del(String ref) {
         map.remove(ref);
-        // total = total - i.getSomme();
     }
 
     public void clean() {

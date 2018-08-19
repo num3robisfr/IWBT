@@ -612,6 +612,7 @@ public class Controller extends HttpServlet {
                 bAdrLiv = bcc.ChargerListeAdresseLivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
                 request.setAttribute("adrliv", bAdrLiv);
                 request.setAttribute("numClient", d.getValue());
+                request.setAttribute("confirmation", "notok");
             }
 
         }
@@ -713,24 +714,23 @@ public class Controller extends HttpServlet {
             String cliId = request.getParameter("cliId");
             String adrId = request.getParameter("adrId");
             String type = request.getParameter("type");
-            
+
             beanAdresse bAdr = new beanAdresse();
 
-            
-            if(type.equals("facturation")){
-              bAdr = bAdr.getAdressefacturation(beanc.getConnexion(), Integer.valueOf(cliId)); 
-              
+            if (type.equals("facturation")) {
+                bAdr = bAdr.getAdressefacturation(beanc.getConnexion(), Integer.valueOf(cliId));
+
             }
-            if(type.equals("livraison")){
-              bAdr = bAdr.getAdresselivraison(beanc.getConnexion(), Integer.valueOf(cliId));  
+            if (type.equals("livraison")) {
+                bAdr = bAdr.getAdresselivraison(beanc.getConnexion(), Integer.valueOf(cliId));
             }
             request.setAttribute("client", bAdr);
             request.setAttribute("cliId", cliId);
             request.setAttribute("adrId", adrId);
             request.setAttribute("type", type);
-            
+
         }
-        
+
         if ("checkMod".equals(request.getParameter("Adresse"))) {
             url = "/WEB-INF/ModAdresse.jsp";
             erreurs.clear();
@@ -746,7 +746,7 @@ public class Controller extends HttpServlet {
             String ville = request.getParameter("ville");
             String type = request.getParameter("type");
 
-            System.out.println(">>>>>> type : "+ type);
+            System.out.println(">>>>>> type : " + type);
             try {
                 checkNom(nom);
                 client.put("nom", nom);
@@ -780,17 +780,17 @@ public class Controller extends HttpServlet {
             }
 
             if (erreurs.isEmpty()) {
-                beanAdresse bA = new beanAdresse(adrId,genre,nom,prenom,adresse,complement,codePostal,ville,1,type);
-                
+                beanAdresse bA = new beanAdresse(adrId, genre, nom, prenom, adresse, complement, codePostal, ville, 1, type);
+
                 resultat.put("message", bA.updateAdresse(beanc.getConnexion()));
-                
-                if(type.equalsIgnoreCase("facturation")){
-                    resultat.put("message", bA.updateAdresseFacture(beanc.getConnexion(),cliId));
+
+                if (type.equalsIgnoreCase("facturation")) {
+                    resultat.put("message", bA.updateAdresseFacture(beanc.getConnexion(), cliId));
                 }
-                if(type.equalsIgnoreCase("livraison")){
+                if (type.equalsIgnoreCase("livraison")) {
                     System.out.println("cliId : " + cliId);
                     System.out.println("bA :" + bA);
-                    resultat.put("message", bA.updateAdresseLivraison(beanc.getConnexion(),cliId));
+                    resultat.put("message", bA.updateAdresseLivraison(beanc.getConnexion(), cliId));
                 }
 
             }
@@ -799,7 +799,24 @@ public class Controller extends HttpServlet {
             request.setAttribute("resultat", resultat);
 
         }
+        if ("validationcommande".equals(request.getParameter("section"))) {
+            if (d != null) {
+                url = "/WEB-INF/AdresseManager.jsp";
+                request.setAttribute("confirmation", "ok");
+                ArrayList<beanAdresse> bAdrFac = new ArrayList<beanAdresse>();
+                ArrayList<beanAdresse> bAdrLiv = new ArrayList<beanAdresse>();
 
+                bAdrFac = bcc.ChargerListeAdresseFacturation(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+                request.setAttribute("adrfac", bAdrFac);
+                bAdrLiv = bcc.ChargerListeAdresseLivraison(beanc.getConnexion(), Integer.valueOf(d.getValue()));
+                request.setAttribute("adrliv", bAdrLiv);
+                request.setAttribute("numClient", d.getValue());
+
+            } else {
+                url = "/WEB-INF/jspLogin.jsp";
+
+            }
+        }
 
         // partie Panier 
         if ("affichePanier".equals(request.getParameter("section"))) {

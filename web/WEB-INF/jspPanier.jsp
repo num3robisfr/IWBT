@@ -17,89 +17,77 @@
             <!-- header -->
             <%@include file="Header.jsp" %>
             <div id="panier">
-            <h1>Votre panier </h1>
-            <br />
+                <br>
+                <h1>Votre panier </h1>
             </div>
             <div id="panier-container">
-            <c:if test="${isempty}">
-            <p class="panier">Panier vide !</p>
-            <p class="panier"><a href="Controller?section=accueil">Retour à l'accueil</a></p>
-            </c:if>
-            <c:if test="${!isempty}">
-                <Table>
-                <%--<tr>
-                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-                    <td><p>Qantité</p></td>
-                    <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
-                    <td><p>Oeuvre</p></td>
-                    <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
-                    <td><p>Prix unitaire</p></td>
-                    <td>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</td>
-                    <td><p>Prix total</p></td>
-                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-                </tr>--%>
-            <c:forEach var="l" items="${list}">
-                <tr>
-                    <td><a class="" href="Controller?section=oeuvre&isbn=${l.ref}"><img src='${l.urlImage}' title='${l.titre}' width = 50%/></a></td>
-                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-                    <td><p>${l.qty}</p></td>
-                    <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
-                    <td><p>${l.titre}</p></td>
-                    <td><p>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</p></td>
-                    <td><p><fmt:formatNumber value="${l.prix}" type="currency"/></p></td>
-                    <td>&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp</td>
-                    <td><p> <fmt:formatNumber value="${l.somme}" type="currency"/> TTC</p></td>
-                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-                    
-                        <form action="Controller" method="get">
-                            <input type='hidden' name='section' value='affichePanier' />
-                            <input type='hidden' name='urlImage' value='${l.urlImage}' />
-                            <input type='hidden' name='ref' value='${l.ref}' />
-                            <input type='hidden' name='titre' value='${l.titre}' />
-                            <input type='hidden' name='prix' value='${l.prix}' />
-                            
-                            <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='add' VALUE='+' /></td>
-                            <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='dec' VALUE='-' /></td>   
-                            <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='del' VALUE='Supprimer' /></td>
-                            
-                            
-                        </form>
-                    
-                    
-                    
-                     
-            <br>
-                </tr>
-                
-                <%--<tr>
-                    <td><img src='${oeuvre.oeuUrlImage}' title='${oeuvre.oeuTitre}'/></td>
-                    <td>${oeuvre.oeuTitre} / ${l.qty}</td>
-                    <td>
-                    <a href="Controller?section=affichePanier&add=${l.ref}"><INPUT TYPE='SUBMIT' NAME='add' VALUE='+' /></a>
-                    <a href="Controller?section=affichePanier&dec=${l.ref}"><INPUT TYPE='SUBMIT' NAME='dec' VALUE='-' /></a>
-                    <a href="Controller?section=affichePanier&del=${l.ref}"><INPUT TYPE='SUBMIT' NAME='del' VALUE='Supprimer' /></a>
-                    </td>--%>
-            <br>
-                </tr>
-            </c:forEach>
-                </Table>
-                
-                <br />
-                <br />
-                <p class="panier">Total du panier : <fmt:formatNumber value="${total}" type="currency"/> TTC
-                &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp
-                <a class="btn btn-primary mx-auto d-block" href="Controller?section=accueil">Valider la commande </a></p>
-                
-                
-                <br />
-                <br />
-                <p class="panier"><a href="Controller?section=affichePanier&clean">Vider le panier</a>
-                &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp
-                <a href="Controller?section=accueil">Retour à l'accueil</a></p>
-            </c:if>
-            
-                
+                <c:if test="${isempty}">
+                    <p class="panier">Panier vide !</p>
+                    <p class="panier"><a href="Controller?section=accueil">Retour à l'accueil</a></p>
+                </c:if>
+                <c:if test="${!isempty}">
+                    <table border="1">
+                        <tr>
+                            <th><center>Article</center></th>
+                        <th><center>Quantité</center></th>
+                        <th><center>Titre</center></th>
+                        <th><center>Prix unitaire TTC</center></th>
+                        <th><center>&nbsp&nbspSous-Total TTC&nbsp&nbsp</center></th>
+                        <th><center>Ajouter</center></th>
+                        <th><center>Enlever</center></th>
+                        <th><center>Supprimer</center></th>             
+                        <th><center>Frais de port</center></th>
+                        </tr>
+                        <c:forEach var="l" items="${list}">
+                            <tr>
+
+                                <td><center><a class="" href="Controller?section=oeuvre&isbn=${l.ref}"><img src='${l.urlImage}' title='${l.titre}' width = 50%/></a></center></td>
+                            <td><p><center>${l.qty}</center></p></td>
+                            <td><p><center>${l.titre}</center></p></td>
+                            <td><p><center><fmt:formatNumber value="${l.prix}" type="currency"/></center></p></td>
+                            <td><p> <center><fmt:formatNumber value="${l.somme}" type="currency"/></center></p></td>
+
+                            <form action="Controller" method="get">
+                                <input type='hidden' name='section' value='affichePanier' />
+                                <input type='hidden' name='urlImage' value='${l.urlImage}' />
+                                <input type='hidden' name='ref' value='${l.ref}' />
+                                <input type='hidden' name='titre' value='${l.titre}' />
+                                <input type='hidden' name='prix' value='${l.prix}' />
+
+                                <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='add' VALUE='+' /></td>
+                                <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='dec' VALUE='-' /></td>   
+                                <td><INPUT TYPE='SUBMIT' class="btn btn-primary mx-auto d-block" NAME='del' VALUE='Supprimer' /></td>
+
+
+                            </form>
+
+                            <br>
+                            </tr>
+                            <br>
+                            </tr>
+
+                        </c:forEach>
+                        <td><center><strong>Tous vos articles</strong></center></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><center><strong><fmt:formatNumber value="${total}" type="currency"/></center></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><center>5 €</center></td>
+                    </Table>
+                    <br>
+                    <h2>Total du panier : &nbsp<strong><fmt:formatNumber value="${total +5}" type="currency"/> &nbspTTC
+                            <br>                    <br>
+
+                            <a class="btn btn-primary mx-auto d-block" href="Controller?section=validationcommande">Valider la commande </a></strong></h2>
+                    <p class="panier"><a href="Controller?section=affichePanier&clean">Vider le panier</a>
+                        &nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp
+                        <a href="Controller?section=accueil">Retour à l'accueil</a></p>
+                    </c:if>
+
+
             </div>
             <!-- footer -->
             <%@include file="Footer.jsp" %> 

@@ -22,6 +22,9 @@
 
                     </div>
                     <h1>Vos Adresses</h1>
+                    <c:if test="${confirmation == 'ok'}">
+                        <p>Veuillez sélectionner vos adresses de facturation et de livraison</p>
+                    </c:if>
                     <div class="row">
                         <div class="col-md-4 flex flex-column align-items-center justify-content-center" style="min-width: 250px; margin-top: 15px; margin-bottom: 15px;">
                             <div class="card border-grey" style="height: 245px;">
@@ -47,14 +50,26 @@
                                                     ${p.codePostal} ${p.ville}
                                                 </small>
                                             </p>
-                                            <div class="row" style="padding-top: 45px; padding-left: 15px">
-                                                <form action="Controller" method="post">
-                                                    <input type="hidden" name="cliId" value="${numClient}">
-                                                    <input type="hidden" name="adrId" value="${p.id}">
-                                                    <input type="hidden" name="type" value="facturation">
-                                                    <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button>
-                                                </form>
-                                            </div>
+                                            <c:if test="${confirmation == 'notok'}">
+                                                <div class="row" style="padding-top: 45px; padding-left: 15px">
+                                                    <form action="Controller" method="post">
+                                                        <input type="hidden" name="cliId" value="${numClient}">
+                                                        <input type="hidden" name="adrId" value="${p.id}">
+                                                        <input type="hidden" name="type" value="facturation">
+                                                        <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button>
+                                                    </form>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${confirmation == 'ok'}">
+                                                <div class="row" style="padding-top: 45px; padding-left: 15px">
+                                                    <form action="Controller" method="post">
+                                                        <input type="hidden" name="cliId" value="${numClient}">
+                                                        <input type="hidden" name="adrId" value="${p.id}">
+                                                        <input type="hidden" name="type" value="facturation">
+                                                        <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button><button class="btn btn-link" type="submit" name="okadresse" value="Mod">Sélectionner</button>
+                                                    </form>
+                                                </div>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
@@ -76,14 +91,26 @@
                                                     ${p.codePostal} ${p.ville}
                                                 </small>
                                             </p>
-                                            <div class="row" style="padding-top: 45px; padding-left: 15px">
-                                                <form action="Controller" method="post">
-                                                    <input type="hidden" name="cliId" value="${numClient}">
-                                                    <input type="hidden" name="adrId" value="${p.id}">
-                                                    <input type="hidden" name="type" value="livraison">
-                                                    <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button>
-                                                </form>
-                                            </div>
+                                              <c:if test="${confirmation == 'notok'}">
+                                                <div class="row" style="padding-top: 45px; padding-left: 15px">
+                                                    <form action="Controller" method="post">
+                                                        <input type="hidden" name="cliId" value="${numClient}">
+                                                        <input type="hidden" name="adrId" value="${p.id}">
+                                                        <input type="hidden" name="type" value="livraison">
+                                                        <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button>
+                                                    </form>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${confirmation == 'ok'}">
+                                                <div class="row" style="padding-top: 45px; padding-left: 15px">
+                                                    <form action="Controller" method="post">
+                                                        <input type="hidden" name="cliId" value="${numClient}">
+                                                        <input type="hidden" name="adrId" value="${p.id}">
+                                                        <input type="hidden" name="type" value="livraison">
+                                                        <button class="btn btn-link" type="submit" name="Adresse" value="Mod">Modifier</button><button class="btn btn-link" type="submit" name="okadresse" value="Mod">Sélectionner</button>
+                                                    </form>
+                                                </div>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
